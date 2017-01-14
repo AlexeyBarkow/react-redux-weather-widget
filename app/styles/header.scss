@@ -1,0 +1,18 @@
+.header {
+    .header__logo {
+        padding-top: 1.25em;
+    }
+
+    .line-up{
+        &:before, &:after {
+            content: ' ';
+            display: block;
+            background-color: var(--color-dark-green);
+            height: .5em;
+        }
+        background-color: var(--color-bright-green);
+    }
+    .navbar {
+      
+    }
+}
