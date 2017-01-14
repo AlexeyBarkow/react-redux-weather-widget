@@ -3,13 +3,11 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
     entry: [
-        'webpack-dev-server/client?http://localhost:3000',
-        'webpack/hot/only-dev-server',
-        'react-hot-loader/patch',
         path.join(__dirname, 'app/index.jsx')
     ],
     output: {
@@ -18,33 +16,43 @@ module.exports = {
         publicPath: '/'
     },
     plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: 'app/index.html',
             inject: 'body',
             filename: 'index.html'
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin('[name]-[hash].min.css'),
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+                warnings: false,
+                screw_ie8: true
+            }
+        }),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('development')
+                'NODE_ENV': JSON.stringify('production')
             }
         })
     ],
     module: {
         loaders: [
             {
-                test: /\.jsx$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loader: 'babel'
             },
             {
-                test: /\.json?$/,
+                test: /\.json$/,
                 loader: 'json'
             },
             {
                 test: /\.scss$/,
                 loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
             }
+        ],
+        postcss: [
+            require('autoprefixer')
         ]
     }
 }
