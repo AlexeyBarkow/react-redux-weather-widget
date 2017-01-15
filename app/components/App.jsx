@@ -2,32 +2,15 @@ import React, {PropTypes} from 'react';
 import Header from './Header.jsx';
 import Navbar from './Navbar.jsx';
 import {Link} from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions/actions.js';
 
-const navButtons = [
-  {
-    title: 'lorem',
-    link: '/'
-  }, {
-    title: 'ipsum',
-    link: '/'
-  }, {
-    title: 'dolor',
-    link: [
-      {
-        title: 'dolor-sit',
-        link: '/'
-      }, {
-        title: 'dolor-amet',
-        link: '/'
-      }
-    ]
-  }
-];
 
 const App = ({children}) => (
   <div>
     <Header>
-      <Navbar navButtons={navButtons}></Navbar>
+      <Navbar></Navbar>
     </Header>
     <div>
       {children}
@@ -42,4 +25,18 @@ App.propTypes = {
   children: PropTypes.object
 };
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    geolocation: state.geolocation,
+      city: state.city,
+      weather: state.weather
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    actions, dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,34 +1,20 @@
 import React from 'react';
+import Button from './Button.jsx';
+import MenuItem from './MenuItem.jsx';
+import ButtonGroup from './ButtonGroup.jsx';
+import ButtonDropDown from '../containers/ButtonDropDown.jsx';
 
-const getChildButtons = (parent, prefix, isFirst) => (
-  <ul role="menu" className={ isFirst ? 'btn-group btn-group-justified' : 'dropdown-menu' }>
-    {
-      parent.map((curr, index) =>
-          typeof curr.link === 'string' ?
-            (
-              <li role="presentation" key={ prefix + index } className="btn btn-default">
-                <a role="button" className="stretch">{ curr.title }</a>
-              </li>
-            )
-          :
-            (
-              <li role="presentation" key={ prefix + index } className="dropdown btn-group">
-                <button className="dropdown-toggle btn btn-default">  { curr.title } <span className="caret"></span></button>
-                { getChildButtons(curr.link, `${ prefix }${ index }-`) }
-              </li>
-            )
-        )
-    }
-  </ul>
-);
-
-
-const Navbar = ({children, navButtons}) => {
-  // const { nav } = props;
-  console.log(navButtons);
+const Navbar = ({ children }) => {
   return (
-    <nav className="navbar">
-      { getChildButtons(navButtons, '', true) }
+    <nav>
+      <ButtonGroup noPadding>
+        <Button href='#' onClickHandler={ () =>{ console.log(2) } }>lorem</Button>
+        <Button href='#' onClickHandler={ () =>{ console.log(3) } }>ipsum</Button>
+        <ButtonDropDown value='Prick'>
+          <MenuItem onClickHandler={ () => { console.log(4) } }>dolor</MenuItem>
+          <MenuItem onClickHandler={ () => { console.log(5) } }>sit</MenuItem>
+        </ButtonDropDown>
+      </ButtonGroup>
     </nav>
   );
 };

@@ -8,6 +8,6 @@ export default function configureStore(initialState) {
         initialState,
         DevTools.instrument()
     );
-    
+
     return store;
 }

@@ -4,7 +4,6 @@ import routes from '../routes.jsx';
 import DevTools from './DevTools.jsx';
 import {Router} from 'react-router';
 
-console.log(Provider)
 class Root extends Component {
   render() {
     const {store, history} = this.props;
