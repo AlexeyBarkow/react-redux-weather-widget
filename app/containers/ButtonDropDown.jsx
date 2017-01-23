@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ClickOutComponent from 'react-onclickout';
 import Button from '../components/Button.jsx';
 
@@ -42,6 +42,14 @@ class ButtonDropDown extends ClickOutComponent {
             </div>
         );
     }
+}
+
+ButtonDropDown.PropTypes = {
+    children: PropTypes.object,
+    value: PropTypes.string,
+    className: PropTypes.string,
+    dropDownClassName: PropTypes.string,
+    caretClassName: PropTypes.string
 }
 
 export default ButtonDropDown;

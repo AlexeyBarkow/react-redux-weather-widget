@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Button from './Button.jsx';
 import MenuItem from './MenuItem.jsx';
 import ButtonGroup from './ButtonGroup.jsx';
 import ButtonDropDown from '../containers/ButtonDropDown.jsx';
+import weatherAPI from '../API/weather.api.js';
 
-const Navbar = ({ children }) => {
+//ToDo: move it to the container component
+function weatherClickHandler(callback) {
+  return function () {
+    callback({
+      temperature: Math.random()
+    });
+  }
+}
+
+const Navbar = ({ children }, { changeWeatherInfo }) => {
   return (
     <nav>
       <ButtonGroup noPadding>
-        <Button href='#' onClickHandler={ () =>{ console.log(2) } }>lorem</Button>
-        <Button href='#' onClickHandler={ () =>{ console.log(3) } }>ipsum</Button>
-        <ButtonDropDown value='Prick'>
-          <MenuItem onClickHandler={ () => { console.log(4) } }>dolor</MenuItem>
-          <MenuItem onClickHandler={ () => { console.log(5) } }>sit</MenuItem>
-        </ButtonDropDown>
+        <Button href='#' onClickHandler={ weatherClickHandler(changeWeatherInfo) }>getWeather</Button>
       </ButtonGroup>
     </nav>
   );
 };
+console.log(Object.keys(PropTypes))
+Navbar.contextTypes = {
+  changeWeatherInfo: PropTypes.func
+}
 
 export default Navbar;

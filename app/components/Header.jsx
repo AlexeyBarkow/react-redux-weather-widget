@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import css from '../styles/header.scss';
 
-const Header = ({children}) => (
-  <header className="container header">
-    <div className="line-up row">
-      <figure className="header__logo text-center col-sm-3">
-        <img src='http://placehold.it/150x150' alt='logo'/>
-        <figcaption>lorem ipsum</figcaption>
-      </figure>
-      <div className="col-sm-9">
-        {children}
+const Header = ({children}, { weather }) => {
+  return (
+    <header className="container header">
+      <div className="line-up row">
+        <figure className="header__logo text-center col-sm-3">
+          <img src='http://placehold.it/150x150' alt='logo'/>
+          <figcaption>lorem ipsum</figcaption>
+        </figure>
+        <div className="col-sm-9">
+          {children}
+        </div>
       </div>
-    </div>
-  </header>
-);
+      <div>{ weather.temperature }</div>
+    </header>
+  )
+};
+
+Header.contextTypes = {
+    weather: PropTypes.object
+}
 
 export default Header;
