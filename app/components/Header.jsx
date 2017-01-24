@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import css from '../styles/header.scss';
 
-const Header = ({children}, { weather }) => {
+const Header = ({ children }, { weather }) => {
+  console.log('weather',  weather);
   return (
     <header className="container header">
       <div className="line-up row">
@@ -10,16 +11,20 @@ const Header = ({children}, { weather }) => {
           <figcaption>lorem ipsum</figcaption>
         </figure>
         <div className="col-sm-9">
-          {children}
+          { children }
         </div>
       </div>
-      <div>{ weather.temperature }</div>
+      <div>{ weather ? weather.temperature : 'no weather fetched now' }</div>
     </header>
   )
 };
 
+Header.propTypes = {
+  children: PropTypes.object
+};
+
 Header.contextTypes = {
     weather: PropTypes.object
-}
+};
 
 export default Header;

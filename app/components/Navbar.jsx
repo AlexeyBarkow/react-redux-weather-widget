@@ -15,6 +15,7 @@ function weatherClickHandler(callback) {
 }
 
 const Navbar = ({ children }, { changeWeatherInfo }) => {
+  console.log('wow',changeWeatherInfo)
   return (
     <nav>
       <ButtonGroup noPadding>
@@ -27,6 +28,10 @@ const Navbar = ({ children }, { changeWeatherInfo }) => {
 console.log(Object.keys(PropTypes))
 Navbar.contextTypes = {
   changeWeatherInfo: PropTypes.func
+}
+
+Navbar.propTypes = {
+  children: PropTypes.object
 }
 
 export default Navbar;
