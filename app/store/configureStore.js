@@ -1,6 +1,11 @@
-console.log(process)
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./configureStore.prod.js');
-} else {
-  module.exports = require('./configureStore.dev.js');
+import { createStore } from 'redux';
+import rootReducer from '../reducers/index';
+
+export default function configureStore(initialState) {
+    const store = createStore(
+        rootReducer,
+        initialState,
+    );
+
+    return store;
 }

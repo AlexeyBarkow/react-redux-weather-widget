@@ -3,16 +3,16 @@
         padding-top: 1.25em;
     }
 
-    .line-up{
-        &:before, &:after {
+    .line-up {
+        &:after,
+        &:before {
             content: ' ';
             display: block;
             background-color: var(--color-dark-green);
-            height: .5em;
+            height: 0.5em;
         }
         background-color: var(--color-bright-green);
     }
-    .navbar {
-      
-    }
+
+    .navbar {}
 }

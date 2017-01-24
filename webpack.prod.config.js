@@ -1,24 +1,25 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    devtool: 'eval-source-map',
-    entry: [
-        path.join(__dirname, 'app/index.jsx')
-    ],
+    entry: {
+        main: path.join(__dirname, 'app/index.js'),
+        vendor: ['react', 'redux', 'lodash'],
+        polyfills: ['babel-polyfill']
+    },
     output: {
-        path: path.join(__dirname, '/dist/'),
-        filename: '[name].js',
-        publicPath: '/'
+        path: path.join(__dirname, 'dist/'),
+        filename: '[name].min.js',
+        publicPath: './'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
         new HtmlWebpackPlugin({
-            template: 'app/index.html',
+            template: path.join(__dirname, 'app/index.html'),
             inject: 'body',
             filename: 'index.html'
         }),
@@ -29,6 +30,9 @@ module.exports = {
                 screw_ie8: true
             }
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor', 'polyfills']
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
@@ -36,21 +40,17 @@ module.exports = {
         })
     ],
     module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel'
-            },
-            {
-                test: /\.json$/,
-                loader: 'json'
-            },
-            {
-                test: /\.scss$/,
-                loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
-            }
-        ],
+        loaders: [{
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            loader: 'babel'
+        }, {
+            test: /\.json$/,
+            loader: 'json'
+        }, {
+            test: /\.scss$/,
+            loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+        }],
         postcss: [
             require('autoprefixer')
         ]

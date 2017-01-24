@@ -1,8 +1,6 @@
-'use strict';
-
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -10,7 +8,7 @@ module.exports = {
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
         'react-hot-loader/patch',
-        path.join(__dirname, 'app/index.jsx')
+        path.join(__dirname, 'app/index.js')
     ],
     output: {
         path: path.join(__dirname, '/dist/'),
@@ -31,24 +29,31 @@ module.exports = {
         })
     ],
     module: {
-        loaders: [
+        preLoaders: [
             {
-                test: /\.jsx?$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel'
-            },
-            {
-                test: /\.json?$/,
-                loader: 'json'
-            },
-            {
-                test: /\.scss$/,
-                loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
-            },
-            {
-              test: /\.css$/,
-              loader: "style-loader!css-loader"
+                loader: 'eslint'
             }
-        ]
+        ],
+        loaders: [
+        {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel'
+        }, {
+            test: /\.json?$/,
+            loader: 'json'
+        }, {
+            test: /\.scss$/,
+            loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+        }, {
+            test: /\.css$/,
+            loader: "style-loader!css-loader"
+        }]
+    },
+    eslint: {
+        failOnWarning: false,
+        failOnError: true
     }
 }
