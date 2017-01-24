@@ -1,13 +1,6 @@
-import { createStore } from 'redux';
-import rootReducer from '../reducers/index.js';
-import DevTools from '../containers/DevTools.jsx';
-
-export default function configureStore(initialState) {
-    const store = createStore(
-        rootReducer,
-        initialState,
-        DevTools.instrument()
-    );
-
-    return store;
+console.log(process)
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./configureStore.prod.js');
+} else {
+  module.exports = require('./configureStore.dev.js');
 }

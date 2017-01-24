@@ -19,6 +19,7 @@ const Navbar = ({ children }, { changeWeatherInfo }) => {
     <nav>
       <ButtonGroup noPadding>
         <Button href='#' onClickHandler={ weatherClickHandler(changeWeatherInfo) }>getWeather</Button>
+
       </ButtonGroup>
     </nav>
   );
