@@ -10,7 +10,7 @@ const Navbar = ({ children }) => {
       <ButtonGroup noPadding>
         <Button href='#' onClickHandler={ () =>{ console.log(2) } }>lorem</Button>
         <Button href='#' onClickHandler={ () =>{ console.log(3) } }>ipsum</Button>
-        <ButtonDropDown value='Prick'>
+        <ButtonDropDown value='qqqq'>
           <MenuItem onClickHandler={ () => { console.log(4) } }>dolor</MenuItem>
           <MenuItem onClickHandler={ () => { console.log(5) } }>sit</MenuItem>
         </ButtonDropDown>

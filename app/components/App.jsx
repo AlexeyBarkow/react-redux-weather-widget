@@ -1,25 +1,33 @@
 import React, {PropTypes} from 'react';
 import Header from './Header.jsx';
 import Navbar from './Navbar.jsx';
+// import DropDown from './DropDown.jsx';
+import DropDownContainer from '../containers/DropDownContainer.jsx';
+import DatalistOption from './DatalistOption.jsx';
 import {Link} from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions.js';
 
 
-const App = ({children}) => (
-  <div>
-    <Header>
-      <Navbar></Navbar>
-    </Header>
+const App = ({children, geolocation, city}) => {
+  return (
     <div>
-      {children}
+      <Header>
+        <Navbar></Navbar>
+        <h1>{ city ? `weather for ${ city }` : `no city selected` }</h1>
+        <DropDownContainer listId='city-data' placeholder='Type city here'>
+        </DropDownContainer>
+      </Header>
+      <main>
+        {children}
+      </main>
+      <footer>
+        <Link to="/about">about</Link>
+      </footer>
     </div>
-    <div>
-      <Link to="/about">about</Link>
-    </div>
-  </div>
-);
+  )
+};
 
 App.propTypes = {
   children: PropTypes.object
@@ -27,10 +35,10 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    geolocation: state.geolocation,
-      city: state.city,
-      weather: state.weather
-  }
+    geolocation: state.weatherApp.geolocation,
+    city: state.weatherApp.city,
+    weather: state.weatherApp.weather
+  };
 }
 
 function mapDispatchToProps(dispatch) {
