@@ -5,19 +5,21 @@ import * as types from '../actions/types.js';
 const initialState = {
     geolocation: null,
     city: null,
-    weather: null
+    weather: null,
 }
 
 function weatherApp(state = initialState, action) {
     switch (action.type) {
         case types.SET_CITY:
-            return Object.assign({}, state, {
-                city: action.city
-            });
+            return {
+                city: action.city,
+                ...state,
+            };
         case types.UPDATE_WEATHER_INFO:
-            return Object.assign({}, state, {
-                weather: action.weather
-            });
+            return {
+                weather: action.weather,
+                ...state,
+            };
         default:
             return state;
     }
@@ -25,7 +27,7 @@ function weatherApp(state = initialState, action) {
 
 const rootReducer = combineReducers({
     weatherApp,
-    routing
+    routing,
 });
 
 export default rootReducer;

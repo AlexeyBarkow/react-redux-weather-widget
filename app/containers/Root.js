@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react';
-import {Provider} from 'react-redux';
-import routes from '../routes.jsx';
-import {Router} from 'react-router';
+import React, { Component, PropTypes } from 'react';
+import { Provider } from 'react-redux';
+import routes from '../routes.js';
+import { Router } from 'react-router';
 
 class Root extends Component {
   render() {
-    const {store, history} = this.props;
+    const { store, history } = this.props;
     return (
       <Provider store={store}>
         <div className="my-app-root-class">
@@ -19,6 +19,6 @@ class Root extends Component {
 Root.propTypes = {
   store: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
-}
+};
 
 export default Root;

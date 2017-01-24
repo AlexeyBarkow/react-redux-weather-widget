@@ -18,26 +18,31 @@ class ButtonDropDown extends ClickOutComponent {
     }
 
     onClickOut() {
-        const { open } = this.state;
+        const {open} = this.state;
         if (open) {
-            this.setState({
-                open: false
-            });
+            this.setState({open: false});
         }
     }
 
     render() {
         const { open } = this.state;
-        const { children, value, className, dropDownClassName, caretClassName } = this.props;
+        const {
+            children,
+            value,
+            className,
+            dropDownClassName,
+            caretClassName,
+        } = this.props;
         return (
-            <div className={`dropdown btn-group ${ open ? 'open' : '' }`}>
-                <Button className={ `${ className || '' } dropdown-toggle` }
-                        onClickHandler={ this._toggleClick }>
-                    { value }
-                    <span className={ caretClassName || `caret` }></span>
+            <div className={`dropdown btn-group ${open
+                ? 'open'
+                : ''}`}>
+                <Button className={`${className || ''} dropdown-toggle`} onClickHandler={this._toggleClick}>
+                    {value}
+                    <span className={caretClassName || `caret`}></span>
                 </Button>
-                <ul className={ `${ dropDownClassName || '' } dropdown-menu` }>
-                    { children }
+                <ul className={`${dropDownClassName || ''} dropdown-menu`}>
+                    {children}
                 </ul>
             </div>
         );
@@ -49,7 +54,7 @@ ButtonDropDown.PropTypes = {
     value: PropTypes.string,
     className: PropTypes.string,
     dropDownClassName: PropTypes.string,
-    caretClassName: PropTypes.string
-}
+    caretClassName: PropTypes.string,
+};
 
 export default ButtonDropDown;

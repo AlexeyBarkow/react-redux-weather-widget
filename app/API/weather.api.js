@@ -6,7 +6,7 @@ function getWeatherTemplate(city, apiKey = DEFAULT_API_KEY) {
     return `api.openweathermap.org/data/2.5/weather?q=${ city }`;
 }
 const weatherAPI = {
-    fetchWeather : function (city) {
+    fetchWeather: function(city) {
         console.log(getWeatherTemplate(city))
         return fetchSimplified.get(getWeatherTemplate(city));
     }

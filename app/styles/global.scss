@@ -1,5 +1,3 @@
-@import '~normalize.css/normalize.css';
-
 :root {
     //put global css variables here
     --color--dark-red: rgb(185, 0 , 0);
@@ -9,35 +7,35 @@
 }
 
 .container {
-  width: 100%;
-  position: relative;
+    width: 100%;
+    position: relative;
 }
 
 .stretch {
-  display: block;
-  height: 100%;
+    display: block;
+    height: 100%;
 }
 
 .btn > a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 ul.no-list-padding {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 figure {
-  margin: 0;
+    margin: 0;
 }
 
 .relative {
-  position: relative;
+    position: relative;
 }
 
 .center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
