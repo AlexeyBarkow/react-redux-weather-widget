@@ -12,13 +12,13 @@ function weatherApp(state = initialState, action) {
     switch (action.type) {
         case types.SET_CITY:
             return {
-                city: action.city,
                 ...state,
+                city: action.city,
             };
         case types.UPDATE_WEATHER_INFO:
             return {
-                weather: action.weather,
                 ...state,
+                weather: action.weather,
             };
         default:
             return state;

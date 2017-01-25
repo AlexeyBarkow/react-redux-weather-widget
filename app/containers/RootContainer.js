@@ -13,6 +13,7 @@ class RootContainer extends Component {
         this.state = {
             typedCity: '',
         };
+        this.onDropDownChange = this.onDropDownChange.bind(this);
     }
 
     getChildContext() {
@@ -58,6 +59,8 @@ RootContainer.childContextTypes = {
 
 RootContainer.propTypes = {
     children: PropTypes.node,
+    weather: PropTypes.object.isRequired,
+    changeWeatherInfo: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {

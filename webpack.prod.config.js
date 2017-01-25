@@ -49,7 +49,10 @@ module.exports = {
             loader: 'json'
         }, {
             test: /\.scss$/,
-            loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+            loader: ExtractTextPlugin.extract('style', 'css!sass')
+        }, {
+            test: /\.css$/,
+            loader: 'css-loader'
         }],
         postcss: [
             require('autoprefixer')

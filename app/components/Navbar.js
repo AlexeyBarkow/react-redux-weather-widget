@@ -1,9 +1,6 @@
 import React, { PropTypes } from 'react';
 import Button from './Button';
-// import MenuItem from './MenuItem';
 import ButtonGroup from './ButtonGroup';
-// import ButtonDropDown from '../containers/ButtonDropDown';
-// import weatherAPI from '../API/weatherAPI';
 
 //    ToDo: move it to the container component
 function weatherClickHandler(callback) {

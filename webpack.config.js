@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
@@ -46,14 +46,10 @@ module.exports = {
             loader: 'json'
         }, {
             test: /\.scss$/,
-            loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+            loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
         }, {
             test: /\.css$/,
-            loader: "style-loader!css-loader"
+            loader: 'css-loader'
         }]
     },
-    eslint: {
-        failOnWarning: false,
-        failOnError: true
-    }
 }

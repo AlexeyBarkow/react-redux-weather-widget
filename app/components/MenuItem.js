@@ -1,39 +1,39 @@
 import React, {PropTypes} from 'react';
 import { Link } from 'react-router';
 
-const MenuItem = ({
+function MenuItem({
     children,
-    className = '',
+    className,
     header,
     divider,
     href,
-    disabled = false,
-    title = null,
-    onClickHandler = null
-}) => {
+    disabled,
+    title,
+    onClickHandler,
+}) {
     switch (true) {
         case header:
             return (
-                <li className={ className } title={ title }>
-                    { children }
+                <li className={className} title={title}>
+                    {children}
                 </li>
             );
         case divider:
             return (
                 <li
                   className={`divider ${className}`}
-                  title={ title }
+                  title={title}
                 ></li>
             );
         default:
             return (
                 <li>
                     <Link
-                      className={ className }
-                      href={ href || '#' }
-                      disabled={ disabled }
-                      onClick={ onClickHandler }
-                      title={ title }
+                      className={className}
+                      href={href || '#'}
+                      disabled={disabled}
+                      onClick={onClickHandler}
+                      title={title}
                     >
                         {children}
                     </Link>

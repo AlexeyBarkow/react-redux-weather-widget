@@ -1,5 +1,5 @@
 import * as types from './types';
-import getWeatherAjax from '../API/weatherAPI';
+import getWeatherAjax from '../utils/weatherAPI';
 
 
 export function changeCity(city) {
@@ -16,7 +16,7 @@ export function changeWeatherInfo(weather) {
     };
 }
 
-export default function getWeather(city) {
+export function getWeather(city) {
     return (dispatch) => {
         getWeatherAjax(city)
           .then((data) => {
@@ -24,3 +24,11 @@ export default function getWeather(city) {
           });
     };
 }
+
+// const dispatchers = {
+//     changeCity,
+//     changeWeatherInfo,
+//     getWeather,
+// };
+
+// export default dispatchers;

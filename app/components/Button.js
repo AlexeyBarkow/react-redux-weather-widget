@@ -9,25 +9,26 @@ function Button({
     disabled,
 }) {
     const classesToPass = `btn btn-default ${className}`;
+
     return (
         href !== ''
         ?
-        <Link
-          disabled={disabled}
-          className={classesToPass}
-          to={href}
-          onClick={onClickHandler}
-        >
-            {children}
-        </Link>
+            <Link
+              disabled={disabled}
+              className={classesToPass}
+              to={href}
+              onClick={onClickHandler}
+            >
+                {children}
+            </Link>
         :
-        <button
-          disabled={disabled}
-          className={classesToPass}
-          onClick={onClickHandler}
-        >
-            { children }
-        </button>
+            <button
+              disabled={disabled}
+              className={classesToPass}
+              onClick={onClickHandler}
+            >
+                { children }
+            </button>
     );
 }
 
