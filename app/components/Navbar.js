@@ -2,20 +2,14 @@ import React, { PropTypes } from 'react';
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
 
-//    ToDo: move it to the container component
-function weatherClickHandler(callback) {
-    return function handle() {
-        callback({ temperature: Math.random() });
-    };
-}
 
-function Navbar({ children }, { changeWeatherInfo }) {
+function Navbar({ children, className }, { changeWeatherInfo }) {
     return (
-        <nav>
+        <nav className={`${className}`}>
             <ButtonGroup noPadding>
                 <Button
                   href="#"
-                  onClickHandler={weatherClickHandler(changeWeatherInfo)}
+                  onClickHandler={changeWeatherInfo}
                 >
                     getWeather
                 </Button>
@@ -29,11 +23,13 @@ Navbar.contextTypes = {
 };
 
 Navbar.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.node,
+    className: PropTypes.string,
 };
 
 Navbar.defaultProps = {
     children: null,
+    className: '',
 };
 
 export default Navbar;

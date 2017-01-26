@@ -3,8 +3,9 @@ module.exports = {
     'plugins': [
         'react',
         'jsx-a11y',
-        'import'
+        'import',
     ],
+    'parser': 'babel-eslint',
     'rules': {
         'arrow-parens': 1,
         'comma-dangle': 1,
@@ -12,6 +13,7 @@ module.exports = {
         'global-require': 0,
         'indent': [1, 4, { 'SwitchCase': 1 }],
         'linebreak-style': [1, 'windows'],
+        'no-multiple-empty-lines': 1,
         'no-unused-vars': [1, { 'varsIgnorePattern': 'css' }],
         'react/forbid-prop-types': 0,
         'react/jsx-closing-bracket-location': 1,
@@ -23,10 +25,12 @@ module.exports = {
             'ignore': [
                 'weather',
                 'changeWeatherInfo',
-            ]
+            ],
         }],
         'react/require-default-props': 1,
+        'react/self-closing-comp':1,
         'semi': 1,
+        'space-before-blocks': 1,
         'spaced-comment': 0,
     },
     'env': {

@@ -1,20 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import DropDown from '../components/DropDown';
-import Header from '../components/Header';
-import Navbar from '../components/Navbar';
+import Header from './Header';
+import Footer from '../components/Footer';
+import MainContainer from './MainContainer';
 import * as actions from '../actions/actions';
 
 class RootContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            typedCity: '',
-        };
-        this.onDropDownChange = this.onDropDownChange.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     getChildContext() {
         return {
@@ -23,30 +18,17 @@ class RootContainer extends Component {
         };
     }
 
-    onDropDownChange(e) {
-        this.setState({ typedCity: e.target.value });
-    }
-
     render() {
         const { children } = this.props;
-        const { typedCity } = this.state;
         return (
-            <div>
-                <Header>
-                    <Navbar>
-                        <DropDown
-                          value={typedCity}
-                          listId="city-input"
-                          onInputChange={this.onDropDownChange}
-                        />
-                    </Navbar>
-                </Header>
-                <div>
-                    {children}
+            <div className="app-wrapper">
+                <div className="sticky-top">
+                    <Header className="header" />
+                    <MainContainer className="main">
+                        {children}
+                    </MainContainer>
                 </div>
-                <div>
-                    <Link to="/about">about</Link>
-                </div>
+                <Footer className="footer" />
             </div>
         );
     }

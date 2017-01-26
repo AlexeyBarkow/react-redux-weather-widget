@@ -4,6 +4,29 @@
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
     --color-bright-green: rgb(125, 255, 125);
+    --color-dark-gray: rgb(25, 25, 25);
+    --color-light-gray: rgb(75, 75, 75);
+}
+
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+.app-wrapper {
+    box-sizing: border-box;
+    padding-bottom: 5em;
+    .footer {
+        position: absolute;
+        bottom: 0;
+        height: 5em;
+        background-color: var(--color-dark-gray);
+        border: .5em solid var(--color-light-gray);
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
+        border-bottom: 0;
+    }
+
 }
 
 .container {

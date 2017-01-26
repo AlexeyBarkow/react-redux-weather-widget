@@ -1,16 +1,15 @@
 .header {
-    .header__logo {
-        padding-top: 1.25em;
-    }
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+    // .header__logo,.header__navbar {
+    //     padding-top: 1.25em;
+    // }
 
-    .line-up {
-        &:after,
-        &:before {
-            content: ' ';
-            display: block;
-            background-color: var(--color-dark-green);
-            height: 0.5em;
-        }
+    &.line-up {
+        border: .5em solid var(--color-dark-green);
+        border-right: 0;
+        border-left: 0;
+        border-top: 0;
         background-color: var(--color-bright-green);
     }
 
