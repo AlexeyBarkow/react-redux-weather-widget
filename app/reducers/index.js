@@ -1,19 +1,33 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import * as types from '../actions/types.js';
+import * as types from '../actions/types';
 
-const filter = (state = '', action) => {
+const initialState = {
+    geolocation: null,
+    city: null,
+    weather: null,
+};
+
+function weatherApp(state = initialState, action) {
     switch (action.type) {
-        case types.FILTER:
-            return action.filter
+        case types.SET_CITY:
+            return {
+                ...state,
+                city: action.city,
+            };
+        case types.UPDATE_WEATHER_INFO:
+            return {
+                ...state,
+                weather: action.weather,
+            };
         default:
             return state;
     }
-};
+}
 
 const rootReducer = combineReducers({
-    filter,
-    routing
+    weatherApp,
+    routing,
 });
 
 export default rootReducer;
