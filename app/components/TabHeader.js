@@ -1,12 +1,18 @@
 import React, { PropTypes } from 'react';
-import Button from './Button';
 
-function TabHeader({ children, className }) {
+function TabHeader({
+    children,
+    className,
+    index,
+}, {
+    selectedTabIndex,
+    setSelectedTabIndex,
+}) {
     return (
-        <li className={className}>
-            <Button>
+        <li className={`${index === selectedTabIndex ? 'active' : ''} ${className}`}>
+            <a href="#" className="btn btn-link" onClick={() => setSelectedTabIndex(index)}>
                 {children}
-            </Button>
+            </a>
         </li>
     );
 }
@@ -14,10 +20,16 @@ function TabHeader({ children, className }) {
 TabHeader.propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
+    index: PropTypes.string.isRequired,
 };
 
 TabHeader.defaultProps = {
     className: '',
+};
+
+TabHeader.contextTypes = {
+    selectedTabIndex: PropTypes.string,
+    setSelectedTabIndex: PropTypes.func,
 };
 
 export default TabHeader;

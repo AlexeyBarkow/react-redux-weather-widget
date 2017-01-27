@@ -1,0 +1,53 @@
+:root {
+    //put global css variables here
+    --color-dark-red: rgb(185, 0 , 0);
+    --color-dark-green: rgb(0, 185, 0);
+    --color-dark-blue: rgb(0, 0, 185);
+    --color-bright-blue: rgb(125, 125, 255);
+    --color-dark-gray: rgb(25, 25, 95);
+    --color-light-gray: rgb(215, 215, 215);
+    --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
+    --color-white: rgb(255, 255, 255);
+
+    --logo-height-small: 85px;
+    --logo-height-huge: 150px;
+    --logo-height: var(--logo-height-huge);
+}
+
+@mixin no-list-padding() {
+    padding-left: 0;
+}
+
+@mixin relative() {
+    position: relative;
+}
+
+@mixin center() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin stretch-width() {
+    display: block;
+    width: 100%;
+}
+
+@mixin respond($min, $max) {
+    @if ($min and $max) {
+        @media (max-width: $max) and (min-width: $min) {
+            @content;
+        }
+    } @elseif ($min == 0 and $max) {
+        @media (max-width: $max) {
+            @content;
+        }
+    } @elseif ($max == 0 and $min) {
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else {
+        @warn "No arguments passed to respond";
+    }
+}

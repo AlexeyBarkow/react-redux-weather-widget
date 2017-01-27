@@ -1,26 +1,16 @@
 import React, { PropTypes } from 'react';
-import Button from './Button';
-import ButtonGroup from './ButtonGroup';
+import ButtonToolbar from './ButtonToolbar';
 
 
-function Navbar({ children, className }, { changeWeatherInfo }) {
+function Navbar({ children, className }) {
     return (
         <nav className={`${className}`}>
-            <ButtonGroup noPadding>
-                <Button
-                  href="#"
-                  onClickHandler={changeWeatherInfo}
-                >
-                    getWeather
-                </Button>
-            </ButtonGroup>
+            <ButtonToolbar>
+                {children}
+            </ButtonToolbar>
         </nav>
     );
 }
-
-Navbar.contextTypes = {
-    changeWeatherInfo: PropTypes.func,
-};
 
 Navbar.propTypes = {
     children: PropTypes.node,

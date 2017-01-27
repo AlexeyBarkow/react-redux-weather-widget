@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-function TabContainer({ children, className, containerType }) {
-    const type = containerType === 'header'
-        ? 'tab__header'
+function TabContainer({ children, className, headerContainer }) {
+    const type = headerContainer
+        ? 'tab__header nav nav-tabs'
         : 'tab__container';
 
     return (
@@ -15,11 +15,12 @@ function TabContainer({ children, className, containerType }) {
 TabContainer.propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
-    containerType: PropTypes.string.isRequired,
+    headerContainer: PropTypes.bool,
 };
 
 TabContainer.defaultProps = {
     className: '',
+    headerContainer: false,
 };
 
 export default TabContainer;

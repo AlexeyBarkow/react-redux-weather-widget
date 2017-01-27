@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -49,7 +47,7 @@ module.exports = {
             loader: 'json'
         }, {
             test: /\.scss$/,
-            loader: ExtractTextPlugin.extract('style', 'css!sass')
+            loader: ExtractTextPlugin.extract('style', 'css!sass!sass-resources')
         }, {
             test: /\.css$/,
             loader: 'css-loader'
@@ -57,5 +55,6 @@ module.exports = {
         postcss: [
             require('autoprefixer')
         ]
-    }
+    },
+    sassResources: './app/styles/mixins.scss'
 }

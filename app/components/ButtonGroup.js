@@ -2,34 +2,25 @@ import React, { PropTypes } from 'react';
 
 function ButtonGroup({
     children,
-    justified,
-    noPadding,
+    className,
 }) {
     return (
-        <ul
-          className={`btn-toolbar${
-            justified
-            ? ' btn-group-justified'
-            : ''}${
-            noPadding
-            ? ' no-list-padding'
-            : ''}`}
+        <div
+          className={`btn-group ${className}`}
         >
             { children }
-        </ul>
+        </div>
     );
 }
 
 ButtonGroup.propTypes = {
     children: PropTypes.node.isRequired,
-    justified: PropTypes.bool,
-    noPadding: PropTypes.bool,
+    className: PropTypes.string,
 };
 
 ButtonGroup.defaultProps = {
     children: null,
-    justified: false,
-    noPadding: false,
+    className: '',
 };
 
 export default ButtonGroup;

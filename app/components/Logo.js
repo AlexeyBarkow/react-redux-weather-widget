@@ -1,22 +1,25 @@
 import React, { PropTypes } from 'react';
+import Button from './Button';
 
-function Logo({ className }) {
+function Logo({ className, height }) {
     return (
         <div className={className}>
-            <figure className="text-center">
-                <img src="http://placehold.it/150x150" alt="logo" />
-                <figcaption>lorem ipsum</figcaption>
-            </figure>
+            <Button noDefaultStyles href="/">
+                <img height={height} src="http://placehold.it/150x150" alt="logo" />
+                <p>lorem ipsum</p>
+            </Button>
         </div>
     );
 }
 
 Logo.propTypes = {
     className: PropTypes.string,
+    height: PropTypes.string,
 };
 
 Logo.defaultProps = {
     className: '',
+    height: null,
 };
 
 export default Logo;

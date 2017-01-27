@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Footer from '../components/Footer';
-import MainContainer from './MainContainer';
+import MainContainer from '../components/MainContainer';
+import AsideBar from '../components/AsideBar';
 import * as actions from '../actions/actions';
 
 class RootContainer extends Component {
@@ -24,9 +25,14 @@ class RootContainer extends Component {
             <div className="app-wrapper">
                 <div className="sticky-top">
                     <Header className="header" />
-                    <MainContainer className="main">
-                        {children}
-                    </MainContainer>
+                    <div className="container">
+                        <div className="row">
+                            <MainContainer className="main col-sm-9 col-xs-12">
+                                {children}
+                            </MainContainer>
+                            <AsideBar className="aside col-sm-3 col-xs-12" />
+                        </div>
+                    </div>
                 </div>
                 <Footer className="footer" />
             </div>

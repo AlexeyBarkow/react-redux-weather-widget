@@ -7,8 +7,10 @@ function Button({
     className,
     href,
     disabled,
+    noDefaultStyles,
+    type,
 }) {
-    const classesToPass = `btn btn-default ${className}`;
+    const classesToPass = `${noDefaultStyles ? '' : 'btn btn-default'} ${className}`;
 
     return (
         href !== ''
@@ -26,6 +28,7 @@ function Button({
               disabled={disabled}
               className={classesToPass}
               onClick={onClickHandler}
+              type={type}
             >
                 { children }
             </button>
@@ -38,6 +41,8 @@ Button.propTypes = {
     className: PropTypes.string,
     href: PropTypes.string,
     disabled: PropTypes.bool,
+    noDefaultStyles: PropTypes.bool,
+    type: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -46,6 +51,8 @@ Button.defaultProps = {
     className: '',
     href: '',
     disabled: false,
+    noDefaultStyles: false,
+    type: null,
 };
 
 export default Button;
