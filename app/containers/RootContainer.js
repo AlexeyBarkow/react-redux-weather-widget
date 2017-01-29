@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from './Header';
+import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
@@ -24,7 +25,9 @@ class RootContainer extends Component {
         return (
             <div className="app-wrapper">
                 <div className="sticky-top">
-                    <Header className="header" />
+                    <StaticFixator placeholderClass="header__placeholder animate-height">
+                        <Header className="header" />
+                    </StaticFixator>
                     <div className="container">
                         <div className="row">
                             <MainContainer className="main col-sm-9 col-xs-12">

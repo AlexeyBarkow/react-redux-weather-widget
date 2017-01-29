@@ -14,6 +14,14 @@
     --logo-height: var(--logo-height-huge);
 }
 
+@mixin invisible() {
+    visibility: hidden;
+}
+
+@mixin hidden() {
+    display: none;
+}
+
 @mixin no-list-padding() {
     padding-left: 0;
 }
@@ -22,11 +30,20 @@
     position: relative;
 }
 
-@mixin center() {
+@mixin center($left, $top) {
+    $top-translate: 0;
+    $left-translate: 0;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @if ($left) {
+        left: 50%;
+        $left-translate: 50%;
+    }
+    @if ($top) {
+        top: 50%;
+        $top-translate: 50%;
+    }
+
+    transform: translate(-$left-translate, -top-translate);
 }
 
 @mixin stretch-width() {

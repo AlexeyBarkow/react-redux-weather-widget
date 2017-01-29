@@ -1,14 +1,12 @@
+
+.header__placeholder {
+    @include invisible();
+}
+
 .header {
     padding-top: 1.25em;
     padding-bottom: 1.25em;
     @include stretch-width();
-
-    .fixed {
-        z-index: 2;
-        position: fixed;
-        top: 0;
-        width: 100%;
-    }
 
     &.line-up {
         border: .5em solid var(--color-dark-blue);
@@ -45,8 +43,37 @@
 
     .header__logo {
         text-align: center;
-        img {
-            // height: 100%;
+        .logo-img {
+            height: 9.5em;
+            transition: height 1s;
+        }
+    }
+
+    .header__city-search {
+        .header__city-search__name {
+            width: 10em;
+        }
+        .header__city-search__metric {
+            width: 3em;
+            appearance: button;
+            position: relative;
+            .caret {
+                @include center(false, true);
+                right: .3em;
+                color: var(--color-white);
+            }
+        }
+    }
+}
+
+.fixed-children {
+    .fixed-wrapper {
+        z-index: 2;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        .header__logo .logo-img {
+            height: 5.5em;
         }
     }
 }

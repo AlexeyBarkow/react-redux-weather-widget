@@ -32,7 +32,7 @@
     "html-webpack-plugin": "^2.24.1",
     "json-loader": "^0.5.4",
     "node-sass": "^4.1.1",
-    "postcss-loader": "^1.2.1",
+    "postcss-loader": "^1.2.2",
     "react-addons-test-utils": "^15.4.1",
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
@@ -49,6 +49,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "babel-polyfill": "^6.20.0",
+    "lodash": "^4.17.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-hot-loader": "^3.0.0-beta.2",

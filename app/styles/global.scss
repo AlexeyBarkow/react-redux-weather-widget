@@ -22,11 +22,11 @@ html {
 
 .btn-group > .form-group {
     float: left;
-    .form-control:not(:first-child) {
+    &:not(:first-child) .form-control {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
-    .form-control:not(:last-child) {
+    &:not(:last-child) .form-control {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }

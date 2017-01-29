@@ -1,23 +1,23 @@
 import React, { PropTypes } from 'react';
+import ClosestCities from './ClosestCities';
 import css from '../styles/aside.scss';
+
+// temporary data filler
+const closestCities = [
+    'City1',
+    'City2',
+    'City3',
+    'City4',
+    'City5',
+];
 
 function AsideBar({ className }) {
     return (
         <aside className={className}>
-            {/*ToDo: create a separete component for this*/}
-            <h3>Closest cities:</h3>
-            <ul>
-                <li>City1</li>
-                <li>City2</li>
-                <li>City3</li>
-                <li>City4</li>
-                <li>City5</li>
-                <li>City6</li>
-                <li>City7</li>
-                <li>City8</li>
-                <li>City9</li>
-                <li>City0</li>
-            </ul>
+            <ClosestCities
+              title={(<h3>Closest cities to your current location</h3>)}
+              list={closestCities}
+            />
             {/*ToDo: create a separete component for this*/}
             <div className="google-map">
                 <img src="http://placehold.it/450x450" alt="placehoder for google map" />

@@ -51,10 +51,14 @@ module.exports = {
                     'css-loader?sourceMap',
                     'sass-loader?sourceMap',
                     'sass-resources?sourceMap',
+                    'postcss-loader'
                 ]
             }, {
                 test: /\.css$/,
-                loader: 'css-loader'
+                loaders: [
+                    'css-loader',
+                    'postcss-loader'
+                ]
             }
         ]
     },
