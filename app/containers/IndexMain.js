@@ -15,7 +15,7 @@ class IndexMain extends Component {
                 </TabContainer>
                 <TabContainer>
                     <Tab index="1">
-                        <WeatherSummary />
+                        <WeatherSummary className="summary" />
                     </Tab>
                     <Tab index="2">
                         <h2>Hidden lorem</h2>

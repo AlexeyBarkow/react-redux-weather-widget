@@ -1,90 +1,38 @@
 import React, { PropTypes } from 'react';
+import dateFormat from 'dateformat';
+import WeatherTemperature from './WeatherTemperature';
+import ValueBlock from './ValueBlock';
+import css from '../styles/summary.scss';
 
 function WeatherSummary({ className }, { weather }) {
+    const date = new Date(weather.calculationTime);
+    const formattedDate = `${dateFormat(date, 'mmmm dS')} at ${dateFormat(date, 'h:MM')}`;
     return (
         <section className={className}>
-            {weather.cod !== 200
+            {weather.status !== 200
                 ? (
                     <div className="error-wrapper">
-                        <h2>Error: { weather.cod }</h2>
+                        <h1>Error: { weather.status }</h1>
                         <p>{ weather.message }</p>
                     </div>
                 )
                 : (
-                    <div className="success-wrapper">
-                        <h1>Weather in { weather.name }</h1>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus mollitia
-                            autem error aliquid, ipsam, sequi inventore quisquam, est unde eos a
-                            dolorem. Consequuntur, nam perspiciatis praesentium unde nulla
-                            necessitatibus iste.
-                        </p>
+                    <div>
+                        <h1>Weather in { weather.city }</h1>
+                        <h3>Today (gathered in {formattedDate})</h3>
+                        <div className="row col-md-7">
+                            <WeatherTemperature
+                              metric={weather.metric}
+                              weatherType={weather.weatherType}
+                              minTemperature={weather.temperature.min}
+                              maxTemperature={weather.temperature.max}
+                              currTemperature={weather.temperature.curr}
+                            />
+                            <ValueBlock tooltip="Humidity" value={weather.humidity} imgUrl="./images/drop.png" valueClass="temperature-percent" />
+                            <ValueBlock tooltip="Coludiness" value={weather.clouds} imgUrl="./images/cloudiness.png" valueClass="temperature-percent" />
+                            <ValueBlock tooltip="Athmospheric pressure" value={weather.clouds} imgUrl="./images/pressure.png" valueClass="temperature-pressure" />
+                            <ValueBlock tooltip="Wind speed and direction" value={weather.wind.speed} imgUrl="./images/wind.png" valueClass="km-h" />
+                        </div>
                     </div>
                 )
             }

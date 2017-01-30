@@ -1,3 +1,38 @@
+:root {
+    //put global css variables here
+    --color-dark-red: rgb(185, 0 , 0);
+    --color-dark-green: rgb(0, 185, 0);
+    --color-dark-blue: rgb(0, 0, 185);
+    --color-bright-blue: rgb(125, 125, 255);
+    --color-dark-gray: rgb(25, 25, 95);
+    --color-light-gray: rgb(215, 215, 215);
+    --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
+    --color-white: rgb(255, 255, 255);
+
+    --metric-color: rgb(180, 0, 0);
+}
+
+.tooltip-container {
+    display: inline-block;
+    position: relative;
+    .tooltip.left {
+        @include center(false, true);
+        right: 100%;
+    }
+    .tooltip.top {
+        @include center(true, false);
+        bottom: calc(100% - 1em);
+    }
+    .tooltip.right {
+        @include center(false, true);
+        left: 100%;
+    }
+    .tooltip.bottom {
+        @include center(true, false);
+        top: calc(100% - 1em);
+    }
+}
+
 html {
     min-height: 100%;
     position: relative;

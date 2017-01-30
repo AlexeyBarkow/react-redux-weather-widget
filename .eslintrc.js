@@ -16,6 +16,7 @@ module.exports = {
         'linebreak-style': [1, 'windows'],
         'no-multiple-empty-lines': 1,
         'no-unused-vars': [1, { 'varsIgnorePattern': 'css' }],
+        'object-curly-spacing': 1,
         'quote-props': 0,
         'react/forbid-prop-types': 0,
         'react/jsx-closing-bracket-location': 1,
@@ -25,6 +26,9 @@ module.exports = {
         'react/no-array-index-key': 0,
         'react/no-string-refs': 1,
         'react/prefer-stateless-function': 0,
+        'key-spacing': 1,
+        'comma-spacing': 1,
+        'quotes': 1,
         'react/prop-types': [1, {
             'ignore': [
                 'weather',

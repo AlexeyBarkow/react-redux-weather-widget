@@ -53,8 +53,8 @@ class Header extends Component {
                                   onInputChange={this.onDropDownChange}
                                 />
                                 <Select name="metric" className="header__city-search__metric" btnStyle>
-                                    <DatalistOption value="F">F&deg;</DatalistOption>
                                     <DatalistOption value="C">C&deg;</DatalistOption>
+                                    <DatalistOption value="F">F&deg;</DatalistOption>
                                 </Select>
                                 <Button type="submit">Get Weather!</Button>
                             </ButtonGroup>
