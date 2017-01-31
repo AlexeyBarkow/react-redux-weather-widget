@@ -8,12 +8,12 @@
     --color-light-gray: rgb(215, 215, 215);
     --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
     --color-white: rgb(255, 255, 255);
+    --color-black: rgb(0, 0, 0);
 
     --metric-color: rgb(180, 0, 0);
 }
 
 .tooltip-container {
-    display: inline-block;
     position: relative;
     .tooltip.left {
         @include center(false, true);
@@ -36,6 +36,10 @@
 html {
     min-height: 100%;
     position: relative;
+}
+
+.pseudo-paragraph:not(:last-child) {
+    margin-bottom: 1em;
 }
 
 .app-wrapper {
@@ -70,9 +74,74 @@ html {
 .main {
     padding-top: 1em;
     padding-bottom: 1em;
+    @include respond(0, 720px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .btn > a {
     color: inherit;
     text-decoration: none;
+}
+
+
+.ball-animate-loading {
+    @include animate-loading(8, 16em, 'ball', 0s, 3s);
+}
+
+.calendar-wrapper {
+    width: 4.5em;
+    @include respond(0, 500px) {
+        width: 3em;
+    }
+    .calendar {
+        text-align: center;
+        background: #f9f9f9;
+        border-radius: .125em;
+        overflow: hidden;
+        box-shadow: 0 0 3px var(--color-black);
+        .calendar__month, .calendar__day {
+            margin-bottom: 0;
+        }
+        .calendar__month {
+            padding: .25em;
+            color: var(--color-white);
+            font-size: 1.25em;
+            background-color: var(--color-dark-red);
+
+            @include respond(0,500px) {
+                font-size: 1em;
+            }
+        }
+        .calendar__day {
+            font-size: 3em;
+            @include respond(0,500px) {
+                font-size: 1em;
+            }
+        }
+    }
+    .calendar__time {
+        width: 3.5em;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: .25em;
+        .calendar__time__separator, .calendar__time__clock {
+            float: left;
+            text-align: center;
+        }
+
+        .calendar__time__clock {
+            border: 1px solid var(--color-dark-gray);
+            background-color: var(--color-white);
+            width: 1.5em;
+        }
+
+        .calendar__time__separator{
+            width: .5em;
+            &:after {
+                content: ':';
+            }
+        }
+    }
 }

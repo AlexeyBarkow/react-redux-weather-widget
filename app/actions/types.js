@@ -1,2 +1,3 @@
 export const SET_CITY = 'SET_CITY';
 export const UPDATE_WEATHER_INFO = 'UPDATE_WEATHER_INFO';
+export const UPDATE_FORECAST = 'UPDATE_FORECAST';

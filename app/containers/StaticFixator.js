@@ -30,15 +30,14 @@ class StaticFixator extends Component {
 
     handleScroll() {
         const { isFixed } = this.state;
-        const { staticStartY } = this.props;
         const { contentElement } = this;
         const newState = {
             contentHeight: `${contentElement.offsetHeight}px`,
         };
 
-        if (isFixed && window.pageYOffset <= staticStartY) {
+        if (isFixed && window.pageYOffset === 0) {
             newState.isFixed = false;
-        } else if (!isFixed && window.pageYOffset > staticStartY) {
+        } else if (!isFixed && window.pageYOffset > 0) {
             newState.isFixed = true;
         }
 
@@ -71,12 +70,10 @@ class StaticFixator extends Component {
 StaticFixator.propTypes = {
     placeholderClass: PropTypes.string,
     children: PropTypes.element.isRequired,
-    staticStartY: PropTypes.number,
 };
 
 StaticFixator.defaultProps = {
     placeholderClass: '',
-    staticStartY: 0,
 };
 
 export default StaticFixator;

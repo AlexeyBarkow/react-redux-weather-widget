@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
-import dateFormat from 'dateformat';
+import { formatDate } from '../utils/unifiedDateFormat';
 import WeatherTemperature from './WeatherTemperature';
 import ValueBlock from './ValueBlock';
 import css from '../styles/summary.scss';
 
 function WeatherSummary({ className }, { weather }) {
     const date = new Date(weather.calculationTime);
-    const formattedDate = `${dateFormat(date, 'mmmm dS')} at ${dateFormat(date, 'h:MM')}`;
+    const formattedDate = formatDate(date);
     return (
         <section className={className}>
-            {weather.status !== 200
+            {!weather || weather.status !== 200
                 ? (
                     <div className="error-wrapper">
                         <h1>Error: { weather.status }</h1>
@@ -19,11 +19,11 @@ function WeatherSummary({ className }, { weather }) {
                 : (
                     <div>
                         <h1>Weather in { weather.city }</h1>
-                        <h3>Today (gathered in {formattedDate})</h3>
                         <div className="row col-md-7">
+                            <h3>Today (gathered in {formattedDate})</h3>
                             <WeatherTemperature
                               metric={weather.metric}
-                              weatherType={weather.weatherType}
+                              weatherType={weather.weatherTypes[0]}
                               minTemperature={weather.temperature.min}
                               maxTemperature={weather.temperature.max}
                               currTemperature={weather.temperature.curr}

@@ -45,12 +45,12 @@ function mapWeatherType(type) {
     }
 }
 //added for unification
-function convertWeatherToAcceptableFormat(metric, city, cod, data) {
+function convertWeatherToAcceptableFormat(metric, city, status, data) {
     let formattedWeather;
-    if ((data.cod || cod) === 200) {
+    if ((data.cod || status) === 200) {
         formattedWeather = {
             metric,
-            status: data.cod || cod,
+            status: data.cod || status,
             city: data.name || city,
             humidity: data.main.humidity,
             temperature: {
@@ -88,14 +88,12 @@ const weatherAPI = {
             .get(getWeatherTemplate(city, metric))
             .then(res => convertWeatherToAcceptableFormat(metric, city, null, res));
     },
-    fetchWeatherForecast(city, metric = 'c') {
+    fetchWeatherForecast(city, metric = 'C') {
         const mapper = convertWeatherToAcceptableFormat.bind(null, metric, city, 200);
         return axios
             .get(getWeatherForecastTemplate(city, metric))
             .then(res => res.data.list.map(mapper));
     },
 };
-
-weatherAPI.fetchWeatherForecast('Minsk');
 
 export default weatherAPI;

@@ -1,37 +1,14 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import * as types from '../actions/types';
-
-// temporary data filler
-const fetchedWeather = {
-    'city': 'Minsk',
-    'metric': 'C',
-    'status': 200,
-    'humidity': 92,
-    'temperature': {
-        'curr': -1,
-        'min': -2,
-        'max': 0,
-    },
-    'pressure': 1027,
-    'weatherType': [{
-        'main': 'cloudy',
-        'desc': 'Mist',
-    }],
-    'clouds': 90,
-    'wind': {
-        'speed': 4,
-        'direction': 180,
-    },
-    'rain': null,
-    'snow': null,
-    'calculationTime': 1485766800000,
-};
+import fetchedForecast from '../utils/testForecast';
+import fetchedWeather from '../utils/testWeather';
 
 const initialState = {
     geolocation: null,
     city: null,
     weather: fetchedWeather,
+    forecast: fetchedForecast,
 };
 
 function weatherApp(state = initialState, action) {
@@ -45,6 +22,11 @@ function weatherApp(state = initialState, action) {
             return {
                 ...state,
                 weather: action.weather,
+            };
+        case types.UPDATE_FORECAST:
+            return {
+                ...state,
+                forecast: action.forecast,
             };
         default:
             return state;

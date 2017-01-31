@@ -17,6 +17,7 @@ class RootContainer extends Component {
         return {
             changeWeatherInfo: this.props.changeWeatherInfo,
             weather: this.props.weather,
+            forecast: this.props.forecast,
         };
     }
 
@@ -46,16 +47,19 @@ class RootContainer extends Component {
 RootContainer.childContextTypes = {
     changeWeatherInfo: PropTypes.func,
     weather: PropTypes.object,
+    forecast: PropTypes.array,
 };
 
 RootContainer.propTypes = {
     children: PropTypes.node,
     weather: PropTypes.object.isRequired,
+    forecast: PropTypes.array,
     changeWeatherInfo: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {
     children: null,
+    forecast: [],
 };
 
 
@@ -64,6 +68,7 @@ function mapStateToProps(state) {
         geolocation: state.weatherApp.geolocation,
         city: state.weatherApp.city,
         weather: state.weatherApp.weather,
+        forecast: state.weatherApp.forecast,
     };
 }
 

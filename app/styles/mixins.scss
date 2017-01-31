@@ -2,6 +2,43 @@
     visibility: hidden;
 }
 
+@mixin animate-loading($number, $width, $name, $offset, $animation-length) {
+    position: relative;
+    width: $width;
+    height: 1em;
+    margin: auto;
+
+    .#{$name} {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        width: 1em;
+        height: 1em;
+
+        animation-name: #{name}Wave;
+        animation-duration: $animation-length;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+    }
+    @for $i from 1 through $number {
+        .#{$name}-#{$i} {
+            left: ($i - 1) * ($width / $number);
+            animation-delay: $animation-length * ($i - 1) / 10 + $offset;
+        }
+    }
+    @keyframes #{name}Wave{
+        0% {
+            background-color: white;
+        }
+        25% {
+            background-color: black;
+        }
+        100% {
+            background-color: white;
+        }
+    }
+}
+
 @mixin hidden() {
     display: none;
 }

@@ -2,9 +2,16 @@
     .main-temperature, .weather-text {
         font-size: 4em;
         margin-bottom: 0;
+
+        @include respond(0, 500px) {
+            font-size: 2em;
+        }
     }
     .temperature-range {
         font-size: 1.5em;
+        @include respond(0, 500px) {
+            font-size: 1em;
+        }
     }
     .main-temperature, .temperature-range, .weather-text {
         white-space: nowrap;
@@ -32,6 +39,12 @@
         width: 10em;
         img {
             height: 8em;
+        }
+        @include respond(0, 500px) {
+            width: 6em;
+            img {
+                height: 5em;
+            }
         }
     }
 }

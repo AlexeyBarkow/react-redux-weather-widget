@@ -44,14 +44,14 @@
     .header__logo {
         text-align: center;
         .logo-img {
-            height: 9.5em;
+            height: 8.5em;
             transition: height 1s;
         }
     }
 
     .header__city-search {
         .header__city-search__name {
-            width: 10em;
+            width: 9.5em;
         }
         .header__city-search__metric {
             width: 3em;
@@ -67,6 +67,7 @@
 }
 
 .fixed-children {
+    transition: translateZ(0);
     .fixed-wrapper {
         z-index: 2;
         position: fixed;
