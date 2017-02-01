@@ -1,6 +1,6 @@
 import * as types from './types';
 import getWeatherAjax from '../utils/weatherAPI';
-
+import loadLocation from '../utils/geolocationAPI';
 
 export function changeCity(city) {
     return {
@@ -16,12 +16,27 @@ export function changeWeatherInfo(weather) {
     };
 }
 
+export function changeLocation(location) {
+    return {
+        type: types.UPDATE_LOCATION,
+        location,
+    };
+}
+
 export function getWeather(city) {
     return (dispatch) => {
         getWeatherAjax(city)
           .then((data) => {
               dispatch(changeWeatherInfo(data));
           });
+    };
+}
+
+export function getLocation() {
+    return (dispatch) => {
+        loadLocation.then((location) => {
+            dispatch(changeLocation(location));
+        });
     };
 }
 

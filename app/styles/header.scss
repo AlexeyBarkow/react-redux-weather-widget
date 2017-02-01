@@ -51,7 +51,10 @@
 
     .header__city-search {
         .header__city-search__name {
-            width: 9.5em;
+            width: 10em;
+            @include respond(0, 720px) {
+                width: 9em;
+            }
         }
         .header__city-search__metric {
             width: 3em;

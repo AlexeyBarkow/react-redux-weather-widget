@@ -71,20 +71,47 @@
     width: 100%;
 }
 
-@mixin respond($min, $max) {
-    @if ($min and $max) {
+@mixin respond($min, $max: 0) {
+    @if ($min != 0 and $max != 0) {
         @media (max-width: $max) and (min-width: $min) {
             @content;
         }
-    } @elseif ($min == 0 and $max) {
+    } @elseif ($min == 0 and $max != 0) {
         @media (max-width: $max) {
             @content;
         }
-    } @elseif ($max == 0 and $min) {
+    } @elseif ($max == 0 and $min != 0) {
         @media (min-width: $min) {
             @content;
         }
     } @else {
-        @warn "No arguments passed to respond";
+        @content;
+    }
+}
+
+@mixin class-with-bootstrap-breaks(
+    $class,
+    $isReverse: false,
+    $breaks: (
+        xs: 0,
+        sm: 768px,
+        md: 992px,
+        lg: 1200px,
+    )
+) {
+    @each $break, $value in $breaks {
+        @if ($isReverse == false) {
+            @include respond($value) {
+                .#{$class}-#{$break} {
+                    @content;
+                }
+            };
+        } @elseif ($value != 0) {
+            @include respond(0, $value) {
+                .#{$class}-r#{$break} {
+                    @content;
+                }
+            };
+        }
     }
 }

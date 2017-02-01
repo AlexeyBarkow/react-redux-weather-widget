@@ -16,6 +16,7 @@ module.exports = {
         'linebreak-style': [1, 'windows'],
         'no-multiple-empty-lines': 1,
         'no-unused-vars': [1, { 'varsIgnorePattern': 'css' }],
+        'no-nested-ternary': 0,
         'object-curly-spacing': 1,
         'quote-props': 0,
         'react/forbid-prop-types': 0,

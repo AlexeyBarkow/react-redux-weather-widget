@@ -145,3 +145,9 @@ html {
         }
     }
 }
+
+
+
+@include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
+    padding: 0 .5em 0 .5em;
+};

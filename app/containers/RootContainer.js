@@ -6,13 +6,10 @@ import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
+import GoogleMap from './GoogleMap';
 import * as actions from '../actions/actions';
 
 class RootContainer extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-
     getChildContext() {
         return {
             changeWeatherInfo: this.props.changeWeatherInfo,
@@ -22,17 +19,25 @@ class RootContainer extends Component {
     }
 
     render() {
-        const { children } = this.props;
+        const { children, geolocation, weather } = this.props;
+        const markers = [];
+        if (weather.city) {
+            markers.push({
+                title: weather.city,
+                location: weather.location,
+            });
+        }
         return (
             <div className="app-wrapper">
                 <div className="sticky-top">
                     <StaticFixator placeholderClass="header__placeholder animate-height">
-                        <Header className="header" />
+                        <Header className="header no-padding-top-and-bottom-rsm" />
                     </StaticFixator>
                     <div className="container">
                         <div className="row">
                             <MainContainer className="main col-sm-9 col-xs-12">
                                 {children}
+                                <GoogleMap className="map" location={geolocation} markers={markers} />
                             </MainContainer>
                             <AsideBar className="aside col-sm-3 col-xs-12" />
                         </div>
@@ -55,6 +60,7 @@ RootContainer.propTypes = {
     weather: PropTypes.object.isRequired,
     forecast: PropTypes.array,
     changeWeatherInfo: PropTypes.func.isRequired,
+    geolocation: PropTypes.object.isRequired,
 };
 
 RootContainer.defaultProps = {

@@ -30,7 +30,7 @@ class Header extends Component {
         return (
             <header ref={this.getHeader} className={`${className} container line-up`}>
                 <div className="header__content row">
-                    <Logo className="header__logo col-sm-3 hidden-xs stop-550" />
+                    <Logo logoSrc="http://placehold.it/150x150" className="header__logo col-sm-3 hidden-xs stop-550" />
                     <div className="header__navbar col-sm-9 col-xs-8 stop-550">
                         <Navbar>
                             <ButtonGroup>

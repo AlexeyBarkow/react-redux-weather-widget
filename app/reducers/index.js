@@ -3,13 +3,15 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/types';
 import fetchedForecast from '../utils/testForecast';
 import fetchedWeather from '../utils/testWeather';
+import fetchedLocation from '../utils/testLocation';
 
 const initialState = {
-    geolocation: null,
-    city: null,
+    geolocation: fetchedLocation,
+    city: 'Minsk',
     weather: fetchedWeather,
     forecast: fetchedForecast,
 };
+
 
 function weatherApp(state = initialState, action) {
     switch (action.type) {

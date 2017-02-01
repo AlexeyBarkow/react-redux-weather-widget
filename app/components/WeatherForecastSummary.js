@@ -6,7 +6,7 @@ import WeatherTemperature from './WeatherTemperature';
 const FORECAST_INTERVAL = 3600000 * 3;
 
 function WeatherForecastSummary({ className }, { forecast }) {
-    const lastForecast = forecast ? forecast[0].calculationTime : null;
+    const lastForecast = forecast ? forecast[0].calculationTime : 0;
     return (
         <section className={className}>
             {

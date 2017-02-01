@@ -8,6 +8,10 @@ const fetchedWeather = {
         'min': -2,
         'max': 0,
     },
+    'location': {
+        'longitude': 54,
+        'latitude': 27,
+    },
     'pressure': 1027,
     'weatherTypes': [{
         'main': 'cloudy',

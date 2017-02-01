@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import Button from './Button';
 
-function Logo({ className, height }) {
+function Logo({ className, height, logoSrc }) {
     return (
         <div className={className}>
             <Button noDefaultStyles href="/">
-                <img className="logo-img" height={height} src="http://placehold.it/150x150" alt="logo" />
+                <img className="logo-img" height={height} src={logoSrc} alt="logo" />
                 <p>lorem ipsum</p>
             </Button>
         </div>
@@ -15,6 +15,7 @@ function Logo({ className, height }) {
 Logo.propTypes = {
     className: PropTypes.string,
     height: PropTypes.string,
+    logoSrc: PropTypes.string.isRequired,
 };
 
 Logo.defaultProps = {

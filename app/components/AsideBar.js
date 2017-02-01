@@ -18,10 +18,6 @@ function AsideBar({ className }) {
               title={(<h3>Closest cities to your current location</h3>)}
               list={closestCities}
             />
-            {/*ToDo: create a separete component for this*/}
-            <div className="google-map">
-                <img src="http://placehold.it/450x450" alt="placehoder for google map" />
-            </div>
         </aside>
     );
 }
