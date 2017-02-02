@@ -3,14 +3,20 @@
     --color-dark-red: rgb(185, 0 , 0);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
-    --color-bright-blue: rgb(125, 125, 255);
-    --color-dark-gray: rgb(25, 25, 95);
+    --color-bright-blue: rgba(125, 125, 255, .95);
+    --color-footer-color: rgba(25, 25, 95, .75);
     --color-light-gray: rgb(215, 215, 215);
     --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
     --color-white: rgb(255, 255, 255);
     --color-black: rgb(0, 0, 0);
-
+    --color-white-alpha: rgba(255,255,255,.85);
+    --color-white-bright-alpha: rgba(255, 255, 255, .45);
     --metric-color: rgb(180, 0, 0);
+
+    --cloudy-url: url('http://epam.2i.by/barkou/images/cloudy.jpg');
+    --clear-url: url('http://epam.2i.by/barkou/images/clear.jpg');
+    --snowy-url: url('http://epam.2i.by/barkou/images/snowy.jpg');
+    --rainy-url: url('http://epam.2i.by/barkou/images/rainy.jpg');
 }
 
 .tooltip-container {
@@ -50,7 +56,7 @@ html {
         position: absolute;
         bottom: 0;
         height: 5em;
-        background-color: var(--color-dark-gray);
+        background-color: var(--color-footer-color);
         border: .5em solid var(--color-light-gray);
         border-top-left-radius: 1em;
         border-top-right-radius: 1em;
@@ -72,11 +78,21 @@ html {
 }
 
 .main {
+    margin-top: 1em;
     padding-top: 1em;
     padding-bottom: 1em;
     @include respond(0, 720px) {
         padding-left: 0;
         padding-right: 0;
+    }
+    background-color: var(--color-white-alpha);
+    border: 1px solid var(--color-white);
+    border-bottom: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+
+    .tab__header > li.active>a {
+        background-color: var(--color-white-bright-alpha);
     }
 }
 
@@ -92,33 +108,13 @@ html {
 
 .calendar-wrapper {
     width: 4.5em;
-    @include respond(0, 500px) {
-        width: 3em;
-    }
-    .calendar {
-        text-align: center;
-        background: #f9f9f9;
-        border-radius: .125em;
-        overflow: hidden;
-        box-shadow: 0 0 3px var(--color-black);
-        .calendar__month, .calendar__day {
-            margin-bottom: 0;
-        }
-        .calendar__month {
-            padding: .25em;
+    text-align: center;
+    .panel-calendar {
+        margin-bottom: 0;
+        .panel-heading {
+            background-color: var(--color-dark-red);
             color: var(--color-white);
             font-size: 1.25em;
-            background-color: var(--color-dark-red);
-
-            @include respond(0,500px) {
-                font-size: 1em;
-            }
-        }
-        .calendar__day {
-            font-size: 3em;
-            @include respond(0,500px) {
-                font-size: 1em;
-            }
         }
     }
     .calendar__time {
@@ -132,7 +128,7 @@ html {
         }
 
         .calendar__time__clock {
-            border: 1px solid var(--color-dark-gray);
+            border: 1px solid var(--color-black);
             background-color: var(--color-white);
             width: 1.5em;
         }
@@ -146,8 +142,35 @@ html {
     }
 }
 
+.aside {
+    background-color: var(--color-white-alpha);
+    padding: 1em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    border: 1px solid var(--color-white);
+    border-top: 0;
+}
 
+.fixed-background {
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.background-cloudy {
+    background-image: var(--cloudy-url);
+}
+
+.background-snowy {
+    background-image: var(--snowy-url);
+}
+
+.background-clear {
+    background-image: var(--clear-url);
+}
+.background-rainy {
+    background-image: var(--rainy-url);
+}
 
 @include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
-    padding: 0 .5em 0 .5em;
+    padding: 0;
 };

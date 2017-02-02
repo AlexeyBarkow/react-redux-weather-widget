@@ -1,9 +1,9 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import * as types from '../actions/types';
-import fetchedForecast from '../utils/testForecast';
-import fetchedWeather from '../utils/testWeather';
-import fetchedLocation from '../utils/testLocation';
+import fetchedForecast from '../../utils/testForecast';
+import fetchedWeather from '../../utils/testWeather';
+import fetchedLocation from '../../utils/testLocation';
 
 const initialState = {
     geolocation: fetchedLocation,

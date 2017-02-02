@@ -28,37 +28,39 @@ class Header extends Component {
         const { className } = this.props;
         const { typedCity } = this.state;
         return (
-            <header ref={this.getHeader} className={`${className} container line-up`}>
-                <div className="header__content row">
-                    <Logo logoSrc="http://placehold.it/150x150" className="header__logo col-sm-3 hidden-xs stop-550" />
-                    <div className="header__navbar col-sm-9 col-xs-8 stop-550">
-                        <Navbar>
-                            <ButtonGroup>
-                                <Button href="/home">
-                                    Home
-                                </Button>
-                                <Button href="/about">
-                                    About
-                                </Button>
-                            </ButtonGroup>
-                        </Navbar>
-                        <Form className="header__city-search">
-                            <ButtonGroup>
-                                <DropDown
-                                  className="header__city-search__name"
-                                  name="city"
-                                  placeholder="Type city here"
-                                  value={typedCity}
-                                  listId="city-input"
-                                  onInputChange={this.onDropDownChange}
-                                />
-                                <Select name="metric" className="header__city-search__metric" btnStyle>
-                                    <DatalistOption value="C">C&deg;</DatalistOption>
-                                    <DatalistOption value="F">F&deg;</DatalistOption>
-                                </Select>
-                                <Button type="submit">Get Weather!</Button>
-                            </ButtonGroup>
-                        </Form>
+            <header ref={this.getHeader} className={`${className} line-up`}>
+                <div className="header__content container">
+                    <div className="row">
+                        <Logo logoSrc="http://placehold.it/150x150" className="header__logo col-sm-3 hidden-xs" />
+                        <div className="header__navbar col-sm-9 col-xs-12">
+                            <Navbar>
+                                <ButtonGroup>
+                                    <Button href="/home">
+                                        Home
+                                    </Button>
+                                    <Button href="/about">
+                                        About
+                                    </Button>
+                                </ButtonGroup>
+                            </Navbar>
+                            <Form className="header__city-search">
+                                <ButtonGroup>
+                                    <DropDown
+                                      className="header__city-search__name"
+                                      name="city"
+                                      placeholder="Type city here"
+                                      value={typedCity}
+                                      listId="city-input"
+                                      onInputChange={this.onDropDownChange}
+                                    />
+                                    <Select name="metric" className="header__city-search__metric" btnStyle>
+                                        <DatalistOption value="C">C&deg;</DatalistOption>
+                                        <DatalistOption value="F">F&deg;</DatalistOption>
+                                    </Select>
+                                    <Button type="submit">Get Weather!</Button>
+                                </ButtonGroup>
+                            </Form>
+                        </div>
                     </div>
                 </div>
             </header>

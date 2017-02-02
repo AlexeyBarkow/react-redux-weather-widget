@@ -1,5 +1,5 @@
 
-.header__placeholder {
+.fixed-placeholder {
     @include invisible();
 }
 
@@ -29,14 +29,8 @@
         }
     }
 
-    .header__logo, .header__navbar {
-        @include respond(0, 550px) {
-            float: none;
-            width: 100%;
-        }
-    }
-
     .header__content {
+        width: 100%;
         padding-top: 1em;
         background-color: var(--color-dark-gray-semitransparent);
     }
@@ -52,8 +46,8 @@
     .header__city-search {
         .header__city-search__name {
             width: 10em;
-            @include respond(0, 720px) {
-                width: 9em;
+            @include respond(0, 768px) {
+                width: 8.25em;
             }
         }
         .header__city-search__metric {

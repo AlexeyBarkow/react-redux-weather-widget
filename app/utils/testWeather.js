@@ -9,13 +9,14 @@ const fetchedWeather = {
         'max': 0,
     },
     'location': {
-        'longitude': 54,
-        'latitude': 27,
+        'longitude': 27.5,
+        'latitude': 53.9,
     },
     'pressure': 1027,
     'weatherTypes': [{
         'main': 'cloudy',
         'desc': 'Mist',
+        'icon': '02n',
     }],
     'clouds': 90,
     'wind': {

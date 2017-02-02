@@ -1,7 +1,7 @@
 const loadLocation = new Promise((success, error) => {
     if (!navigator) {
         error({
-            message: 'navicator is not supported',
+            message: 'navigator is not supported',
         });
         return;
     }
@@ -18,9 +18,5 @@ const loadLocation = new Promise((success, error) => {
         }
     });
 });
-
-loadLocation.then(res => {
-    console.log(res);
-})
 
 export default loadLocation;

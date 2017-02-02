@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const DEFAULT_API_KEY = 'e370193d5122935a572140b76ba0a173';
-const API_URL = 'http://api.openweathermap.org/data/2.5';
+import { DEFAULT_API_KEY, API_URL } from './constants';
 
 function getWeatherTemplate(city, format = 'C', apiKey = DEFAULT_API_KEY) {
     let metric;

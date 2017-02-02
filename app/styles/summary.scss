@@ -34,12 +34,26 @@
         color: var(--metric-color);
     }
 
-    .weather-pictures {
+    .weather-pictures, .weather-desc {
         text-align: center;
-        width: 10em;
+        width: 10em
+    }
+
+    .weather-desc-text {
+        font-size: 1.5em;
+    }
+
+    .weather-pictures {
         img {
             height: 8em;
         }
+
+        .temperature-icon {
+            margin-top: 1.25em;
+            height: 4em;
+        }
+
+
         @include respond(0, 500px) {
             width: 6em;
             img {

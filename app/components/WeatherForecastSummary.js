@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import Loading from './Loading';
 import WeatherTemperature from './WeatherTemperature';
-
-// ToDo: Move to constants
-const FORECAST_INTERVAL = 3600000 * 3;
+import { FORECAST_INTERVAL } from '../utils/constants';
 
 function WeatherForecastSummary({ className }, { forecast }) {
     const lastForecast = forecast ? forecast[0].calculationTime : 0;

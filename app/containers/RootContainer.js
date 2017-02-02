@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
 import GoogleMap from './GoogleMap';
-import * as actions from '../actions/actions';
+import * as actions from '../dataflow/actions/actions';
 
 class RootContainer extends Component {
     getChildContext() {
@@ -21,6 +21,14 @@ class RootContainer extends Component {
     render() {
         const { children, geolocation, weather } = this.props;
         const markers = [];
+
+        if (geolocation) {
+            markers.push({
+                title: 'You',
+                location: geolocation,
+            });
+        }
+
         if (weather.city) {
             markers.push({
                 title: weather.city,
@@ -28,18 +36,18 @@ class RootContainer extends Component {
             });
         }
         return (
-            <div className="app-wrapper">
+            <div className={`app-wrapper fixed-background background-${weather.weatherTypes ? weather.weatherTypes[0].main : 'default'}`}>
                 <div className="sticky-top">
-                    <StaticFixator placeholderClass="header__placeholder animate-height">
+                    <StaticFixator placeholderClass="header__placeholder">
                         <Header className="header no-padding-top-and-bottom-rsm" />
                     </StaticFixator>
                     <div className="container">
                         <div className="row">
                             <MainContainer className="main col-sm-9 col-xs-12">
                                 {children}
-                                <GoogleMap className="map" location={geolocation} markers={markers} />
                             </MainContainer>
                             <AsideBar className="aside col-sm-3 col-xs-12" />
+                            <GoogleMap className="map" location={weather.location} markers={markers} />
                         </div>
                     </div>
                 </div>

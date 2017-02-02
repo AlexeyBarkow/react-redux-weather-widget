@@ -5,9 +5,9 @@ function CalendarPage({ date, className, showTime }) {
     return (
         <div className={`${className}`}>
             <div className="calendar-wrapper">
-                <div className="calendar">
-                    <div className="calendar__month"><span>{getMonth(date)}</span></div>
-                    <div className="calendar__day">{getDay(date)}</div>
+                <div className="panel panel-default panel-calendar">
+                    <div className="panel-heading"><span>{getMonth(date)}</span></div>
+                    <div className="panel-body">{getDay(date)}</div>
                 </div>
                 { showTime ? (
                     <div className="calendar__time clearfix">

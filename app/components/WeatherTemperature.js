@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react';
 import Tooltip from '../containers/Tooltip';
 import Temperature from './Temperature';
 import CalendarPage from './CalendarPage';
-
-// ToDo move to constants
-const IMAGES_BASE_PATH = './images/';
+import { IMAGES_BASE_PATH } from '../utils/constants';
 
 function WeatherTemperature({
     metric,
@@ -30,10 +28,16 @@ function WeatherTemperature({
                       tooltipText={weatherType.desc}
                     >
                         <img
-                          src={`${IMAGES_BASE_PATH}${weatherType.main}.png`}
+                          className="temperature-icon"
+                          src={`${IMAGES_BASE_PATH}${weatherType.icon}.png`}
                           alt={weatherType.desc}
                         />
                     </Tooltip>
+                    <p className="weather-desc">
+                        <span className="weather-desc-text">
+                            {weatherType.desc}
+                        </span>
+                    </p>
                 </div>
                 <Temperature
                   className="col-xs-5"

@@ -1,6 +1,6 @@
 import * as types from './types';
-import getWeatherAjax from '../utils/weatherAPI';
-import loadLocation from '../utils/geolocationAPI';
+import getWeatherAjax from '../../utils/weatherAPI';
+import loadLocation from '../../utils/geolocationAPI';
 
 export function changeCity(city) {
     return {

@@ -35,7 +35,7 @@ class StaticFixator extends Component {
             contentHeight: `${contentElement.offsetHeight}px`,
         };
 
-        if (isFixed && window.pageYOffset === 0) {
+        if (isFixed && window.pageYOffset < 5) {
             newState.isFixed = false;
         } else if (!isFixed && window.pageYOffset > 0) {
             newState.isFixed = true;

@@ -12,6 +12,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 56,
     'wind': {
@@ -33,7 +34,8 @@ const fetchedForecast = [{
     'pressure': 1008.89,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 64,
     'wind': {
@@ -56,6 +58,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 68,
     'wind': {
@@ -77,7 +80,8 @@ const fetchedForecast = [{
     'pressure': 1008.85,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 64,
     'wind': {
@@ -99,7 +103,8 @@ const fetchedForecast = [{
     'pressure': 1008.81,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 64,
     'wind': {
@@ -122,6 +127,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 64,
     'wind': {
@@ -144,6 +150,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 64,
     'wind': {
@@ -166,6 +173,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 44,
     'wind': {
@@ -188,6 +196,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 48,
     'wind': {
@@ -209,7 +218,8 @@ const fetchedForecast = [{
     'pressure': 1009.97,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 64,
     'wind': {
@@ -232,6 +242,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 76,
     'wind': {
@@ -254,6 +265,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 64,
     'wind': {
@@ -276,6 +288,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 68,
     'wind': {
@@ -298,6 +311,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 68,
     'wind': {
@@ -320,6 +334,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 64,
     'wind': {
@@ -342,6 +357,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 56,
     'wind': {
@@ -364,6 +380,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 76,
     'wind': {
@@ -386,6 +403,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 88,
     'wind': {
@@ -408,6 +426,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 88,
     'wind': {
@@ -430,6 +449,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 92,
     'wind': {
@@ -452,6 +472,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 76,
     'wind': {
@@ -474,6 +495,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 68,
     'wind': {
@@ -496,6 +518,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 68,
     'wind': {
@@ -517,7 +540,8 @@ const fetchedForecast = [{
     'pressure': 1006.12,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 64,
     'wind': {
@@ -539,7 +563,8 @@ const fetchedForecast = [{
     'pressure': 1005.31,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 12,
     'wind': {
@@ -561,7 +586,8 @@ const fetchedForecast = [{
     'pressure': 1005.61,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 8,
     'wind': {
@@ -583,6 +609,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'cloudy',
         'desc': 'few clouds',
+        'icon': '02n',
     }],
     'clouds': 24,
     'wind': {
@@ -603,7 +630,8 @@ const fetchedForecast = [{
     'pressure': 1006.09,
     'weatherTypes': [{
         'main': 'cloudy',
-        'desc': 'clear sky',
+        'desc': 'light snow',
+        'icon': '01n',
     }],
     'clouds': 64,
     'wind': {
@@ -626,6 +654,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 56,
     'wind': {
@@ -648,6 +677,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 64,
     'wind': {
@@ -670,6 +700,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 76,
     'wind': {
@@ -692,6 +723,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 68,
     'wind': {
@@ -714,6 +746,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 76,
     'wind': {
@@ -736,6 +769,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 80,
     'wind': {
@@ -758,6 +792,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 80,
     'wind': {
@@ -780,6 +815,7 @@ const fetchedForecast = [{
     'weatherTypes': [{
         'main': 'snowy',
         'desc': 'light snow',
+        'icon': '13n',
     }],
     'clouds': 80,
     'wind': {

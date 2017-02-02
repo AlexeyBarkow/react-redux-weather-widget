@@ -17,7 +17,7 @@ function WeatherSummary({ className }, { weather }) {
                     </div>
                 )
                 : (
-                    <div>
+                    <div className="clearfix">
                         <h1>Weather in { weather.city }</h1>
                         <div className="row col-md-7">
                             <h3>Today (gathered in {formattedDate})</h3>
