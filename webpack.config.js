@@ -37,19 +37,30 @@ module.exports = {
             }
         ],
         loaders: [
-        {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel'
-        }, {
-            test: /\.json?$/,
-            loader: 'json'
-        }, {
-            test: /\.scss$/,
-            loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
-        }, {
-            test: /\.css$/,
-            loader: 'css-loader'
-        }]
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel'
+            }, {
+                test: /\.json?$/,
+                loader: 'json'
+            }, {
+                test: /\.scss$/,
+                loaders: [
+                    'style-loader',
+                    'css-loader?sourceMap',
+                    'sass-loader?sourceMap',
+                    'sass-resources?sourceMap',
+                    'postcss-loader'
+                ]
+            }, {
+                test: /\.css$/,
+                loaders: [
+                    'css-loader',
+                    'postcss-loader'
+                ]
+            }
+        ]
     },
+    sassResources: './app/styles/mixins.scss'
 }

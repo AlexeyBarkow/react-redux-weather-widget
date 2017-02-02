@@ -1,20 +1,20 @@
 import React, { PropTypes } from 'react';
 
-function DatalistOption({ children, value }){
+function DatalistOption({ children, value }) {
     return (
         <option value={value}>
-            {children}
+            { children || value }
         </option>
     );
 }
 
 DatalistOption.propTypes = {
-    children: PropTypes.node.isRequired,
-    value: PropTypes.string,
+    children: PropTypes.node,
+    value: PropTypes.string.isRequired,
 };
 
 DatalistOption.defaultProps = {
-    value: '',
+    children: null,
 };
 
 export default DatalistOption;

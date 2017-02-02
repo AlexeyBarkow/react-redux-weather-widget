@@ -1,0 +1,117 @@
+@mixin invisible() {
+    visibility: hidden;
+}
+
+@mixin animate-loading($number, $width, $name, $offset, $animation-length) {
+    position: relative;
+    width: $width;
+    height: 1em;
+    margin: auto;
+
+    .#{$name} {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        width: 1em;
+        height: 1em;
+
+        animation-name: #{name}Wave;
+        animation-duration: $animation-length;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+    }
+    @for $i from 1 through $number {
+        .#{$name}-#{$i} {
+            left: ($i - 1) * ($width / $number);
+            animation-delay: $animation-length * ($i - 1) / 10 + $offset;
+        }
+    }
+    @keyframes #{name}Wave{
+        0% {
+            background-color: white;
+        }
+        25% {
+            background-color: black;
+        }
+        100% {
+            background-color: white;
+        }
+    }
+}
+
+@mixin hidden() {
+    display: none;
+}
+
+@mixin no-list-padding() {
+    padding-left: 0;
+}
+
+@mixin relative() {
+    position: relative;
+}
+
+@mixin center($left, $top) {
+    $top-translate: 0;
+    $left-translate: 0;
+    position: absolute;
+    @if ($left) {
+        left: 50%;
+        $left-translate: 50%;
+    }
+    @if ($top) {
+        top: 50%;
+        $top-translate: 50%;
+    }
+    transform: translate(-$left-translate, -$top-translate);
+}
+
+@mixin stretch-width() {
+    display: block;
+    width: 100%;
+}
+
+@mixin respond($min, $max: 0) {
+    @if ($min != 0 and $max != 0) {
+        @media (max-width: $max) and (min-width: $min) {
+            @content;
+        }
+    } @elseif ($min == 0 and $max != 0) {
+        @media (max-width: $max) {
+            @content;
+        }
+    } @elseif ($max == 0 and $min != 0) {
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+@mixin class-with-bootstrap-breaks(
+    $class,
+    $isReverse: false,
+    $breaks: (
+        xs: 0,
+        sm: 768px,
+        md: 992px,
+        lg: 1200px,
+    )
+) {
+    @each $break, $value in $breaks {
+        @if ($isReverse == false) {
+            @include respond($value) {
+                .#{$class}-#{$break} {
+                    @content;
+                }
+            };
+        } @elseif ($value != 0) {
+            @include respond(0, $value) {
+                .#{$class}-r#{$break} {
+                    @content;
+                }
+            };
+        }
+    }
+}

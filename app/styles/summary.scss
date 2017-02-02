@@ -1,0 +1,64 @@
+.summary {
+    .main-temperature, .weather-text {
+        font-size: 4em;
+        margin-bottom: 0;
+
+        @include respond(0, 500px) {
+            font-size: 2em;
+        }
+    }
+    .temperature-range {
+        font-size: 1.5em;
+        @include respond(0, 500px) {
+            font-size: 1em;
+        }
+    }
+    .main-temperature, .temperature-range, .weather-text {
+        white-space: nowrap;
+        text-align: center;
+    }
+    .temperature-percent:before {
+        content: '%';
+        color: var(--metric-color)
+    }
+    .temperature-metric, .temperature-pressure {
+        &:before {
+            content: "\00b0";
+        }
+        color: var(--metric-color)
+    }
+    .km-h {
+        &:before {
+            content: ' km/h';
+        }
+        color: var(--metric-color);
+    }
+
+    .weather-pictures, .weather-desc {
+        text-align: center;
+        width: 10em
+    }
+
+    .weather-desc-text {
+        font-size: 1.5em;
+    }
+
+    .weather-pictures {
+        img {
+            height: 8em;
+        }
+
+        .temperature-icon {
+            margin-top: 1.25em;
+            height: 4em;
+        }
+
+
+        @include respond(0, 500px) {
+            width: 6em;
+            img {
+                height: 5em;
+            }
+        }
+    }
+}

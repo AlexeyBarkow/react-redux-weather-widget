@@ -17,7 +17,6 @@ module.exports = {
         chunkModules: false
     },
     watchOptions: {
-        aggregateTimeout: 300,
-        poll: 300
+        aggregateTimeout: 300
     }
 };

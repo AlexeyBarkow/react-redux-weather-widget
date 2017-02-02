@@ -1,52 +1,57 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import DropDown from '../components/DropDown';
-import Header from '../components/Header';
-import Navbar from '../components/Navbar';
-import * as actions from '../actions/actions';
+import Header from './Header';
+import StaticFixator from './StaticFixator';
+import Footer from '../components/Footer';
+import MainContainer from '../components/MainContainer';
+import AsideBar from '../components/AsideBar';
+import GoogleMap from './GoogleMap';
+import * as actions from '../dataflow/actions/actions';
 
 class RootContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            typedCity: '',
-        };
-        this.onDropDownChange = this.onDropDownChange.bind(this);
-    }
-
     getChildContext() {
         return {
             changeWeatherInfo: this.props.changeWeatherInfo,
             weather: this.props.weather,
+            forecast: this.props.forecast,
         };
     }
 
-    onDropDownChange(e) {
-        this.setState({ typedCity: e.target.value });
-    }
-
     render() {
-        const { children } = this.props;
-        const { typedCity } = this.state;
+        const { children, geolocation, weather } = this.props;
+        const markers = [];
+
+        if (geolocation) {
+            markers.push({
+                title: 'You',
+                location: geolocation,
+            });
+        }
+
+        if (weather.city) {
+            markers.push({
+                title: weather.city,
+                location: weather.location,
+            });
+        }
         return (
-            <div>
-                <Header>
-                    <Navbar>
-                        <DropDown
-                          value={typedCity}
-                          listId="city-input"
-                          onInputChange={this.onDropDownChange}
-                        />
-                    </Navbar>
-                </Header>
-                <div>
-                    {children}
+            <div className={`app-wrapper fixed-background background-${weather.weatherTypes ? weather.weatherTypes[0].main : 'default'}`}>
+                <div className="sticky-top">
+                    <StaticFixator placeholderClass="header__placeholder">
+                        <Header className="header no-padding-top-and-bottom-rsm" />
+                    </StaticFixator>
+                    <div className="container">
+                        <div className="row">
+                            <MainContainer className="main col-sm-9 col-xs-12">
+                                {children}
+                            </MainContainer>
+                            <AsideBar className="aside col-sm-3 col-xs-12" />
+                            <GoogleMap className="map" location={weather.location} markers={markers} />
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <Link to="/about">about</Link>
-                </div>
+                <Footer className="footer" />
             </div>
         );
     }
@@ -55,16 +60,20 @@ class RootContainer extends Component {
 RootContainer.childContextTypes = {
     changeWeatherInfo: PropTypes.func,
     weather: PropTypes.object,
+    forecast: PropTypes.array,
 };
 
 RootContainer.propTypes = {
     children: PropTypes.node,
     weather: PropTypes.object.isRequired,
+    forecast: PropTypes.array,
     changeWeatherInfo: PropTypes.func.isRequired,
+    geolocation: PropTypes.object.isRequired,
 };
 
 RootContainer.defaultProps = {
     children: null,
+    forecast: [],
 };
 
 
@@ -73,6 +82,7 @@ function mapStateToProps(state) {
         geolocation: state.weatherApp.geolocation,
         city: state.weatherApp.city,
         weather: state.weatherApp.weather,
+        forecast: state.weatherApp.forecast,
     };
 }
 

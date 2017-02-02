@@ -1,19 +1,99 @@
 :root {
     //put global css variables here
-    --color--dark-red: rgb(185, 0 , 0);
+    --color-dark-red: rgb(185, 0 , 0);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
-    --color-bright-green: rgb(125, 255, 125);
+    --color-bright-blue: rgba(125, 125, 255, .95);
+    --color-footer-color: rgba(25, 25, 95, .75);
+    --color-light-gray: rgb(215, 215, 215);
+    --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
+    --color-white: rgb(255, 255, 255);
+    --color-black: rgb(0, 0, 0);
+    --color-white-alpha: rgba(255,255,255,.85);
+    --color-white-bright-alpha: rgba(255, 255, 255, .45);
+    --metric-color: rgb(180, 0, 0);
+
+    --cloudy-url: url('http://epam.2i.by/barkou/images/cloudy.jpg');
+    --clear-url: url('http://epam.2i.by/barkou/images/clear.jpg');
+    --snowy-url: url('http://epam.2i.by/barkou/images/snowy.jpg');
+    --rainy-url: url('http://epam.2i.by/barkou/images/rainy.jpg');
 }
 
-.container {
-    width: 100%;
+.tooltip-container {
+    position: relative;
+    .tooltip.left {
+        @include center(false, true);
+        right: 100%;
+    }
+    .tooltip.top {
+        @include center(true, false);
+        bottom: calc(100% - 1em);
+    }
+    .tooltip.right {
+        @include center(false, true);
+        left: 100%;
+    }
+    .tooltip.bottom {
+        @include center(true, false);
+        top: calc(100% - 1em);
+    }
+}
+
+html {
+    min-height: 100%;
     position: relative;
 }
 
-.stretch {
-    display: block;
-    height: 100%;
+.pseudo-paragraph:not(:last-child) {
+    margin-bottom: 1em;
+}
+
+.app-wrapper {
+    box-sizing: border-box;
+    padding-bottom: 5em;
+    .footer {
+        @include stretch-width();
+        position: absolute;
+        bottom: 0;
+        height: 5em;
+        background-color: var(--color-footer-color);
+        border: .5em solid var(--color-light-gray);
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
+        border-bottom: 0;
+    }
+
+}
+
+.btn-group > .form-group {
+    float: left;
+    &:not(:first-child) .form-control {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    &:not(:last-child) .form-control {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.main {
+    margin-top: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    @include respond(0, 720px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    background-color: var(--color-white-alpha);
+    border: 1px solid var(--color-white);
+    border-bottom: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+
+    .tab__header > li.active>a {
+        background-color: var(--color-white-bright-alpha);
+    }
 }
 
 .btn > a {
@@ -21,21 +101,76 @@
     text-decoration: none;
 }
 
-ul.no-list-padding {
-    padding-left: 0;
+
+.ball-animate-loading {
+    @include animate-loading(8, 16em, 'ball', 0s, 3s);
 }
 
-figure {
-    margin: 0;
+.calendar-wrapper {
+    width: 4.5em;
+    text-align: center;
+    .panel-calendar {
+        margin-bottom: 0;
+        .panel-heading {
+            background-color: var(--color-dark-red);
+            color: var(--color-white);
+            font-size: 1.25em;
+        }
+    }
+    .calendar__time {
+        width: 3.5em;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: .25em;
+        .calendar__time__separator, .calendar__time__clock {
+            float: left;
+            text-align: center;
+        }
+
+        .calendar__time__clock {
+            border: 1px solid var(--color-black);
+            background-color: var(--color-white);
+            width: 1.5em;
+        }
+
+        .calendar__time__separator{
+            width: .5em;
+            &:after {
+                content: ':';
+            }
+        }
+    }
 }
 
-.relative {
-    position: relative;
+.aside {
+    background-color: var(--color-white-alpha);
+    padding: 1em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    border: 1px solid var(--color-white);
+    border-top: 0;
 }
 
-.center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.fixed-background {
+    background-attachment: fixed;
+    background-size: cover;
 }
+
+.background-cloudy {
+    background-image: var(--cloudy-url);
+}
+
+.background-snowy {
+    background-image: var(--snowy-url);
+}
+
+.background-clear {
+    background-image: var(--clear-url);
+}
+.background-rainy {
+    background-image: var(--rainy-url);
+}
+
+@include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
+    padding: 0;
+};
