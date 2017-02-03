@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import Loading from '../components/Loading';
+import Button from '../components/Button';
 import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers } from '../utils/googleMapAPI';
 import css from '../styles/gmap.scss';
 
@@ -20,6 +21,7 @@ class GoogleMap extends Component {
         this.scriptLoadingFailed = this::this.scriptLoadingFailed;
         this.initMapBlock = this::this.initMapBlock;
         this.getStateMarkers = this::this.getStateMarkers;
+        this.updateComponent = this::this.updateComponent;
     }
 
     componentWillReceiveProps(newProps) {
@@ -39,7 +41,8 @@ class GoogleMap extends Component {
     }
 
     shouldComponentUpdate(_, newState) {
-        if (newState.googleScriptLoaded !== this.state.googleScriptLoaded) {
+        const { map, googleScriptLoaded } = this.state;
+        if (newState.googleScriptLoaded !== googleScriptLoaded || !map) {
             return true;
         }
         return false;
@@ -81,9 +84,16 @@ class GoogleMap extends Component {
         this.setState({ map, stateMarkers });
     }
 
+    updateComponent() {
+        this.setState({
+            map: null,
+        });
+
+        this.forceUpdate();
+    }
 
     render() {
-        const { className } = this.props;
+        const { className, location } = this.props;
         const { googleScriptLoaded } = this.state;
 
         return (
@@ -108,7 +118,11 @@ class GoogleMap extends Component {
                                 {
                                     location
                                     ? location.message
-                                    : 'Google Maps service is not responding or google location service is not enabled'
+                                    : <span>
+                                        Google Maps service is not responding or google location
+                                        service is not enabled.
+                                        <Button link onClick={this.updateComponent}>Retry?</Button>
+                                    </span>
                                 }
                             </p>
                         </div>

@@ -21,7 +21,7 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
                             { metric }
                         </span>
                     </span>
-                    {' - '}
+                    {' — '}
                     <span className="max-temperature">
                         { maxTemperature }
                         <span className="temperature-metric">

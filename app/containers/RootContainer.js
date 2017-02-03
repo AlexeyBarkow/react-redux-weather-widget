@@ -10,18 +10,24 @@ import GoogleMap from './GoogleMap';
 import * as actions from '../dataflow/actions/actions';
 
 class RootContainer extends Component {
+    constructor(props) {
+        super(props);
+        const { getWeather, getForecast } = props;
+        getWeather('Minsk');
+        getForecast('Minsk');
+    }
+
     getChildContext() {
         return {
-            changeWeatherInfo: this.props.changeWeatherInfo,
             weather: this.props.weather,
             forecast: this.props.forecast,
+            autocompleteCity: this.props.autocompleteCity,
         };
     }
 
     render() {
         const { children, geolocation, weather } = this.props;
         const markers = [];
-
         if (geolocation) {
             markers.push({
                 title: 'You',
@@ -35,6 +41,7 @@ class RootContainer extends Component {
                 location: weather.location,
             });
         }
+
         return (
             <div className={`app-wrapper fixed-background background-${weather.weatherTypes ? weather.weatherTypes[0].main : 'default'}`}>
                 <div className="sticky-top">
@@ -43,11 +50,11 @@ class RootContainer extends Component {
                     </StaticFixator>
                     <div className="container">
                         <div className="row">
-                            <MainContainer className="main col-sm-9 col-xs-12">
+                            <MainContainer className="main col-sm-9 col-xs-12 panel">
                                 {children}
                             </MainContainer>
-                            <AsideBar className="aside col-sm-3 col-xs-12" />
-                            <GoogleMap className="map" location={weather.location} markers={markers} />
+                            <AsideBar className="aside col-sm-3 col-xs-12 panel" />
+                            <GoogleMap className="map panel" location={weather.location} markers={markers} />
                         </div>
                     </div>
                 </div>
@@ -58,17 +65,22 @@ class RootContainer extends Component {
 }
 
 RootContainer.childContextTypes = {
-    changeWeatherInfo: PropTypes.func,
     weather: PropTypes.object,
     forecast: PropTypes.array,
+    changeLocation: PropTypes.func,
+    getWeather: PropTypes.func,
+    getForecast: PropTypes.func,
+    autocompleteCity: PropTypes.func,
 };
 
 RootContainer.propTypes = {
     children: PropTypes.node,
     weather: PropTypes.object.isRequired,
     forecast: PropTypes.array,
-    changeWeatherInfo: PropTypes.func.isRequired,
     geolocation: PropTypes.object.isRequired,
+    getWeather: PropTypes.func.isRequired,
+    getForecast: PropTypes.func.isRequired,
+    autocompleteCity: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {
@@ -85,6 +97,7 @@ function mapStateToProps(state) {
         forecast: state.weatherApp.forecast,
     };
 }
+
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);

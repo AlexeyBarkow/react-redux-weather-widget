@@ -1,23 +1,23 @@
 //ToDo delete this component
 import React, { Component } from 'react';
-import DropDown from '../components/DropDown.js';
-import getCityAjax from '../API/getCity.js';
+import DropDown from '../components/DropDown';
 
 class DropDownContainer extends Component {
     constructor() {
         super();
         this.state = {
-            typedCity: ''
-        }
+            typedCity: '',
+        };
+        this.onChange = this::this.onChange;
     }
-    _onChange = (e) => {
-        this.setState({typedCity: e.target.value});
-    }    
+    onChange = (e) => {
+        this.setState({ typedCity: e.target.value });
+    }
 
     render() {
-        const {typedCity} = this.state;
+        const { typedCity } = this.state;
         return (
-            <DropDown {...this.props} value={typedCity} onChange={this._onChange}></DropDown>
+            <DropDown {...this.props} value={typedCity} onChange={this.onChange} />
         );
     }
 }

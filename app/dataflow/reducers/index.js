@@ -1,15 +1,19 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import * as types from '../actions/types';
-import fetchedForecast from '../../utils/testForecast';
-import fetchedWeather from '../../utils/testWeather';
 import fetchedLocation from '../../utils/testLocation';
 
 const initialState = {
     geolocation: fetchedLocation,
     city: 'Minsk',
-    weather: fetchedWeather,
-    forecast: fetchedForecast,
+    weather: {
+        status: 0,
+        message: 'not fetched',
+    },
+    forecast: [{
+        status: 0,
+        message: 'not fetched',
+    }],
 };
 
 
@@ -29,6 +33,11 @@ function weatherApp(state = initialState, action) {
             return {
                 ...state,
                 forecast: action.forecast,
+            };
+        case types.SET_AUTOCOMPLETE_ARRAY:
+            return {
+                ...state,
+                autocomplete: action.autocomplete,
             };
         default:
             return state;

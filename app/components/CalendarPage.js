@@ -26,7 +26,7 @@ function CalendarPage({ date, className, showTime }) {
 }
 
 CalendarPage.propTypes = {
-    date: PropTypes.number.isRequired,
+    date: PropTypes.any.isRequired,
     className: PropTypes.string,
     showTime: PropTypes.bool,
 };

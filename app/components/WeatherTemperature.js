@@ -59,7 +59,7 @@ WeatherTemperature.propTypes = {
     maxTemperature: PropTypes.number.isRequired,
     className: PropTypes.string,
     title: PropTypes.string,
-    date: PropTypes.number,
+    date: PropTypes.any,
 };
 
 WeatherTemperature.defaultProps = {

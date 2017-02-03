@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import ButtonGroup from '../components/ButtonGroup';
@@ -8,25 +11,47 @@ import DatalistOption from '../components/DatalistOption';
 import DropDown from '../components/DropDown';
 import Form from '../components/Form';
 import css from '../styles/header.scss';
+import * as actions from '../dataflow/actions/actions';
+import { MIN_AJAX_INTERVAL } from '../utils/constants';
 
 class Header extends Component {
     constructor(props) {
         super(props);
+        const { autocompleteCity } = props;
+
         this.state = {
             typedCity: '',
+            selectedMetric: 'C',
         };
         this.onDropDownChange = this::this.onDropDownChange;
+        this.onSelectChange = this::this.onSelectChange;
+        this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL, {
+            trailing: true,
+        });
+        this.onSubmit = this::this.onSubmit;
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const { typedCity, selectedMetric } = this.state;
+        console.log(typedCity, selectedMetric);
+    }
+
+    onSelectChange(e) {
+        const selectedMetric = e.target.value;
+        this.setState({ selectedMetric });
     }
 
     onDropDownChange(e) {
-        this.setState({
-            typedCity: e.target.value,
-        });
+        const typedCity = e.target.value;
+        //
+        this.autocompleteCity(typedCity);
+        this.setState({ typedCity });
     }
 
     render() {
-        const { className } = this.props;
-        const { typedCity } = this.state;
+        const { className, autocomplete } = this.props;
+        const { typedCity, selectedMetric } = this.state;
         return (
             <header ref={this.getHeader} className={`${className} line-up`}>
                 <div className="header__content container">
@@ -43,7 +68,7 @@ class Header extends Component {
                                     </Button>
                                 </ButtonGroup>
                             </Navbar>
-                            <Form className="header__city-search">
+                            <Form className="header__city-search" autocompleteOff submitHandler={this.onSubmit}>
                                 <ButtonGroup>
                                     <DropDown
                                       className="header__city-search__name"
@@ -52,8 +77,14 @@ class Header extends Component {
                                       value={typedCity}
                                       listId="city-input"
                                       onInputChange={this.onDropDownChange}
-                                    />
-                                    <Select name="metric" className="header__city-search__metric" btnStyle>
+                                    >
+                                        {
+                                            autocomplete.map((curr, index) => (
+                                                <DatalistOption value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
+                                            ))
+                                        }
+                                    </DropDown>
+                                    <Select name="metric" value={selectedMetric} onChange={this.onSelectChange} className="header__city-search__metric" btnStyle>
                                         <DatalistOption value="C">C&deg;</DatalistOption>
                                         <DatalistOption value="F">F&deg;</DatalistOption>
                                     </Select>
@@ -70,14 +101,23 @@ class Header extends Component {
 
 Header.propTypes = {
     className: PropTypes.string,
+    autocompleteCity: PropTypes.func.isRequired,
+    autocomplete: PropTypes.array,
 };
 
 Header.defaultProps = {
     className: '',
+    autocomplete: [],
 };
 
-// Header.contextTypes = {
-//     weather: PropTypes.object,
-// };
+function mapStateToProps(state) {
+    return {
+        autocomplete: state.weatherApp.autocomplete,
+    };
+}
 
-export default Header;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

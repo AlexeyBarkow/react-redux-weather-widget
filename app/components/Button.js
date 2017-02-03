@@ -7,10 +7,11 @@ function Button({
     className,
     href,
     disabled,
+    link,
     noDefaultStyles,
     type,
 }) {
-    const classesToPass = `${noDefaultStyles ? '' : 'btn btn-default'} ${className}`;
+    const classesToPass = `${noDefaultStyles ? '' : `btn btn-${link ? 'link' : 'default'}`} ${className}`;
 
     return (
         href !== ''
@@ -43,6 +44,7 @@ Button.propTypes = {
     disabled: PropTypes.bool,
     noDefaultStyles: PropTypes.bool,
     type: PropTypes.string,
+    link: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -53,6 +55,7 @@ Button.defaultProps = {
     disabled: false,
     noDefaultStyles: false,
     type: null,
+    link: false,
 };
 
 export default Button;

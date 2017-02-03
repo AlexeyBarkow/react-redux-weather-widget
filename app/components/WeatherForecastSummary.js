@@ -3,12 +3,12 @@ import Loading from './Loading';
 import WeatherTemperature from './WeatherTemperature';
 import { FORECAST_INTERVAL } from '../utils/constants';
 
-function WeatherForecastSummary({ className }, { forecast }) {
-    const lastForecast = forecast ? forecast[0].calculationTime : 0;
+function WeatherForecastSummary({ className, forecast }) {
+    const lastForecast = forecast.length > 0 ? forecast[0].calculationTime : 0;
     return (
         <section className={className}>
             {
-                forecast && forecast[0].status === 200
+                forecast.length > 0 && forecast[0].status === 200
                 ? (
                     <div className="col-sm-10">
                         <h1>Weather forecast in {forecast[0].city}</h1>
@@ -16,7 +16,7 @@ function WeatherForecastSummary({ className }, { forecast }) {
                             forecast.map((current, index) => (
                                 <WeatherTemperature
                                   className="row pseudo-paragraph"
-                                  date={(index * FORECAST_INTERVAL) + lastForecast}
+                                  date={new Date((index * FORECAST_INTERVAL) + lastForecast)}
                                   metric={current.metric}
                                   weatherType={current.weatherTypes[0]}
                                   minTemperature={current.temperature.min}
@@ -41,14 +41,12 @@ function WeatherForecastSummary({ className }, { forecast }) {
 
 WeatherForecastSummary.propTypes = {
     className: PropTypes.string,
+    forecast: PropTypes.array,
 };
 
 WeatherForecastSummary.defaultProps = {
     className: '',
-};
-
-WeatherForecastSummary.contextTypes = {
-    forecast: PropTypes.array,
+    forecast: [],
 };
 
 export default WeatherForecastSummary;

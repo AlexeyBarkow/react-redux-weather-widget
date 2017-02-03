@@ -39,7 +39,11 @@
     }
 }
 
-html {
+html, body, .my-app-root-class, #root,  {
+    height: 100%;
+}
+
+.app-wrapper {
     min-height: 100%;
     position: relative;
 }
@@ -167,6 +171,7 @@ html {
 .background-clear {
     background-image: var(--clear-url);
 }
+
 .background-rainy {
     background-image: var(--rainy-url);
 }
