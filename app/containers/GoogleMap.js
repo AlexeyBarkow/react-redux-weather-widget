@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import Loading from '../components/Loading';
-import Button from '../components/Button';
 import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers } from '../utils/googleMapAPI';
 import css from '../styles/gmap.scss';
 
@@ -119,9 +118,8 @@ class GoogleMap extends Component {
                                     location
                                     ? location.message
                                     : <span>
-                                        Google Maps service is not responding or google location
-                                        service is not enabled.
-                                        <Button link onClick={this.updateComponent}>Retry?</Button>
+                                        Google Maps service is not respondingor google location
+                                        service is not enabled. <a href="#" onClick={this.updateComponent}>Retry?</a>
                                     </span>
                                 }
                             </p>

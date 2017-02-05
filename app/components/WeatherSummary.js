@@ -4,6 +4,7 @@ import WeatherTemperature from './WeatherTemperature';
 import ValueBlock from './ValueBlock';
 import Loading from './Loading';
 import css from '../styles/summary.scss';
+import { IMAGES_UNUSUAL_PATH } from '../utils/constants';
 
 function WeatherSummary({ className, weather }) {
     const date = new Date(weather.calculationTime);
@@ -24,10 +25,10 @@ function WeatherSummary({ className, weather }) {
                                   maxTemperature={weather.temperature.max}
                                   currTemperature={weather.temperature.curr}
                                 />
-                                <ValueBlock tooltip="Humidity" value={weather.humidity} imgUrl="./images/drop.png" valueClass="temperature-percent" />
-                                <ValueBlock tooltip="Coludiness" value={weather.clouds} imgUrl="./images/cloudiness.png" valueClass="temperature-percent" />
-                                <ValueBlock tooltip="Athmospheric pressure" value={weather.pressure} imgUrl="./images/pressure.png" valueClass="temperature-pressure" />
-                                <ValueBlock tooltip="Wind speed and direction" value={weather.wind.speed} imgUrl="./images/wind.png" valueClass="km-h" />
+                                <ValueBlock tooltip="Humidity" value={weather.humidity} imgUrl={`${IMAGES_UNUSUAL_PATH}/drop.png`} valueClass="temperature-percent" />
+                                <ValueBlock tooltip="Coludiness" value={weather.clouds} imgUrl={`${IMAGES_UNUSUAL_PATH}/cloudiness.png`} valueClass="temperature-percent" />
+                                <ValueBlock tooltip="Athmospheric pressure" value={weather.pressure} imgUrl={`${IMAGES_UNUSUAL_PATH}/pressure.png`} valueClass="temperature-pressure" />
+                                <ValueBlock tooltip="Wind speed and direction" value={weather.wind.speed} imgUrl={`${IMAGES_UNUSUAL_PATH}/wind.png`} valueClass="km-h" />
                             </div>
                         </div>
                     );

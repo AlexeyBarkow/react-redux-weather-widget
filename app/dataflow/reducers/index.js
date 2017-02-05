@@ -1,10 +1,9 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import * as types from '../actions/types';
-import fetchedLocation from '../../utils/testLocation';
 
 const initialState = {
-    geolocation: fetchedLocation,
+    geolocation: null,
     city: 'Minsk',
     weather: {
         status: 0,
@@ -14,6 +13,7 @@ const initialState = {
         status: 0,
         message: 'not fetched',
     }],
+    nearestCities: [],
 };
 
 
@@ -23,6 +23,16 @@ function weatherApp(state = initialState, action) {
             return {
                 ...state,
                 city: action.city,
+            };
+        case types.SET_NEAREST_CITIES:
+            return {
+                ...state,
+                nearestCities: action.nearestCities,
+            };
+        case types.UPDATE_LOCATION:
+            return {
+                ...state,
+                geolocation: action.geolocation,
             };
         case types.UPDATE_WEATHER_INFO:
             return {

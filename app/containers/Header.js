@@ -25,16 +25,15 @@ class Header extends Component {
         };
         this.onDropDownChange = this::this.onDropDownChange;
         this.onSelectChange = this::this.onSelectChange;
-        this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL, {
-            trailing: true,
-        });
+        this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL);
         this.onSubmit = this::this.onSubmit;
     }
 
     onSubmit(e) {
         e.preventDefault();
+        const { redirectToCity } = this.props;
         const { typedCity, selectedMetric } = this.state;
-        console.log(typedCity, selectedMetric);
+        redirectToCity(typedCity.split(', ')[0], typedCity.split(', ')[1], selectedMetric);
     }
 
     onSelectChange(e) {
@@ -44,7 +43,7 @@ class Header extends Component {
 
     onDropDownChange(e) {
         const typedCity = e.target.value;
-        //
+
         this.autocompleteCity(typedCity);
         this.setState({ typedCity });
     }
@@ -103,6 +102,7 @@ Header.propTypes = {
     className: PropTypes.string,
     autocompleteCity: PropTypes.func.isRequired,
     autocomplete: PropTypes.array,
+    redirectToCity: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {

@@ -8,7 +8,7 @@ function ClosestCities({ list, className, title, keySeed }) {
             { title }
             <ButtonGroup vertical block>
                 { list.map((city, index) => (
-                    <Button key={`${keySeed}-${index}`} className="" href={city}>{ city }</Button>
+                    <Button key={`${keySeed}-${index}`} className="" href={`/cities/${city.countryCode}/${city.name}`}>{ `${city.name}, ${city.countryCode}` }</Button>
                 )) }
             </ButtonGroup>
         </div>

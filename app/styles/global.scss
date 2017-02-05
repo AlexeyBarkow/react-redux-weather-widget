@@ -1,5 +1,5 @@
 :root {
-    //put global css variables here
+    //put the global css variables here
     --color-dark-red: rgb(185, 0 , 0);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
@@ -179,3 +179,12 @@ html, body, .my-app-root-class, #root,  {
 @include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
     padding: 0;
 };
+
+@include class-with-bootstrap-breaks('no-padding') {
+    padding: 0;
+}
+
+.btn-inline {
+    display: inline;
+    border: none;
+}

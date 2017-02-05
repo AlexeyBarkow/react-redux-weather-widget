@@ -1,8 +1,10 @@
 // ToDo: separate actions into different files
+import { push } from 'react-router-redux';
 import * as types from './types';
 import getWeatherAjax from '../../utils/weatherAPI';
-import loadLocation from '../../utils/geolocationAPI';
-import getCityAjax from '../../utils/getCityAPI';
+import geolocationAPI from '../../utils/geolocationAPI';
+import getCityAPI from '../../utils/getCityAPI';
+import { DEFAULT_METRIC } from '../../utils/constants';
 
 export function changeCity(city) {
     return {
@@ -11,28 +13,35 @@ export function changeCity(city) {
     };
 }
 
-export function changeWeatherInfo(weather) {
+function changeNearestCities(nearestCities) {
+    return {
+        type: types.SET_NEAREST_CITIES,
+        nearestCities,
+    };
+}
+
+function changeWeatherInfo(weather) {
     return {
         type: types.UPDATE_WEATHER_INFO,
         weather,
     };
 }
 
-export function changeForecastInfo(forecast) {
+function changeForecastInfo(forecast) {
     return {
         type: types.UPDATE_FORECAST,
         forecast,
     };
 }
 
-export function changeLocation(location) {
+function changeLocation(geolocation) {
     return {
         type: types.UPDATE_LOCATION,
-        location,
+        geolocation,
     };
 }
 
-export function setCityAutocompleteArray(autocomplete) {
+function setCityAutocompleteArray(autocomplete) {
     return {
         type: types.SET_AUTOCOMPLETE_ARRAY,
         autocomplete,
@@ -41,7 +50,7 @@ export function setCityAutocompleteArray(autocomplete) {
 
 export function autocompleteCity(beginning) {
     return (dispatch) => {
-        getCityAjax(beginning)
+        getCityAPI.getCityAjax(beginning)
           .then((data) => {
               dispatch(setCityAutocompleteArray(data));
           });
@@ -66,11 +75,31 @@ export function getForecast(city, code, metric) {
     };
 }
 
+export function redirectToCity(city, countryCode, metric = DEFAULT_METRIC) {
+    return (dispatch) => {
+        dispatch(getWeather(city, countryCode, metric));
+        dispatch(getForecast(city, countryCode, metric));
+        dispatch(push({
+            pathname: `/cities/${countryCode}/${city}`,
+            query: { metric },
+        }));
+    };
+}
+
 export function getLocation() {
     return (dispatch) => {
-        loadLocation.then((location) => {
+        geolocationAPI.loadLocation().then((location) => {
             dispatch(changeLocation(location));
         });
+    };
+}
+
+export function getNearestTo(location) {
+    return (dispatch) => {
+        getCityAPI.getClosestCitiesToLocation(location)
+          .then((cities) => {
+              dispatch(changeNearestCities(cities));
+          });
     };
 }
 

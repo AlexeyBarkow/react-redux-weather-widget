@@ -1,22 +1,28 @@
-const loadLocation = new Promise((success, error) => {
-    if (!navigator) {
-        error({
-            message: 'navigator is not supported',
-        });
-        return;
-    }
-    navigator.geolocation.getCurrentPosition((geoposition) => {
-        if (geoposition) {
-            success({
-                latitude: geoposition.coords.latitude,
-                longitude: geoposition.coords.longitude,
-            });
-        } else {
+function loadLocation() {
+    return new Promise((success, error) => {
+        if (!navigator) {
             error({
-                message: 'could not get geoposition',
+                message: 'navigator is not supported',
             });
+            return;
         }
+        navigator.geolocation.getCurrentPosition((geoposition) => {
+            if (geoposition) {
+                success({
+                    latitude: geoposition.coords.latitude,
+                    longitude: geoposition.coords.longitude,
+                });
+            } else {
+                error({
+                    message: 'could not get geoposition',
+                });
+            }
+        });
     });
-});
+}
 
-export default loadLocation;
+const geolocationAPI = {
+    loadLocation,
+};
+
+export default geolocationAPI;

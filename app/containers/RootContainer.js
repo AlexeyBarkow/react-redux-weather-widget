@@ -12,21 +12,35 @@ import * as actions from '../dataflow/actions/actions';
 class RootContainer extends Component {
     constructor(props) {
         super(props);
-        const { getWeather, getForecast } = props;
-        getWeather('Minsk');
-        getForecast('Minsk');
+        const { getLocation } = props;
+        getLocation();
     }
 
     getChildContext() {
         return {
             weather: this.props.weather,
             forecast: this.props.forecast,
-            autocompleteCity: this.props.autocompleteCity,
         };
     }
 
+    componentWillReceiveProps({
+        geolocation,
+        nearestCities,
+        getNearestTo,
+        redirectToCity,
+    }) {
+        if (geolocation !== this.props.geolocation) {
+            getNearestTo(geolocation);
+        }
+        if (nearestCities !== this.props.nearestCities
+            && nearestCities.length > 0) {
+            const { name, countryCode } = nearestCities[0];
+            redirectToCity(name, countryCode);
+        }
+    }
+
     render() {
-        const { children, geolocation, weather } = this.props;
+        const { children, geolocation, weather, nearestCities } = this.props;
         const markers = [];
         if (geolocation) {
             markers.push({
@@ -53,7 +67,7 @@ class RootContainer extends Component {
                             <MainContainer className="main col-sm-9 col-xs-12 panel">
                                 {children}
                             </MainContainer>
-                            <AsideBar className="aside col-sm-3 col-xs-12 panel" />
+                            <AsideBar nearestCities={nearestCities} className="aside col-sm-3 col-xs-12 panel" />
                             <GoogleMap className="map panel" location={weather.location} markers={markers} />
                         </div>
                     </div>
@@ -67,25 +81,23 @@ class RootContainer extends Component {
 RootContainer.childContextTypes = {
     weather: PropTypes.object,
     forecast: PropTypes.array,
-    changeLocation: PropTypes.func,
-    getWeather: PropTypes.func,
-    getForecast: PropTypes.func,
-    autocompleteCity: PropTypes.func,
 };
 
 RootContainer.propTypes = {
     children: PropTypes.node,
     weather: PropTypes.object.isRequired,
     forecast: PropTypes.array,
-    geolocation: PropTypes.object.isRequired,
-    getWeather: PropTypes.func.isRequired,
-    getForecast: PropTypes.func.isRequired,
-    autocompleteCity: PropTypes.func.isRequired,
+    geolocation: PropTypes.object,
+    getLocation: PropTypes.func.isRequired,
+    getNearestTo: PropTypes.func.isRequired,
+    nearestCities: PropTypes.array.isRequired,
+    redirectToCity: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {
     children: null,
     forecast: [],
+    geolocation: null,
 };
 
 
@@ -95,6 +107,7 @@ function mapStateToProps(state) {
         city: state.weatherApp.city,
         weather: state.weatherApp.weather,
         forecast: state.weatherApp.forecast,
+        nearestCities: state.weatherApp.nearestCities,
     };
 }
 

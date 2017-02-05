@@ -1,6 +1,8 @@
 export const IMAGES_BASE_PATH = 'http://openweathermap.org/img/w/';
+export const IMAGES_UNUSUAL_PATH = 'http://epam.2i.by/barkou/images/';
 export const FORECAST_INTERVAL = 3600000 * 3;
 export const MIN_AJAX_INTERVAL = 500;
+export const DEFAULT_METRIC = 'C';
 
 //get city api
 export const USERNAME = 'aliaksei_barkou';
