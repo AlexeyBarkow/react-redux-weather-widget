@@ -9,7 +9,7 @@ function CalendarPage({ date, className, showTime }) {
                     <div className="panel-heading"><span>{getMonth(date)}</span></div>
                     <div className="panel-body">{getDay(date)}</div>
                 </div>
-                { showTime ? (
+                { showTime && (
                     <div className="calendar__time clearfix">
                         <div className="calendar__time__clock">
                             {getHours(date)}
@@ -19,7 +19,7 @@ function CalendarPage({ date, className, showTime }) {
                             {getMinutes(date)}
                         </div>
                     </div>
-                ) : undefined }
+                ) }
             </div>
         </div>
     );

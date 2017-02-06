@@ -10,10 +10,10 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
                 </span>
             </p>
             {
-                minTemperature === undefined
+                (minTemperature === undefined
                 || maxTemperature === undefined
-                || minTemperature < maxTemperature
-                ?
+                || minTemperature < maxTemperature)
+                &&
                 (<p className="temperature-range">
                     <span className="min-temperature">
                         { minTemperature }
@@ -29,7 +29,6 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
                         </span>
                     </span>
                 </p>)
-                : undefined
             }
         </div>
     );

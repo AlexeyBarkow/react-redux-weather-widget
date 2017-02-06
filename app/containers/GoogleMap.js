@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import Loading from '../components/Loading';
-import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers } from '../utils/googleMapAPI';
+import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
 import css from '../styles/gmap.scss';
 
 class GoogleMap extends Component {
@@ -25,8 +25,9 @@ class GoogleMap extends Component {
 
     componentWillReceiveProps(newProps) {
         const { map } = this.state;
-        const { markers } = this.props;
+        const { markers, location } = this.props;
         const newMarkers = newProps.markers;
+        const newLocation = newProps.location;
 
         if (!map) {
             return;
@@ -36,6 +37,10 @@ class GoogleMap extends Component {
             const stateMarkers = this.getStateMarkers(map, newMarkers);
 
             this.setState({ stateMarkers });
+        }
+
+        if (newLocation !== location) {
+            setCenter(map, newLocation);
         }
     }
 
