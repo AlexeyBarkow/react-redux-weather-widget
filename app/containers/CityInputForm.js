@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import _ from 'lodash';
 import Select from '../components/Select';
 import DatalistOption from '../components/DatalistOption';
@@ -10,7 +8,6 @@ import Form from '../components/Form';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
 import { validateAddress } from '../utils/validateFunctions';
-import * as actions from '../dataflow/actions/actions';
 import { MIN_AJAX_INTERVAL } from '../utils/constants';
 
 class CityInputForm extends Component {
@@ -111,14 +108,4 @@ CityInputForm.defaultProps = {
     autocomplete: [],
 };
 
-function mapStateToProps(state) {
-    return {
-        autocomplete: state.weatherApp.autocomplete,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CityInputForm);
+export default CityInputForm;

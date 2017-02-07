@@ -3,7 +3,7 @@ import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
-import CityInputForm from '../containers/CityInputForm';
+import CityInputForm from '../containers/Connectors/CityInputFormConnector';
 import css from '../styles/header.scss';
 
 class Header extends Component {

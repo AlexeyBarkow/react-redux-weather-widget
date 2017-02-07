@@ -1,13 +1,10 @@
 import React, { PropTypes, Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import TabController from './TabController';
 import Tab from '../components/Tab';
 import TabHeader from '../components/TabHeader';
 import TabContainer from '../components/TabContainer';
 import WeatherSummary from '../components/WeatherSummary';
 import WeatherForecastSummary from '../components/WeatherForecastSummary';
-import * as actions from '../dataflow/actions/actions';
 
 class IndexMain extends Component {
     componentWillMount() {
@@ -89,16 +86,4 @@ IndexMain.defaultProps = {
     nearestCities: [],
 };
 
-function mapStateToProps(state) {
-    return {
-        weather: state.weatherApp.weather,
-        forecast: state.weatherApp.forecast,
-        nearestCities: state.weatherApp.nearestCities,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(IndexMain);
+export default IndexMain;

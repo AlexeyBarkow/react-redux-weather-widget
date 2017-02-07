@@ -1,14 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import Header from './Header';
 import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
 import GoogleMap from './GoogleMap';
-import { weatherOverallSelector } from '../selectors/selectors';
-import * as actions from '../dataflow/actions/actions';
 
 class RootContainer extends Component {
     componentWillMount() {
@@ -78,18 +74,4 @@ RootContainer.defaultProps = {
     geolocation: null,
 };
 
-
-function mapStateToProps(state) {
-    return {
-        geolocation: state.weatherApp.geolocation,
-        weatherOverall: weatherOverallSelector(state.weatherApp.weather),
-        nearestCities: state.weatherApp.nearestCities,
-    };
-}
-
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
+export default RootContainer;
