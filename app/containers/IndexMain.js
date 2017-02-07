@@ -66,13 +66,15 @@ class IndexMain extends Component {
 }
 
 IndexMain.propTypes = {
-    router: PropTypes.object.isRequired,
     weather: PropTypes.object,
     forecast: PropTypes.array,
+/*eslint-disable react/no-unused-prop-types*/
+    router: PropTypes.object.isRequired,
     getWeather: PropTypes.func.isRequired,
     getForecast: PropTypes.func.isRequired,
     redirectToCity: PropTypes.func.isRequired,
     nearestCities: PropTypes.array,
+/*eslint-enable react/no-unused-prop-types*/
     routeParams: PropTypes.object.isRequired,
 };
 
