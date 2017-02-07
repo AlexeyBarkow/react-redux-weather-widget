@@ -11,16 +11,26 @@ function getCitiesByNameUrl(
 
 function getClosestToLocationUrl(
     { latitude, longitude },
-    radius = 50,
+    radius = .5,
     resultRows = MAX_ROWS,
     username = USERNAME,
 ) {
-    return `${GEONAMES_API_URL}/findNearbyPlaceNameJSON?lat=${latitude}&lng=${longitude}&username=${username}&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
+    const qwe = `${GEONAMES_API_URL}/citiesJSON?north=${
+        latitude - radius
+    }&south=${
+        latitude + radius
+    }&west=${
+        longitude - radius
+    }
+    &east=${
+        longitude + radius
+    }&username=${username}&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
+    return qwe;
 }
 
 function convertToAcceptable(city) {
     return {
-        countryCode: city.countryCode,
+        countryCode: city.countryCode || city.countrycode,
         name: city.name,
     };
 }
@@ -33,11 +43,8 @@ function getCityAjax(cityStart) {
       .then(respond => respond.data.geonames.map(convertToAcceptable));
 }
 
-function getClosestCitiesToLocation(
-    location,
-    radius = 50,
-) {
-    return axios.get(getClosestToLocationUrl(location, radius))
+function getClosestCitiesToLocation(location) {
+    return axios.get(getClosestToLocationUrl(location))
       .then(respond => respond.data.geonames.map(convertToAcceptable));
 }
 

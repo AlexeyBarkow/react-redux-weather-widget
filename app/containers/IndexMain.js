@@ -1,43 +1,46 @@
 import React, { PropTypes, Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import TabController from './TabController';
 import Tab from '../components/Tab';
 import TabHeader from '../components/TabHeader';
 import TabContainer from '../components/TabContainer';
 import WeatherSummary from '../components/WeatherSummary';
 import WeatherForecastSummary from '../components/WeatherForecastSummary';
+import * as actions from '../dataflow/actions/actions';
 
 class IndexMain extends Component {
     componentWillMount() {
-        this.loadCityInfo(this.props, this.context);
+        this.loadCityInfo(this.props);
     }
 
-    componentWillReceiveProps(newProps, newContext) {
-        this.loadCityInfo(newProps, newContext);
+    componentWillReceiveProps(newProps) {
+        this.loadCityInfo(newProps);
     }
 
-    loadCityInfo(newProps, newContext) {
+    loadCityInfo(newProps) {
         const {
+            //ToDo: find out the difference between routeParams and router.params
+            //It seems like router.params isn't synchronized with store
+            routeParams: { cityname, country },
             router: {
-                params: { cityname, country },
                 location: { query: { metric } },
             },
-        } = newProps;
-        const {
             weather: { status },
             nearestCities,
             getWeather,
             getForecast,
             redirectToCity,
-        } = newContext;
-        const oldCityname = this.props.router.params.cityname;
-        const oldCountry = this.props.router.params.country;
+        } = newProps;
+        const oldCityname = this.props.routeParams.cityname;
+        const oldCountry = this.props.routeParams.country;
 
         if (!cityname && !country && nearestCities.length > 0) {
             const { name, countryCode } = nearestCities[0];
             redirectToCity(name, countryCode);
         }
         if (cityname && country &&
-            (newProps !== this.props || status === 0
+            (newProps === this.props || status === 0
             || cityname !== oldCityname || country !== oldCountry)) {
             getWeather(cityname, country, metric);
             getForecast(cityname, country, metric);
@@ -45,7 +48,7 @@ class IndexMain extends Component {
     }
 
     render() {
-        const { weather, forecast } = this.context;
+        const { weather, forecast } = this.props;
         return (
             <TabController defaultSelectedTabIndex="1">
                 <TabContainer headerContainer>
@@ -67,15 +70,35 @@ class IndexMain extends Component {
 
 IndexMain.propTypes = {
     router: PropTypes.object.isRequired,
-};
-
-IndexMain.contextTypes = {
     weather: PropTypes.object,
     forecast: PropTypes.array,
     getWeather: PropTypes.func.isRequired,
     getForecast: PropTypes.func.isRequired,
     redirectToCity: PropTypes.func.isRequired,
     nearestCities: PropTypes.array,
+    routeParams: PropTypes.object.isRequired,
 };
 
-export default IndexMain;
+IndexMain.defaultProps = {
+    weather: {
+        status: 0,
+    },
+    forecast: {
+        status: 0,
+    },
+    nearestCities: [],
+};
+
+function mapStateToProps(state) {
+    return {
+        weather: state.weatherApp.weather,
+        forecast: state.weatherApp.forecast,
+        nearestCities: state.weatherApp.nearestCities,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexMain);

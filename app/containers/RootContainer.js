@@ -7,20 +7,10 @@ import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
 import GoogleMap from './GoogleMap';
+import { weatherOverallSelector } from '../selectors/selectors';
 import * as actions from '../dataflow/actions/actions';
 
 class RootContainer extends Component {
-    getChildContext() {
-        return {
-            weather: this.props.weather,
-            forecast: this.props.forecast,
-            getWeather: this.props.getWeather,
-            getForecast: this.props.getForecast,
-            redirectToCity: this.props.redirectToCity,
-            nearestCities: this.props.nearestCities,
-        };
-    }
-
     componentWillMount() {
         const { getLocation } = this.props;
         getLocation();
@@ -33,7 +23,7 @@ class RootContainer extends Component {
     }
 
     render() {
-        const { children, geolocation, weather, nearestCities } = this.props;
+        const { children, geolocation, weatherOverall, nearestCities, getLocation } = this.props;
         const markers = [];
         let mapCenter;
 
@@ -45,15 +35,15 @@ class RootContainer extends Component {
             mapCenter = geolocation;
         }
 
-        if (weather.city) {
+        if (weatherOverall.city) {
             markers.push({
-                title: weather.city,
-                location: weather.location,
+                title: weatherOverall.city,
+                location: weatherOverall.location,
             });
         }
 
         return (
-            <div className={`app-wrapper fixed-background background-${weather.weatherTypes ? weather.weatherTypes[0].main : 'default'}`}>
+            <div className={`app-wrapper fixed-background background-${weatherOverall.main}`}>
                 <div className="sticky-top">
                     <StaticFixator placeholderClass="header__placeholder">
                         <Header className="header no-padding-top-and-bottom-rsm" />
@@ -64,7 +54,7 @@ class RootContainer extends Component {
                                 {children}
                             </MainContainer>
                             <AsideBar nearestCities={nearestCities} className="aside col-sm-3 col-xs-12 panel" />
-                            <GoogleMap className="map panel" location={weather.location || mapCenter} markers={markers} />
+                            <GoogleMap className="map panel" location={weatherOverall.location || mapCenter} markers={markers} getLocation={getLocation} />
                         </div>
                     </div>
                 </div>
@@ -74,31 +64,17 @@ class RootContainer extends Component {
     }
 }
 
-RootContainer.childContextTypes = {
-    weather: PropTypes.object,
-    forecast: PropTypes.array,
-    getForecast: PropTypes.func.isRequired,
-    getWeather: PropTypes.func.isRequired,
-    redirectToCity: PropTypes.func.isRequired,
-    nearestCities: PropTypes.array,
-};
-
 RootContainer.propTypes = {
     children: PropTypes.node,
-    weather: PropTypes.object.isRequired,
-    forecast: PropTypes.array,
+    weatherOverall: PropTypes.object.isRequired,
     geolocation: PropTypes.object,
     getLocation: PropTypes.func.isRequired,
     getNearestTo: PropTypes.func.isRequired,
     nearestCities: PropTypes.array.isRequired,
-    redirectToCity: PropTypes.func.isRequired,
-    getForecast: PropTypes.func.isRequired,
-    getWeather: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {
     children: null,
-    forecast: [],
     geolocation: null,
 };
 
@@ -106,9 +82,7 @@ RootContainer.defaultProps = {
 function mapStateToProps(state) {
     return {
         geolocation: state.weatherApp.geolocation,
-        city: state.weatherApp.city,
-        weather: state.weatherApp.weather,
-        forecast: state.weatherApp.forecast,
+        weatherOverall: weatherOverallSelector(state.weatherApp.weather),
         nearestCities: state.weatherApp.nearestCities,
     };
 }

@@ -22,12 +22,13 @@ class CityInputForm extends Component {
         this.state = {
             typedCity: '',
             selectedMetric: 'C',
-            triggerValidation: false,
+            dropDownValidationState: '',
         };
         this.onDropDownChange = this::this.onDropDownChange;
         this.onSelectChange = this::this.onSelectChange;
         this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL);
         this.onSubmit = this::this.onSubmit;
+        this.validateDropDown = this::this.validateDropDown;
     }
 
     onSubmit(e) {
@@ -35,10 +36,8 @@ class CityInputForm extends Component {
         const { redirectToCity } = this.props;
         const { typedCity, selectedMetric } = this.state;
 
-        if (validateAddress(typedCity)) {
+        if (this.validateDropDown()) {
             redirectToCity(typedCity.split(', ')[0], typedCity.split(', ')[1], selectedMetric);
-            //ToDo: find out more applicable solution
-            this.setState({ triggerValidation: true });
         }
     }
 
@@ -54,9 +53,20 @@ class CityInputForm extends Component {
         this.setState({ typedCity });
     }
 
+    validateDropDown() {
+        const { typedCity } = this.state;
+
+        if (validateAddress(typedCity)) {
+            this.setState({ dropDownValidationState: 'has-success' });
+            return true;
+        }
+        this.setState({ dropDownValidationState: 'has-error' });
+        return false;
+    }
+
     render() {
         const { className, autocomplete } = this.props;
-        const { typedCity, selectedMetric, triggerValidation } = this.state;
+        const { typedCity, selectedMetric, dropDownValidationState } = this.state;
 
         return (
             <Form className={className} autocompleteOff submitHandler={this.onSubmit}>
@@ -68,8 +78,8 @@ class CityInputForm extends Component {
                       value={typedCity}
                       listId="city-input"
                       onInputChange={this.onDropDownChange}
-                      validationFunction={validateAddress}
-                      triggerValidation={triggerValidation}
+                      onBlur={this.validateDropDown}
+                      validationState={dropDownValidationState}
                       errorBlock={<InputError errorMessage="Address should be presented in format 'City name, Country code'" />}
                     >
                         {

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { formatDate } from '../utils/unifiedDateFormat';
 import WeatherTemperature from './WeatherTemperature';
+import ErrorMessage from './ErrorMessage';
 import ValueBlock from './ValueBlock';
 import Loading from './Loading';
 import css from '../styles/summary.scss';
@@ -41,10 +42,10 @@ function WeatherSummary({ className, weather }) {
                     );
                 }
                 return (
-                    <div className="error-wrapper">
-                        <h1>Error: { weather.status }</h1>
-                        <p>{ weather.message }</p>
-                    </div>
+                    <ErrorMessage
+                      status={weather.status}
+                      message={weather.message}
+                    />
                 );
             })()
         }
@@ -63,9 +64,6 @@ WeatherSummary.defaultProps = {
         message: 'No weather data fetched',
         status: 0,
     },
-};
-
-WeatherSummary.contextTypes = {
 };
 
 export default WeatherSummary;

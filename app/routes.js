@@ -6,7 +6,7 @@ import About from './components/About';
 import IndexMain from './containers/IndexMain';
 import WrongPath from './components/WrongPath';
 
-const router = (
+const routes = (
     <Route path="/" component={RootContainer}>
         <IndexRoute component={IndexMain} />
         <Route path="/home" component={IndexMain} />
@@ -15,4 +15,4 @@ const router = (
         <Route path="*" component={WrongPath} />
     </Route>
 );
-export default router;
+export default routes;

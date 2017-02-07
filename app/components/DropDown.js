@@ -1,66 +1,37 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
-class DropDown extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            validationState: '',
-        };
-        this.validate = this::this.validate;
-        this.dropValidationState = this::this.dropValidationState;
-    }
-
-    validate() {
-        const { validationFunction, value } = this.props;
-        if (validationFunction(value)) {
-            this.setState({ validationState: 'has-success' });
-        } else {
-            this.setState({ validationState: 'has-error' });
-        }
-    }
-
-    dropValidationState() {
-        this.setState({
-            validationState: '',
-        });
-    }
-
-    render() {
-        const {
-            children,
-            className,
-            inputClassName,
-            dataListClassName,
-            name,
-            value,
-            placeholder,
-            listId,
-            onInputChange,
-            errorBlock,
-            validationFunction,
-        } = this.props;
-        const { validationState } = this.state;
-
-        return (
-            <div className={`${className} form-group ${validationState}`}>
-                <input
-                  className={`${inputClassName} form-control`}
-                  type="text"
-                  name={name}
-                  value={value}
-                  placeholder={placeholder}
-                  list={listId}
-                  onChange={onInputChange}
-                  onFocus={this.dropValidationState}
-                  onBlur={!!validationFunction && this.validate}
-                />
-                <datalist id={listId} className={dataListClassName}>
-                    { children }
-                </datalist>
-                { validationState === 'has-error' && errorBlock }
-            </div>
-        );
-    }
+function DropDown({
+    children,
+    className,
+    inputClassName,
+    dataListClassName,
+    name,
+    value,
+    placeholder,
+    listId,
+    onInputChange,
+    errorBlock,
+    onBlur,
+    validationState,
+}) {
+    return (
+        <div className={`${className} form-group ${validationState}`}>
+            <input
+              className={`${inputClassName} form-control`}
+              type="text"
+              name={name}
+              value={value}
+              placeholder={placeholder}
+              list={listId}
+              onChange={onInputChange}
+              onBlur={onBlur}
+            />
+            <datalist id={listId} className={dataListClassName}>
+                { children }
+            </datalist>
+            { validationState === 'has-error' && errorBlock }
+        </div>
+    );
 }
 
 DropDown.propTypes = {
@@ -74,7 +45,8 @@ DropDown.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     errorBlock: PropTypes.element,
-    validationFunction: PropTypes.func,
+    onBlur: PropTypes.func,
+    validationState: PropTypes.string,
 };
 
 DropDown.defaultProps = {
@@ -87,7 +59,8 @@ DropDown.defaultProps = {
     placeholder: '',
     value: '',
     errorBlock: null,
-    validationFunction: null,
+    onBlur: null,
+    validationState: '',
 };
 
 export default DropDown;

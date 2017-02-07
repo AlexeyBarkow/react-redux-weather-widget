@@ -93,7 +93,7 @@ class GoogleMap extends Component {
             map: null,
         });
 
-        this.forceUpdate();
+        this.props.getLocation();
     }
 
     render() {
@@ -123,7 +123,7 @@ class GoogleMap extends Component {
                                     location
                                     ? location.message
                                     : <span>
-                                        Google Maps service is not respondingor google location
+                                        Google Maps service is not responding or google location
                                         service is not enabled. <a href="#" onClick={this.updateComponent}>Retry?</a>
                                     </span>
                                 }
@@ -145,6 +145,7 @@ GoogleMap.propTypes = {
     className: PropTypes.string,
     location: PropTypes.object,
     markers: PropTypes.array,
+    getLocation: PropTypes.func.isRequired,
 };
 
 GoogleMap.defaultProps = {

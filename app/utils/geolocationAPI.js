@@ -17,6 +17,11 @@ function loadLocation() {
                     message: 'could not get geoposition',
                 });
             }
+        }, (errorMessage) => {
+            error({
+                code: errorMessage.code,
+                message: errorMessage.message,
+            });
         });
     });
 }
