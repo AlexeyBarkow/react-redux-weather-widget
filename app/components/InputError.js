@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 
-function InputError({ className, errorMessage }) {
+function InputError({ className, errorMessage, popupPanel }) {
     return (
         <div>
-            <span className={`${className} help-block`}>
+            <span className={`${className} help-block${popupPanel ? ' panel panel-danger' : ''}`}>
                 { errorMessage }
             </span>
         </div>
@@ -13,10 +13,12 @@ function InputError({ className, errorMessage }) {
 InputError.propTypes = {
     className: PropTypes.string,
     errorMessage: PropTypes.string.isRequired,
+    popupPanel: PropTypes.bool,
 };
 
 InputError.defaultProps = {
     className: '',
+    popupPanel: false,
 };
 
 export default InputError;

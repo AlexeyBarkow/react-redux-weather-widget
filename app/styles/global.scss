@@ -188,3 +188,32 @@ html, body, .my-app-root-class, #root,  {
     display: inline;
     border: none;
 }
+
+.active-form {
+    .has-error {
+        position: relative;
+        .help-block.panel-danger {
+            position: absolute;
+            display: block;
+            z-index: 3;
+            width: 18em;
+            top: calc(100% + 1em);
+            left: 1em;
+            padding: 1em;
+            &:before {
+                position: absolute;
+                content: ' ';
+                width: 1px;
+                height: 1px;
+                border: 15px solid;
+                border-color: transparent transparent var(--color-white) var(--color-white);
+                left: -1px;
+                top: -15px;
+            }
+        }
+    }
+}
+
+.help-block.panel-danger {
+    display: none;
+}

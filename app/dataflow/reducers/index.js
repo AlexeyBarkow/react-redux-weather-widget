@@ -6,7 +6,8 @@ import mainReducer from './main';
 import locationReducer from './location';
 import { load } from '../../utils/localStorage';
 
-const { city, countryCode, metric } = load('store');
+const stored = load('store') || {};
+const { city, countryCode, metric } = stored;
 
 const initialState = {
     geolocation: null,

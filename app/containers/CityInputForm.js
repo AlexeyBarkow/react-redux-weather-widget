@@ -4,7 +4,7 @@ import Select from '../components/Select';
 import DatalistOption from '../components/DatalistOption';
 import DropDown from '../components/DropDown';
 import InputError from '../components/InputError';
-import Form from '../components/Form';
+import Form from '../containers/Form';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
 import { validateAddress } from '../utils/validateFunctions';
@@ -26,7 +26,7 @@ class CityInputForm extends Component {
         this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL);
         this.onSubmit = this::this.onSubmit;
         this.validateDropDown = this::this.validateDropDown;
-        this.setValidationState = this::this.setValidationState;
+        this.setDropDownValidationState = this::this.setDropDownValidationState;
     }
 
     onSubmit(e) {
@@ -51,9 +51,9 @@ class CityInputForm extends Component {
         this.setState({ typedCity });
     }
 
-    setValidationState(propName, newState) {
+    setDropDownValidationState(newState) {
         this.setState({
-            [propName]: newState,
+            dropDownValidationState: newState,
         });
     }
 
@@ -61,17 +61,16 @@ class CityInputForm extends Component {
         const { typedCity } = this.state;
 
         if (validateAddress(typedCity)) {
-            this.setValidationState('dropDownValidationState', 'has-success');
+            this.setDropDownValidationState('has-success');
             return true;
         }
-        this.setValidationState('dropDownValidationState', 'has-error');
+        this.setDropDownValidationState('has-error');
         return false;
     }
 
     render() {
         const { className, autocomplete } = this.props;
         const { typedCity, selectedMetric, dropDownValidationState } = this.state;
-
         return (
             <Form className={className} autocompleteOff submitHandler={this.onSubmit}>
                 <ButtonGroup>
@@ -83,9 +82,8 @@ class CityInputForm extends Component {
                       listId="city-input"
                       onInputChange={this.onDropDownChange}
                       onBlur={this.validateDropDown}
-                      onFocus={() => this.setValidationState('dropDownValidationState', '')}
                       validationState={dropDownValidationState}
-                      errorBlock={<InputError errorMessage="Address should be presented in format 'City name, Country code'" />}
+                      errorBlock={<InputError popupPanel errorMessage="Address should be presented in format 'City name, Country code'" />}
                     >
                         {
                             autocomplete.map((curr, index) => (
