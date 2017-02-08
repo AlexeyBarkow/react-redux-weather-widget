@@ -14,11 +14,11 @@ class CityInputForm extends Component {
     constructor(props) {
         super(props);
 
-        const { autocompleteCity } = props;
+        const { autocompleteCity, metric } = props;
 
         this.state = {
             typedCity: '',
-            selectedMetric: 'C',
+            selectedMetric: metric,
             dropDownValidationState: '',
         };
         this.onDropDownChange = this::this.onDropDownChange;
@@ -101,6 +101,7 @@ CityInputForm.propTypes = {
     autocompleteCity: PropTypes.func.isRequired,
     autocomplete: PropTypes.array,
     redirectToCity: PropTypes.func.isRequired,
+    metric: PropTypes.string.isRequired,
 };
 
 CityInputForm.defaultProps = {

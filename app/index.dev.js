@@ -11,7 +11,9 @@ import Root from './containers/Root';
 import css from './styles/global.scss';
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(browserHistory, store, {
+    selectLocationState: state => state,
+});
 
 render(
     (

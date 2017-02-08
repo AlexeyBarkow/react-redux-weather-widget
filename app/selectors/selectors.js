@@ -8,5 +8,3 @@ export const weatherOverallSelector = ({
     location,
     main: weatherTypes ? weatherTypes[0].main : 'default',
 });
-//ToDo: Remove this line
-export const eslintFiller = {};

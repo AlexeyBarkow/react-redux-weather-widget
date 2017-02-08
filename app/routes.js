@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import RootContainer from './containers/Connectors/RootContainerConnector';
+import RootContainer from './containers/connectors/RootContainerConnector';
 import About from './components/About';
-import IndexMain from './containers/Connectors/IndexMainConnector';
+import IndexMain from './containers/connectors/IndexMainConnector';
 import WrongPath from './components/WrongPath';
 
 const routes = (
