@@ -14,11 +14,11 @@ class CityInputForm extends Component {
     constructor(props) {
         super(props);
 
-        const { autocompleteCity } = props;
+        const { autocompleteCity, metric } = props;
 
         this.state = {
             typedCity: '',
-            selectedMetric: 'C',
+            selectedMetric: metric,
             dropDownValidationState: '',
         };
         this.onDropDownChange = this::this.onDropDownChange;
@@ -26,6 +26,7 @@ class CityInputForm extends Component {
         this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL);
         this.onSubmit = this::this.onSubmit;
         this.validateDropDown = this::this.validateDropDown;
+        this.setValidationState = this::this.setValidationState;
     }
 
     onSubmit(e) {
@@ -50,14 +51,20 @@ class CityInputForm extends Component {
         this.setState({ typedCity });
     }
 
+    setValidationState(propName, newState) {
+        this.setState({
+            [propName]: newState,
+        });
+    }
+
     validateDropDown() {
         const { typedCity } = this.state;
 
         if (validateAddress(typedCity)) {
-            this.setState({ dropDownValidationState: 'has-success' });
+            this.setValidationState('dropDownValidationState', 'has-success');
             return true;
         }
-        this.setState({ dropDownValidationState: 'has-error' });
+        this.setValidationState('dropDownValidationState', 'has-error');
         return false;
     }
 
@@ -76,6 +83,7 @@ class CityInputForm extends Component {
                       listId="city-input"
                       onInputChange={this.onDropDownChange}
                       onBlur={this.validateDropDown}
+                      onFocus={() => this.setValidationState('dropDownValidationState', '')}
                       validationState={dropDownValidationState}
                       errorBlock={<InputError errorMessage="Address should be presented in format 'City name, Country code'" />}
                     >
@@ -101,6 +109,7 @@ CityInputForm.propTypes = {
     autocompleteCity: PropTypes.func.isRequired,
     autocomplete: PropTypes.array,
     redirectToCity: PropTypes.func.isRequired,
+    metric: PropTypes.string.isRequired,
 };
 
 CityInputForm.defaultProps = {

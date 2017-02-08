@@ -5,7 +5,8 @@ import * as actions from '../../dataflow/actions/actions';
 
 function mapStateToProps(state) {
     return {
-        autocomplete: state.weatherApp.autocomplete,
+        autocomplete: state.autocomplete,
+        metric: state.metric,
     };
 }
 

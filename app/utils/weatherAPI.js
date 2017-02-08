@@ -90,20 +90,13 @@ const weatherAPI = {
     fetchCurrentWeather(city, country, metric = 'C') {
         return axios
             .get(getWeatherTemplate(city, country, metric))
-            .then(res => convertWeatherToAcceptableFormat(metric, city, null, res.data))
-            .catch(error => ({
-                status: error.cod,
-                message: error.message,
-            }));
+            .then(res => convertWeatherToAcceptableFormat(metric, city, null, res.data));
     },
     fetchWeatherForecast(city, country, metric = 'C') {
         const mapper = convertWeatherToAcceptableFormat.bind(null, metric, city, 200);
         return axios
             .get(getWeatherForecastTemplate(city, country, metric))
-            .then(res => res.data.list.map(mapper)).catch(error => ([{
-                status: error.cod,
-                message: error.message,
-            }]));
+            .then(res => res.data.list.map(mapper));
     },
 };
 

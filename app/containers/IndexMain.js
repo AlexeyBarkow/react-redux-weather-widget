@@ -15,32 +15,31 @@ class IndexMain extends Component {
         this.loadCityInfo(newProps);
     }
 
-    loadCityInfo(newProps) {
-        const {
-            //ToDo: find out the difference between routeParams and router.params
-            //It seems like router.params isn't synchronized with store
-            routeParams: { cityname, country },
-            router: {
-                location: { query: { metric } },
-            },
-            weather: { status },
-            nearestCities,
-            getWeather,
-            getForecast,
-            redirectToCity,
-        } = newProps;
-        const oldCityname = this.props.routeParams.cityname;
-        const oldCountry = this.props.routeParams.country;
+    loadCityInfo({
+        weather: { status },
+        nearestCities,
+        getWeather,
+        getForecast,
+        redirectToCity,
+        city,
+        countryCode,
+        metric,
+    }) {
+        const oldCity = this.props.city;
+        const oldCountryCode = this.props.countryCode;
 
-        if (!cityname && !country && nearestCities.length > 0) {
-            const { name, countryCode } = nearestCities[0];
-            redirectToCity(name, countryCode);
+        if (city && countryCode && status === 0) {
+            redirectToCity(city, countryCode, metric);
         }
-        if (cityname && country &&
-            (newProps === this.props || status === 0
-            || cityname !== oldCityname || country !== oldCountry)) {
-            getWeather(cityname, country, metric);
-            getForecast(cityname, country, metric);
+
+        if ((!city || !countryCode) && nearestCities.length > 0) {
+            const nearestCityName = nearestCities[0].name;
+            const nearestCityCountryCode = nearestCities[0].countryCode;
+            redirectToCity(nearestCityName, nearestCityCountryCode, metric);
+        }
+        if (city !== oldCity || countryCode !== oldCountryCode || status === 0) {
+            getWeather(city, countryCode, metric);
+            getForecast(city, countryCode, metric);
         }
     }
 
@@ -69,13 +68,14 @@ IndexMain.propTypes = {
     weather: PropTypes.object,
     forecast: PropTypes.array,
 /*eslint-disable react/no-unused-prop-types*/
-    router: PropTypes.object.isRequired,
     getWeather: PropTypes.func.isRequired,
     getForecast: PropTypes.func.isRequired,
     redirectToCity: PropTypes.func.isRequired,
     nearestCities: PropTypes.array,
+    metric: PropTypes.string.isRequired,
 /*eslint-enable react/no-unused-prop-types*/
-    routeParams: PropTypes.object.isRequired,
+    city: PropTypes.string,
+    countryCode: PropTypes.string,
 };
 
 IndexMain.defaultProps = {
@@ -86,6 +86,8 @@ IndexMain.defaultProps = {
         status: 0,
     },
     nearestCities: [],
+    city: '',
+    countryCode: '',
 };
 
 export default IndexMain;

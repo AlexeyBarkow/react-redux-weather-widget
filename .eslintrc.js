@@ -29,6 +29,7 @@ module.exports = {
         'react/no-string-refs': 1,
         'react/no-unused-prop-types': 1,
         'react/prefer-stateless-function': 0,
+        'import/prefer-default-export': 0,
         'key-spacing': 1,
         'comma-spacing': 1,
         'quotes': 1,

@@ -3,11 +3,21 @@ import { connect } from 'react-redux';
 import * as actions from '../../dataflow/actions/actions';
 import IndexMain from '../IndexMain';
 
-function mapStateToProps(state) {
+function mapStateToProps({
+    weather,
+    forecast,
+    nearestCities,
+    city,
+    countryCode,
+    metric,
+}) {
     return {
-        weather: state.weatherApp.weather,
-        forecast: state.weatherApp.forecast,
-        nearestCities: state.weatherApp.nearestCities,
+        weather,
+        forecast,
+        nearestCities,
+        city,
+        countryCode,
+        metric,
     };
 }
 

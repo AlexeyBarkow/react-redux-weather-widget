@@ -12,6 +12,7 @@ function DropDown({
     onInputChange,
     errorBlock,
     onBlur,
+    onFocus,
     validationState,
 }) {
     return (
@@ -25,6 +26,7 @@ function DropDown({
               list={listId}
               onChange={onInputChange}
               onBlur={onBlur}
+              onFocus={onFocus}
             />
             <datalist id={listId} className={dataListClassName}>
                 { children }
@@ -46,6 +48,7 @@ DropDown.propTypes = {
     value: PropTypes.string,
     errorBlock: PropTypes.element,
     onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
     validationState: PropTypes.string,
 };
 
@@ -60,6 +63,7 @@ DropDown.defaultProps = {
     value: '',
     errorBlock: null,
     onBlur: null,
+    onFocus: null,
     validationState: '',
 };
 

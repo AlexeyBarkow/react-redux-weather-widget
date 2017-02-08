@@ -6,9 +6,9 @@ import * as actions from '../../dataflow/actions/actions';
 
 function mapStateToProps(state) {
     return {
-        geolocation: state.weatherApp.geolocation,
-        weatherOverall: weatherOverallSelector(state.weatherApp.weather),
-        nearestCities: state.weatherApp.nearestCities,
+        geolocation: state.geolocation,
+        weatherOverall: weatherOverallSelector(state.weather),
+        nearestCities: state.nearestCities,
     };
 }
 
