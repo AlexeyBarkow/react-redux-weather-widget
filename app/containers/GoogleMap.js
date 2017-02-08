@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import Loading from '../components/Loading';
-import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers } from '../utils/googleMapAPI';
+import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
 import css from '../styles/gmap.scss';
 
 class GoogleMap extends Component {
@@ -20,12 +20,14 @@ class GoogleMap extends Component {
         this.scriptLoadingFailed = this::this.scriptLoadingFailed;
         this.initMapBlock = this::this.initMapBlock;
         this.getStateMarkers = this::this.getStateMarkers;
+        this.updateComponent = this::this.updateComponent;
     }
 
     componentWillReceiveProps(newProps) {
         const { map } = this.state;
-        const { markers } = this.props;
+        const { markers, location } = this.props;
         const newMarkers = newProps.markers;
+        const newLocation = newProps.location;
 
         if (!map) {
             return;
@@ -36,10 +38,15 @@ class GoogleMap extends Component {
 
             this.setState({ stateMarkers });
         }
+
+        if (newLocation !== location) {
+            setCenter(map, newLocation);
+        }
     }
 
     shouldComponentUpdate(_, newState) {
-        if (newState.googleScriptLoaded !== this.state.googleScriptLoaded) {
+        const { map, googleScriptLoaded } = this.state;
+        if (newState.googleScriptLoaded !== googleScriptLoaded || !map) {
             return true;
         }
         return false;
@@ -81,9 +88,16 @@ class GoogleMap extends Component {
         this.setState({ map, stateMarkers });
     }
 
+    updateComponent() {
+        this.setState({
+            map: null,
+        });
+
+        this.props.getLocation();
+    }
 
     render() {
-        const { className } = this.props;
+        const { className, location } = this.props;
         const { googleScriptLoaded } = this.state;
 
         return (
@@ -108,7 +122,10 @@ class GoogleMap extends Component {
                                 {
                                     location
                                     ? location.message
-                                    : 'Google Maps service is not responding or google location service is not enabled'
+                                    : <span>
+                                        Google Maps service is not responding or google location
+                                        service is not enabled. <a href="#" onClick={this.updateComponent}>Retry?</a>
+                                    </span>
                                 }
                             </p>
                         </div>
@@ -128,6 +145,7 @@ GoogleMap.propTypes = {
     className: PropTypes.string,
     location: PropTypes.object,
     markers: PropTypes.array,
+    getLocation: PropTypes.func.isRequired,
 };
 
 GoogleMap.defaultProps = {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DEFAULT_API_KEY, API_URL } from './constants';
 
-function getWeatherTemplate(city, format = 'C', apiKey = DEFAULT_API_KEY) {
+function getWeatherTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
     let metric;
 
     if (format === 'C') {
@@ -10,10 +10,10 @@ function getWeatherTemplate(city, format = 'C', apiKey = DEFAULT_API_KEY) {
         metric = 'imperial';
     }
 
-    return `${API_URL}/weather?q=${city}&APPID=${apiKey}&units=${metric}`;
+    return `${API_URL}/weather?q=${city},${countryCode}&APPID=${apiKey}&units=${metric}`;
 }
 
-function getWeatherForecastTemplate(city, format = 'C', apiKey = DEFAULT_API_KEY) {
+function getWeatherForecastTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
     let metric;
 
     if (format === 'C') {
@@ -22,7 +22,7 @@ function getWeatherForecastTemplate(city, format = 'C', apiKey = DEFAULT_API_KEY
         metric = 'imperial';
     }
 
-    return `${API_URL}/forecast?q=${city}&APPID=${apiKey}&units=${metric}`;
+    return `${API_URL}/forecast?q=${city},${countryCode}&APPID=${apiKey}&units=${metric}`;
 }
 
 function mapWeatherType(type) {
@@ -56,10 +56,15 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
                 min: Math.trunc(data.main.temp_min),
                 max: Math.trunc(data.main.temp_max),
             },
+            location: data.coord ? {
+                longitude: data.coord.lon,
+                latitude: data.coord.lat,
+            } : null,
             pressure: data.main.pressure,
             weatherTypes: data.weather.map(curr => ({
                 main: mapWeatherType(curr.main),
                 desc: curr.description,
+                icon: curr.icon,
             })),
             clouds: data.clouds.all,
             wind: {
@@ -77,19 +82,20 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
             message: data.message,
         };
     }
+
     return formattedWeather;
 }
 
 const weatherAPI = {
-    fetchCurrentWeather(city, metric = 'C') {
+    fetchCurrentWeather(city, country, metric = 'C') {
         return axios
-            .get(getWeatherTemplate(city, metric))
-            .then(res => convertWeatherToAcceptableFormat(metric, city, null, res));
+            .get(getWeatherTemplate(city, country, metric))
+            .then(res => convertWeatherToAcceptableFormat(metric, city, null, res.data));
     },
-    fetchWeatherForecast(city, metric = 'C') {
+    fetchWeatherForecast(city, country, metric = 'C') {
         const mapper = convertWeatherToAcceptableFormat.bind(null, metric, city, 200);
         return axios
-            .get(getWeatherForecastTemplate(city, metric))
+            .get(getWeatherForecastTemplate(city, country, metric))
             .then(res => res.data.list.map(mapper));
     },
 };

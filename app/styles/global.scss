@@ -1,5 +1,5 @@
 :root {
-    //put global css variables here
+    //put the global css variables here
     --color-dark-red: rgb(185, 0 , 0);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
@@ -39,7 +39,11 @@
     }
 }
 
-html {
+html, body, .my-app-root-class, #root,  {
+    height: 100%;
+}
+
+.app-wrapper {
     min-height: 100%;
     position: relative;
 }
@@ -167,6 +171,7 @@ html {
 .background-clear {
     background-image: var(--clear-url);
 }
+
 .background-rainy {
     background-image: var(--rainy-url);
 }
@@ -174,3 +179,12 @@ html {
 @include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
     padding: 0;
 };
+
+@include class-with-bootstrap-breaks('no-padding') {
+    padding: 0;
+}
+
+.btn-inline {
+    display: inline;
+    border: none;
+}

@@ -29,14 +29,13 @@ class Tooltip extends Component {
             <div onMouseOver={this.onHover} onMouseOut={this.onLeave} className={`${className} tooltip-container`}>
                 { children }
                 {
-                    isHovered
-                    ? <div className={`tooltip in ${placement}`}>
+                    isHovered &&
+                    (<div className={`tooltip in ${placement}`}>
                         <div className="tooltip-inner">
                             {tooltipText}
                         </div>
                         <div className="tooltip-arrow" />
-                    </div>
-                    : undefined
+                    </div>)
                 }
             </div>
         );

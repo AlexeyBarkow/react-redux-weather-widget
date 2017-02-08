@@ -1,11 +1,5 @@
-import { createStore } from 'redux';
-import rootReducer from '../reducers/index';
+const configureStore = (process.env.NODE_ENV === 'production')
+    ? require('./configureStore.prod.js').default
+    : require('./configureStore.dev.js').default;
 
-export default function configureStore(initialState) {
-    const store = createStore(
-        rootReducer,
-        initialState,
-    );
-
-    return store;
-}
+export default configureStore;

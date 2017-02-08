@@ -1,26 +1,26 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import ClickOutComponent from 'react-onclickout';
-import Button from '../components/Button.js';
+import Button from '../components/Button';
 
 class ButtonDropDown extends ClickOutComponent {
     constructor() {
         super();
         this.toggleClick = ::this.toggleClick;
         this.state = {
-            open: false
+            open: false,
         };
     }
 
     toggleClick() {
         this.setState({
-            open: !this.state.open
+            open: !this.state.open,
         });
     }
 
     onClickOut() {
-        const {open} = this.state;
+        const { open } = this.state;
         if (open) {
-            this.setState({open: false});
+            this.setState({ open: false });
         }
     }
 
@@ -34,12 +34,15 @@ class ButtonDropDown extends ClickOutComponent {
             caretClassName,
         } = this.props;
         return (
-            <div className={`dropdown btn-group ${open
+            <div
+              className={`dropdown btn-group ${
+                open
                 ? 'open'
-                : ''}`}>
-                <Button className={`${className || ''} dropdown-toggle`} onClickHandler={this._toggleClick}>
+                : ''}`}
+            >
+                <Button className={`${className || ''} dropdown-toggle`} onClickHandler={this.toggleClick}>
                     {value}
-                    <span className={caretClassName || `caret`}></span>
+                    <span className={caretClassName || 'caret'} />
                 </Button>
                 <ul className={`${dropDownClassName || ''} dropdown-menu`}>
                     {children}

@@ -16,10 +16,8 @@ function WeatherTemperature({
 }) {
     return (
         <div className={className}>
-            { title ? (<h3>{title}</h3>) : undefined }
-            { date ? (
-                <CalendarPage className="col-xs-3" date={date} showTime />
-            ) : undefined }
+            { !!title && (<h3>{title}</h3>) }
+            { !!date && <CalendarPage className="col-xs-3" date={date} showTime /> }
             <div className={date ? 'col-xs-8' : ''}>
                 <div className="col-xs-7">
                     <Tooltip
@@ -59,7 +57,7 @@ WeatherTemperature.propTypes = {
     maxTemperature: PropTypes.number.isRequired,
     className: PropTypes.string,
     title: PropTypes.string,
-    date: PropTypes.number,
+    date: PropTypes.any,
 };
 
 WeatherTemperature.defaultProps = {

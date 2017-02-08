@@ -25,6 +25,10 @@ export function setMapOnAll(map, markers) {
     return markers;
 }
 
+export function setCenter(map, position) {
+    map.setCenter(convertToLitLng(position));
+}
+
 export function getGoogleMapUrl(key = GOOGLE_MAP_API_KEY) {
     return `https://maps.googleapis.com/maps/api/js?key=${key}`;
 }

@@ -64,9 +64,11 @@
 }
 
 .fixed-children {
-    transition: translateZ(0);
     .fixed-wrapper {
-        z-index: 2;
+        .header {
+            transform: translateZ(0);
+        }
+        z-index: 3;
         position: fixed;
         top: 0;
         width: 100%;
