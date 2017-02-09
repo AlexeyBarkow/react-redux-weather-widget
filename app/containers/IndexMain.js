@@ -27,8 +27,10 @@ class IndexMain extends Component {
     }) {
         const oldCity = this.props.city;
         const oldCountryCode = this.props.countryCode;
+        const { params: { country, cityname } } = this.props;
 
-        if (city && countryCode && status === 0) {
+        if ((city !== cityname || country !== countryCode)
+            && city && countryCode && status === 0) {
             redirectToCity(city, countryCode, metric);
         }
 
@@ -37,7 +39,8 @@ class IndexMain extends Component {
             const nearestCityCountryCode = nearestCities[0].countryCode;
             redirectToCity(nearestCityName, nearestCityCountryCode, metric);
         }
-        if (city !== oldCity || countryCode !== oldCountryCode || status === 0) {
+        if (city && countryCode &&
+            (city !== oldCity || countryCode !== oldCountryCode || status === 0)) {
             getWeather(city, countryCode, metric);
             getForecast(city, countryCode, metric);
         }
@@ -76,6 +79,7 @@ IndexMain.propTypes = {
 /*eslint-enable react/no-unused-prop-types*/
     city: PropTypes.string,
     countryCode: PropTypes.string,
+    params: PropTypes.object.isRequired,
 };
 
 IndexMain.defaultProps = {

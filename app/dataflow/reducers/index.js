@@ -13,11 +13,11 @@ const initialState = {
     geolocation: null,
     weather: {
         status: 0,
-        message: 'not fetched',
+        message: 'Not fetched',
     },
     forecast: [{
         status: 0,
-        message: 'not fetched',
+        message: 'Not fetched',
     }],
     nearestCities: [],
     countryCode,

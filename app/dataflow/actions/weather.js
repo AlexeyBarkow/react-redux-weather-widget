@@ -45,24 +45,36 @@ export function getWeather(city, code, metric) {
         }));
         getWeatherAjax.fetchCurrentWeather(city, code, metric)
           .then((data) => {
-              dispatch(changeWeatherInfo(data));
-          }).catch((error) => {
-              dispatch(setWeatherStatus(error));
+              if (data.cod === -1) {
+                  return;
+              }
+              if (!data.response) {
+                  dispatch(changeWeatherInfo(data));
+              } else {
+                  const { response: { data: { cod, message } } } = data;
+                  dispatch(setWeatherStatus({ cod, message }));
+              }
           });
     };
 }
 
 export function getForecast(city, code, metric) {
     return (dispatch) => {
-        dispatch(setForecastStatus([{
-            status: 1,
+        dispatch(setForecastStatus({
+            cod: 1,
             message: 'loading...',
-        }]));
+        }));
         getWeatherAjax.fetchWeatherForecast(city, code, metric)
           .then((data) => {
-              dispatch(changeForecastInfo(data));
-          }).catch((error) => {
-              dispatch(setForecastStatus(error));
+              if (data.cod === -1) {
+                  return;
+              }
+              if (!data.response) {
+                  dispatch(changeForecastInfo(data));
+              } else {
+                  const { response: { data: { cod, message } } } = data;
+                  dispatch(setForecastStatus({ cod, message }));
+              }
           });
     };
 }

@@ -200,15 +200,24 @@ html, body, .my-app-root-class, #root,  {
             top: calc(100% + 1em);
             left: 1em;
             padding: 1em;
-            &:before {
+            &:before, &:after {
                 position: absolute;
                 content: ' ';
-                width: 1px;
-                height: 1px;
-                border: 15px solid;
-                border-color: transparent transparent var(--color-white) var(--color-white);
+                width: 0;
+                height: 0;
+
+            }
+            &:after {
+                border: 18px solid;
+                border-color: transparent transparent transparent var(--color-white);
+                left: 0px;
+                top: -18px;
+            }
+            &:before {
+                border: 19px solid;
+                border-color: transparent transparent transparent #eed3d7;
                 left: -1px;
-                top: -15px;
+                top: -20px
             }
         }
     }
@@ -216,4 +225,13 @@ html, body, .my-app-root-class, #root,  {
 
 .help-block.panel-danger {
     display: none;
+}
+
+.aside {
+    .closest-cities-container {
+        .btn {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
 }

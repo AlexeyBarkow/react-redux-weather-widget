@@ -10,8 +10,9 @@ function Button({
     link,
     noDefaultStyles,
     type,
+    title,
 }) {
-    const classesToPass = `${noDefaultStyles ? '' : `btn btn-${link ? 'link' : 'default'}`} ${className}`;
+    const classesToPass = `${noDefaultStyles ? '' : `btn btn-${link ? 'link ' : 'default '}`}${className}`;
 
     return (
         href !== ''
@@ -19,6 +20,7 @@ function Button({
             <Link
               disabled={disabled}
               className={classesToPass}
+              title={title}
               to={href}
               onClick={onClickHandler}
             >
@@ -45,6 +47,7 @@ Button.propTypes = {
     noDefaultStyles: PropTypes.bool,
     type: PropTypes.string,
     link: PropTypes.bool,
+    title: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -56,6 +59,7 @@ Button.defaultProps = {
     noDefaultStyles: false,
     type: null,
     link: false,
+    title: null,
 };
 
 export default Button;

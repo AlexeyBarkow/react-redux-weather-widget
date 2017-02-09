@@ -9,15 +9,15 @@ function WeatherForecastSummary({ className, forecast }) {
     return (
         <section className={className}>
             {(() => {
-                if (forecast.length > 0 && forecast[0].status === 200) {
+                if (forecast.length > 0 && forecast[0].status !== 1) {
                     if (forecast[0].status === 200) {
                         return (
-                            <div className="col-sm-10">
+                            <div className="col-md-10">
                                 <h1>Weather forecast in {forecast[0].city}</h1>
                                 {
                                     forecast.map((current, index) => (
                                         <WeatherTemperature
-                                          className="row pseudo-paragraph"
+                                          className="pseudo-paragraph"
                                           date={new Date((index * FORECAST_INTERVAL)
                                               + lastForecast)}
                                           metric={current.metric}
@@ -42,7 +42,7 @@ function WeatherForecastSummary({ className, forecast }) {
                 }
                 return (
                     <div>
-                        <h1>Fetching weather from server...</h1>
+                        <h1>Fetching data from server...</h1>
                         <Loading />
                     </div>
                 );

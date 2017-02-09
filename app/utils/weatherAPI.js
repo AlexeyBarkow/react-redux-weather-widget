@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CancelToken, isCancel } from 'axios';
 import { DEFAULT_API_KEY, API_URL } from './constants';
 
 function getWeatherTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
@@ -86,17 +86,60 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
     return formattedWeather;
 }
 
+let cancelWeatherAjax = null;
+let cancelForecastAjax = null;
+
 const weatherAPI = {
     fetchCurrentWeather(city, country, metric = 'C') {
+        if (cancelWeatherAjax) {
+            cancelWeatherAjax();
+        }
+
         return axios
-            .get(getWeatherTemplate(city, country, metric))
-            .then(res => convertWeatherToAcceptableFormat(metric, city, null, res.data));
+            .get(getWeatherTemplate(city, country, metric), {
+                cancelToken: new CancelToken((cancel) => {
+                    cancelWeatherAjax = cancel;
+                }),
+            })
+            .then((res) => {
+                cancelWeatherAjax = null;
+                return convertWeatherToAcceptableFormat(metric, city, null, res.data);
+            })
+            .catch((error) => {
+                if (isCancel(error)) {
+                    return {
+                        cod: -1,
+                        message: 'another ajax sent',
+                    };
+                }
+                return error;
+            });
     },
     fetchWeatherForecast(city, country, metric = 'C') {
+        if (cancelForecastAjax) {
+            cancelForecastAjax();
+        }
+
         const mapper = convertWeatherToAcceptableFormat.bind(null, metric, city, 200);
         return axios
-            .get(getWeatherForecastTemplate(city, country, metric))
-            .then(res => res.data.list.map(mapper));
+            .get(getWeatherForecastTemplate(city, country, metric), {
+                cancelToken: new CancelToken((cancel) => {
+                    cancelForecastAjax = cancel;
+                }),
+            })
+            .then((res) => {
+                cancelForecastAjax = null;
+                return res.data.list.map(mapper);
+            })
+            .catch((error) => {
+                if (isCancel(error)) {
+                    return {
+                        cod: -1,
+                        message: 'another ajax sent',
+                    };
+                }
+                return error;
+            });
     },
 };
 

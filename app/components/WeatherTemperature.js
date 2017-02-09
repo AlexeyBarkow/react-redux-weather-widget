@@ -15,11 +15,11 @@ function WeatherTemperature({
     date,
 }) {
     return (
-        <div className={className}>
+        <div className={`row ${className}`}>
             { !!title && (<h3>{title}</h3>) }
             { !!date && <CalendarPage className="col-xs-3" date={date} showTime /> }
             <div className={date ? 'col-xs-8' : ''}>
-                <div className="col-xs-7">
+                <div className={`col-xs-7${date ? '' : ' col-sm-5 col-md-7'}`}>
                     <Tooltip
                       className="weather-pictures"
                       placement="bottom"
@@ -38,7 +38,7 @@ function WeatherTemperature({
                     </p>
                 </div>
                 <Temperature
-                  className="col-xs-5"
+                  className={`col-xs-5 ${date ? '' : ' col-sm-7 col-md-5'}`}
                   metric={metric}
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}
