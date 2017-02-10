@@ -4,11 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./config/server.js",
     "build": "rimraf dist && mkdir dist && webpack --config webpack.prod.config.js"
   },
-  "author": "Aliaksei_Barkou\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[",
+  "author": "Aliaksei_Barkou",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.5.4",
