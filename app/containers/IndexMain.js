@@ -27,6 +27,7 @@ class IndexMain extends Component {
     }) {
         const oldCity = this.props.city;
         const oldCountryCode = this.props.countryCode;
+        const oldMetric = this.props.metric;
         const { params: { country, cityname } } = this.props;
 
         if ((city !== cityname || country !== countryCode)
@@ -40,14 +41,15 @@ class IndexMain extends Component {
             redirectToCity(nearestCityName, nearestCityCountryCode, metric);
         }
         if (city && countryCode &&
-            (city !== oldCity || countryCode !== oldCountryCode || status === 0)) {
+            (city !== oldCity || countryCode !== oldCountryCode
+                || metric !== oldMetric || status === 0)) {
             getWeather(city, countryCode, metric);
             getForecast(city, countryCode, metric);
         }
     }
 
     render() {
-        const { weather, forecast } = this.props;
+        const { weather, forecast, forecastFilter, setForecastFilter } = this.props;
         return (
             <TabController defaultSelectedTabIndex="1">
                 <TabContainer headerContainer>
@@ -59,7 +61,7 @@ class IndexMain extends Component {
                         <WeatherSummary weather={weather} className="summary" />
                     </Tab>
                     <Tab index="2">
-                        <WeatherForecastSummary forecast={forecast} className="summary" />
+                        <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={setForecastFilter} forecast={forecast} className="summary" />
                     </Tab>
                 </TabContainer>
             </TabController>
@@ -80,6 +82,8 @@ IndexMain.propTypes = {
     city: PropTypes.string,
     countryCode: PropTypes.string,
     params: PropTypes.object.isRequired,
+    forecastFilter: PropTypes.string.isRequired,
+    setForecastFilter: PropTypes.func.isRequired,
 };
 
 IndexMain.defaultProps = {

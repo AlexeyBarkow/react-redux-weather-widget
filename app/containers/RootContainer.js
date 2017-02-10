@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
 import GoogleMap from './GoogleMap';
+import { IMAGES_UNUSUAL_PATH } from '../utils/constants';
 
 class RootContainer extends Component {
     componentWillMount() {
@@ -39,7 +40,7 @@ class RootContainer extends Component {
         }
 
         return (
-            <div className={`app-wrapper fixed-background background-${weatherOverall.main}`}>
+            <div className="app-wrapper fixed-background" style={{ backgroundImage: `url(${IMAGES_UNUSUAL_PATH}${weatherOverall.main}.jpg)` }}>
                 <div className="sticky-top">
                     <StaticFixator placeholderClass="header__placeholder">
                         <Header className="header no-padding-top-and-bottom-rsm" />
@@ -63,7 +64,7 @@ class RootContainer extends Component {
 RootContainer.propTypes = {
     children: PropTypes.node,
     weatherOverall: PropTypes.object.isRequired,
-    geolocation: PropTypes.object,
+    geolocation: PropTypes.object.isRequired,
     getLocation: PropTypes.func.isRequired,
     getNearestTo: PropTypes.func.isRequired,
     nearestCities: PropTypes.array.isRequired,
@@ -71,7 +72,6 @@ RootContainer.propTypes = {
 
 RootContainer.defaultProps = {
     children: null,
-    geolocation: null,
 };
 
 export default RootContainer;

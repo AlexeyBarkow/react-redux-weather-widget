@@ -10,15 +10,19 @@ const stored = load('store') || {};
 const { city, countryCode, metric } = stored;
 
 const initialState = {
-    geolocation: null,
+    geolocation: {
+        code: -1,
+        message: 'You location is not defined',
+    },
     weather: {
         status: 0,
-        message: 'Not fetched',
+        message: 'No location API available to get initial state',
     },
     forecast: [{
         status: 0,
-        message: 'Not fetched',
+        message: 'No location API available to get initial state',
     }],
+    forecastFilter: '12H',
     nearestCities: [],
     countryCode,
     city,

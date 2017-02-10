@@ -27,7 +27,7 @@ ClosestCities.propTypes = {
 
 ClosestCities.defaultProps = {
     list: [],
-    className: null,
+    className: '',
     keySeed: 'closest-city',
 };
 

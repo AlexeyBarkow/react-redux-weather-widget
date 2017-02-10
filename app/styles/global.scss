@@ -12,11 +12,6 @@
     --color-white-alpha: rgba(255,255,255,.85);
     --color-white-bright-alpha: rgba(255, 255, 255, .45);
     --metric-color: rgb(180, 0, 0);
-
-    --cloudy-url: url('http://epam.2i.by/barkou/images/cloudy.jpg');
-    --clear-url: url('http://epam.2i.by/barkou/images/clear.jpg');
-    --snowy-url: url('http://epam.2i.by/barkou/images/snowy.jpg');
-    --rainy-url: url('http://epam.2i.by/barkou/images/rainy.jpg');
 }
 
 .tooltip-container {
@@ -80,6 +75,57 @@ html, body, .my-app-root-class, #root,  {
         border-bottom-right-radius: 0;
     }
 }
+
+.btn-group-justified-sm {
+    @include respond(780px) {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: separate;
+        & > .form-group {
+            display: table-cell;
+            float: none;
+            width: 1%;
+        }
+    }
+}
+
+@mixin btn-group-vertical {
+    & > .form-group {
+        display: block;
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
+        &:not(:first-child):not(:last-child) .form-control {
+            border-radius: 0;
+        }
+        &:first-child:not(:last-child) .form-control {
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        &:last-child:not(:first-child) .form-control {
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+    }
+}
+
+.btn-group-vertical {
+    @include btn-group-vertical;
+}
+
+.btn-group-vertical-rsm {
+    @include respond(0, 780px) {
+        width: 100%;
+        @include btn-group-vertical;
+    }
+}
+
 
 .main {
     margin-top: 1em;
@@ -160,21 +206,6 @@ html, body, .my-app-root-class, #root,  {
     background-size: cover;
 }
 
-.background-cloudy {
-    background-image: var(--cloudy-url);
-}
-
-.background-snowy {
-    background-image: var(--snowy-url);
-}
-
-.background-clear {
-    background-image: var(--clear-url);
-}
-
-.background-rainy {
-    background-image: var(--rainy-url);
-}
 
 @include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
     padding: 0;
@@ -234,4 +265,26 @@ html, body, .my-app-root-class, #root,  {
             overflow: hidden;
         }
     }
+}
+
+input[type="radio"] {
+    position: absolute;
+    left: -99999px;
+    &:checked + label.btn {
+        background-image: none;
+        box-shadow: inset 0 3px 5px rgba(0,0,0,0.125)
+    }
+    &:focus + label {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-color: -webkit-focus-ring-color;
+        outline-style: auto;
+        outline-width: 5px;
+        outline-offset: -2px;
+    }
+}
+
+.btn-group-justified > .form-group{
+    display: table-cell;
+    float: none;
+    width: 1%;
 }

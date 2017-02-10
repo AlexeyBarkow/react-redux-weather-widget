@@ -11,12 +11,13 @@ function ErrorMessage({ message, status, className }) {
 
 ErrorMessage.propTypes = {
     message: PropTypes.string.isRequired,
-    status: PropTypes.number.isRequired,
+    status: PropTypes.number,
     className: PropTypes.string,
 };
 
 ErrorMessage.defaultProps = {
     className: '',
+    status: '',
 };
 
 export default ErrorMessage;

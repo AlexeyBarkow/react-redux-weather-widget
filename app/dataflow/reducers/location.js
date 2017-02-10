@@ -9,6 +9,7 @@ function locationReducer(state, action) {
                 nearestCities: action.nearestCities,
             };
         case types.UPDATE_LOCATION:
+        case types.SET_LOCATION_STATUS:
             return {
                 ...state,
                 geolocation: action.geolocation,

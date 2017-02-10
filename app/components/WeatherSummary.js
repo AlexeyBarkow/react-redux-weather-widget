@@ -33,7 +33,7 @@ function WeatherSummary({ className, weather }) {
                             </div>
                         </div>
                     );
-                } else if (weather.status === 0 || weather.status === 1) {
+                } else if (weather.status === 1) {
                     return (
                         <div>
                             <h1>Fetching data from server...</h1>
@@ -43,7 +43,7 @@ function WeatherSummary({ className, weather }) {
                 }
                 return (
                     <ErrorMessage
-                      status={weather.status}
+                      status={weather.status !== 0 ? weather.status : null}
                       message={weather.message}
                     />
                 );

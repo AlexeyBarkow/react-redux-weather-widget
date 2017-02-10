@@ -103,7 +103,7 @@ class GoogleMap extends Component {
         return (
             <div className={className}>
                 {
-                    googleScriptLoaded === 'loaded' && location !== null && !location.message
+                    googleScriptLoaded === 'loaded' && !location.message
                     ? (
                         <div
                           style={{
@@ -120,11 +120,9 @@ class GoogleMap extends Component {
                         <div>
                             <p>
                                 {
-                                    location
-                                    ? location.message
-                                    : <span>
-                                        Google Maps service is not responding or google location
-                                        service is not enabled. <a href="#" onClick={this.updateComponent}>Retry?</a>
+                                    <span>
+                                        { location.message
+                                        || 'Google Maps service is not responding or google location service is not enabled.'} <a href="#" onClick={this.updateComponent}>Retry?</a>
                                     </span>
                                 }
                             </p>
@@ -150,7 +148,7 @@ GoogleMap.propTypes = {
 
 GoogleMap.defaultProps = {
     className: '',
-    location: null,
+    location: PropTypes.isRequired,
     markers: [],
 };
 

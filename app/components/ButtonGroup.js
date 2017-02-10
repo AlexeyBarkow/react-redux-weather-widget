@@ -5,6 +5,7 @@ function ButtonGroup({
     className,
     vertical,
     block,
+    justified,
 }) {
     return (
         <div
@@ -15,6 +16,10 @@ function ButtonGroup({
             }${
                 block
                 ? ' btn-block '
+                : ' '
+            }${
+                justified
+                ? ' btn-group-justified '
                 : ' '
             }${className}`}
         >
@@ -28,6 +33,7 @@ ButtonGroup.propTypes = {
     className: PropTypes.string,
     vertical: PropTypes.bool,
     block: PropTypes.bool,
+    justified: PropTypes.bool,
 };
 
 ButtonGroup.defaultProps = {
@@ -35,6 +41,7 @@ ButtonGroup.defaultProps = {
     className: '',
     vertical: false,
     block: false,
+    justified: false,
 };
 
 export default ButtonGroup;

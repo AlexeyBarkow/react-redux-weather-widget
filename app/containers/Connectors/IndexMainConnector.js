@@ -2,18 +2,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../dataflow/actions/actions';
 import IndexMain from '../IndexMain';
+import { selectForecastFilter } from '../../selectors/selectors';
 
-function mapStateToProps({
-    weather,
-    forecast,
-    nearestCities,
-    city,
-    countryCode,
-    metric,
-}) {
+function mapStateToProps(state) {
+    const {
+        weather,
+        forecastFilter,
+        nearestCities,
+        city,
+        countryCode,
+        metric,
+    } = state;
     return {
         weather,
-        forecast,
+        forecast: selectForecastFilter(state),
+        forecastFilter,
         nearestCities,
         city,
         countryCode,

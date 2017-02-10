@@ -14,6 +14,11 @@ function weatherReducer(state, action) {
                 ...state,
                 forecast: action.forecast,
             };
+        case types.SET_FORECAST_FILTER:
+            return {
+                ...state,
+                forecastFilter: action.forecastFilter,
+            };
         default:
             return state;
     }

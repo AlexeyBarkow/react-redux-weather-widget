@@ -8,12 +8,19 @@ function changeLocation(geolocation) {
     };
 }
 
+function setLocationStatus(status) {
+    return {
+        type: types.SET_LOCATION_STATUS,
+        geolocation: status,
+    };
+}
+
 export function getLocation() {
     return (dispatch) => {
         geolocationAPI.loadLocation().then((location) => {
             dispatch(changeLocation(location));
-        }).catch(() => {
-            dispatch(changeLocation(null));
+        }).catch((err) => {
+            dispatch(setLocationStatus(err));
         });
     };
 }

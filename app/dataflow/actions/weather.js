@@ -17,6 +17,13 @@ function changeForecastInfo(forecast) {
     };
 }
 
+export function setForecastFilter(forecastFilter) {
+    return {
+        type: types.SET_FORECAST_FILTER,
+        forecastFilter,
+    };
+}
+
 function setWeatherStatus(error) {
     return {
         type: types.SET_WEATHER_STATUS,
