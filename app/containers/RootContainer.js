@@ -13,12 +13,6 @@ class RootContainer extends Component {
         getLocation();
     }
 
-    componentWillReceiveProps({ getNearestTo, geolocation }) {
-        if (geolocation && geolocation !== this.props.geolocation) {
-            getNearestTo(geolocation);
-        }
-    }
-
     render() {
         const { children, geolocation, weatherOverall, nearestCities, getLocation } = this.props;
         const markers = [];
@@ -66,7 +60,6 @@ RootContainer.propTypes = {
     weatherOverall: PropTypes.object.isRequired,
     geolocation: PropTypes.object.isRequired,
     getLocation: PropTypes.func.isRequired,
-    getNearestTo: PropTypes.func.isRequired,
     nearestCities: PropTypes.array.isRequired,
 };
 

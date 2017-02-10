@@ -31,14 +31,11 @@ class CityInputForm extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const { push } = this.props;
+        const { redirectToCity } = this.props;
         const { typedCity, selectedMetric } = this.state;
         const splitted = typedCity.split(', ');
         if (this.validateDropDown()) {
-            push({
-                pathname: `/cities/${splitted[1]}/${splitted[0]}`,
-                query: { metric: selectedMetric },
-            });
+            redirectToCity(splitted[0], splitted[1], selectedMetric);
         }
     }
 
@@ -109,7 +106,7 @@ CityInputForm.propTypes = {
     className: PropTypes.string,
     autocompleteCity: PropTypes.func.isRequired,
     autocomplete: PropTypes.array,
-    push: PropTypes.func.isRequired,
+    redirectToCity: PropTypes.func.isRequired,
     metric: PropTypes.string.isRequired,
 };
 

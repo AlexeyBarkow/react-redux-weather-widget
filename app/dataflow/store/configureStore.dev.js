@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { browserHistory } from 'react-router';
 import { routerMiddleware } from 'react-router-redux';
+import onStateChange from 'redux-on-state-change';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
 import { save } from '../../utils/localStorage';
+import storeChangeHandler from './onStoreChange';
 
 const middleware = routerMiddleware(browserHistory);
 
@@ -13,7 +15,11 @@ const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 /*eslint-enable no-underscore-dangle*/
-const enhancer = composeEnhancers(applyMiddleware(thunk, middleware));
+const enhancer = composeEnhancers(applyMiddleware(
+    thunk,
+    middleware,
+    onStateChange(storeChangeHandler),
+));
 export default function configureStore(initialState) {
     const store = createStore(
         rootReducer,

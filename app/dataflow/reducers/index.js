@@ -1,6 +1,5 @@
 import { routerReducer } from 'react-router-redux';
 import reduceReducers from 'reduce-reducers';
-import routingChangeReducer from './router';
 import weatherReducer from './weather';
 import mainReducer from './main';
 import locationReducer from './location';
@@ -34,7 +33,6 @@ const reduce = reduceReducers(
     weatherReducer,
     locationReducer,
     routerReducer,
-    routingChangeReducer,
 );
 
 function rootReducer(state = initialState, action) {
