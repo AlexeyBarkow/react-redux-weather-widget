@@ -7,12 +7,7 @@ import WeatherSummary from '../components/WeatherSummary';
 import WeatherForecastSummary from '../components/WeatherForecastSummary';
 
 class IndexMain extends Component {
-    constructor(props) {
-        super(props);
-        this.changeForecastFilter = this::this.changeForecastFilter;
-    }
-
-    changeForecastFilter(e) {
+    changeForecastFilter = (e) => {
         this.props.setForecastFilter(e.target.value);
     }
 

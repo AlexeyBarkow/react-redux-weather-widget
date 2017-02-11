@@ -1,12 +1,13 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CityInputForm from '../CityInputForm';
+import BottomWrapper from '../BottomWrapper';
+import { weatherOverallSelector } from '../../selectors/selectors';
 import * as actions from '../../dataflow/actions/index';
 
 function mapStateToProps(state) {
     return {
-        autocomplete: state.autocomplete,
-        metric: state.metric,
+        geolocation: state.geolocation,
+        weatherOverall: weatherOverallSelector(state),
     };
 }
 
@@ -14,4 +15,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CityInputForm);
+export default connect(mapStateToProps, mapDispatchToProps)(BottomWrapper);

@@ -1,4 +1,4 @@
-import * as types from './types';
+import types from './types';
 import getCityAPI from '../../utils/getCityAPI';
 
 function changeNearestCities(nearestCities) {

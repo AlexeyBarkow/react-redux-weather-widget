@@ -4,7 +4,7 @@ import WeatherTemperature from './WeatherTemperature';
 import ErrorMessage from './ErrorMessage';
 import ValueBlock from './ValueBlock';
 import Loading from './Loading';
-import css from '../styles/summary.scss';
+import '../styles/summary.scss';
 import { IMAGES_UNUSUAL_PATH } from '../utils/constants';
 
 function WeatherSummary({ className, weather }) {

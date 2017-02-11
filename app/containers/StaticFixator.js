@@ -7,8 +7,6 @@ class StaticFixator extends Component {
             isFixed: window.pageYOffset > 0,
             contentHeight: 0,
         };
-        this.handleScroll = this::this.handleScroll;
-        this.getContent = this::this.getContent;
     }
 
     componentDidMount() {
@@ -21,14 +19,14 @@ class StaticFixator extends Component {
         window.removeEventListener('scroll', this.handleScroll);
     }
 
-    getContent(element) {
+    getContent = (element) => {
         if (!element) {
             return;
         }
         this.contentElement = element;
     }
 
-    handleScroll() {
+    handleScroll = () => {
         const { isFixed } = this.state;
         const { contentElement } = this;
         const newState = {

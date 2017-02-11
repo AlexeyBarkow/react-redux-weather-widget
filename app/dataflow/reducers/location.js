@@ -1,4 +1,4 @@
-import * as types from '../actions/types';
+import types from '../actions/types';
 
 function locationReducer(state, action) {
     switch (action.type) {

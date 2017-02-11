@@ -4,6 +4,7 @@ import weatherReducer from './weather';
 import mainReducer from './main';
 import locationReducer from './location';
 import { load } from '../../utils/localStorage';
+import { DEFAULT_METRIC } from '../../utils/constants';
 
 const stored = load('store') || {};
 const { city, countryCode, metric } = stored;
@@ -25,7 +26,7 @@ const initialState = {
     nearestCities: [],
     countryCode,
     city,
-    metric: metric || 'C',
+    metric: metric || DEFAULT_METRIC,
 };
 
 const reduce = reduceReducers(

@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import * as types from './types';
+import types from './types';
 import getWeatherAjax from '../../utils/weatherAPI';
 import { DEFAULT_METRIC } from '../../utils/constants';
 
@@ -59,7 +59,7 @@ export function getWeather(city, code, metric) {
                   dispatch(changeWeatherInfo(data));
               } else {
                   const { response: { data: { cod, message } } } = data;
-                  dispatch(setWeatherStatus({ cod, message }));
+                  dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
               }
           });
     };
@@ -80,7 +80,7 @@ export function getForecast(city, code, metric) {
                   dispatch(changeForecastInfo(data));
               } else {
                   const { response: { data: { cod, message } } } = data;
-                  dispatch(setForecastStatus({ cod, message }));
+                  dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
               }
           });
     };

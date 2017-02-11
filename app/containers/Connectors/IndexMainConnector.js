@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../../dataflow/actions/actions';
+import * as actions from '../../dataflow/actions/index';
 import IndexMain from '../IndexMain';
 import { selectForecastFilter } from '../../selectors/selectors';
 

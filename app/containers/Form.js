@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ButtonToolbar from '../components/ButtonToolbar';
-import css from '../styles/forms.scss';
+import '../styles/forms.scss';
 
 class Form extends Component {
     constructor(props) {
@@ -8,17 +8,15 @@ class Form extends Component {
         this.state = {
             hasFocus: false,
         };
-        this.onBlurHandler = this::this.onBlurHandler;
-        this.onFocusHandler = this::this.onFocusHandler;
     }
 
-    onBlurHandler() {
+    onBlurHandler = () => {
         this.setState({
             hasFocus: false,
         });
     }
 
-    onFocusHandler() {
+    onFocusHandler = () => {
         this.setState({
             hasFocus: true,
         });

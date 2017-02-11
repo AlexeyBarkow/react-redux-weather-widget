@@ -4,14 +4,15 @@ import RootContainer from './containers/connectors/RootContainerConnector';
 import About from './components/About';
 import IndexMain from './containers/connectors/IndexMainConnector';
 import WrongPath from './components/WrongPath';
+import BottomWrapper from './containers/connectors/BottomWrapperConnector';
 
 const routes = (
     <Route path="/" component={RootContainer}>
-        <IndexRoute component={IndexMain} />
-        <Route path="/home" component={IndexMain} />
-        <Route path="/cities/:country/:cityname" component={IndexMain} />
-        <Route path="/about" component={About} />
-        <Route path="*" component={WrongPath} />
+        <IndexRoute components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="/home" components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="/cities/:country/:cityname" components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="/about" components={{ main: About, bottom: null }} />
+        <Route path="*" components={{ main: WrongPath, bottom: null }} />
     </Route>
 );
 export default routes;

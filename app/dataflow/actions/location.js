@@ -1,5 +1,5 @@
 import { loadLocation } from '../../utils/geolocationAPI';
-import * as types from './types';
+import types from './types';
 
 function changeLocation(geolocation) {
     return {

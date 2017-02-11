@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import Loading from '../components/Loading';
 import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
-import css from '../styles/gmap.scss';
+import '../styles/gmap.scss';
 
 class GoogleMap extends Component {
     constructor(props) {
@@ -15,15 +15,9 @@ class GoogleMap extends Component {
             // markers that are transformed to google.map object
             stateMarkers: [],
         };
-
-        this.scriptLoaded = this::this.scriptLoaded;
-        this.scriptLoadingFailed = this::this.scriptLoadingFailed;
-        this.initMapBlock = this::this.initMapBlock;
-        this.getStateMarkers = this::this.getStateMarkers;
-        this.updateComponent = this::this.updateComponent;
     }
 
-    componentWillReceiveProps(newProps) {
+    componentWillReceiveProps = (newProps) => {
         const { map } = this.state;
         const { markers, location } = this.props;
         const newMarkers = newProps.markers;
@@ -46,14 +40,11 @@ class GoogleMap extends Component {
 
     shouldComponentUpdate(_, newState) {
         const { map, googleScriptLoaded } = this.state;
-        if (newState.googleScriptLoaded !== googleScriptLoaded || !map) {
-            return true;
-        }
-        return false;
+        return newState.googleScriptLoaded !== googleScriptLoaded || !map;
     }
 
     // creates an array with google.map markers
-    getStateMarkers(map, markers) {
+    getStateMarkers = (map, markers) => {
         const { stateMarkers } = this.state;
 
         if (stateMarkers.length > 0) {
@@ -64,19 +55,19 @@ class GoogleMap extends Component {
             markers.map(curr => createMarker(map, curr.location, curr.title)));
     }
 
-    scriptLoadingFailed() {
+    scriptLoadingFailed = () => {
         this.setState({
             googleScriptLoaded: 'failed',
         });
     }
 
-    scriptLoaded() {
+    scriptLoaded = () => {
         this.setState({
             googleScriptLoaded: 'loaded',
         });
     }
 
-    initMapBlock(element) {
+    initMapBlock = (element) => {
         if (!element) {
             return;
         }
@@ -88,7 +79,7 @@ class GoogleMap extends Component {
         this.setState({ map, stateMarkers });
     }
 
-    updateComponent() {
+    updateComponent = () => {
         this.setState({
             map: null,
         });

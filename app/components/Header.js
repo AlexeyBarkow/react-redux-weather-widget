@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
 import CityInputForm from '../containers/connectors/CityInputFormConnector';
-import css from '../styles/header.scss';
+import '../styles/header.scss';
 
 class Header extends Component {
     render() {

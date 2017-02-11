@@ -1,6 +1,6 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-import * as types from '../actions/types';
-import { getWeather, getForecast, changeCity, setMetric, redirectToCity, getNearestTo } from '../actions/actions';
+import types from '../actions/types';
+import { getWeather, getForecast, changeCity, setMetric, redirectToCity, getNearestTo } from '../actions/index';
 
 const storeChangeHandler = (prevState, newState, action, dispatch) => {
     switch (action.type) {
@@ -14,7 +14,7 @@ const storeChangeHandler = (prevState, newState, action, dispatch) => {
 
             if (cityName || countryName) {
                 dispatch(changeCity(cityName, countryName));
-            } else if (city || countryCode) {
+            } else if ((city || countryCode) && action.payload.pathname !== '/about') {
                 dispatch(redirectToCity(city, countryCode, metricTitle));
             }
             if (metricTitle) {

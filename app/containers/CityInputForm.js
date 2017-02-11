@@ -21,15 +21,10 @@ class CityInputForm extends Component {
             selectedMetric: metric,
             dropDownValidationState: '',
         };
-        this.onDropDownChange = this::this.onDropDownChange;
-        this.onSelectChange = this::this.onSelectChange;
         this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL);
-        this.onSubmit = this::this.onSubmit;
-        this.validateDropDown = this::this.validateDropDown;
-        this.setDropDownValidationState = this::this.setDropDownValidationState;
     }
 
-    onSubmit(e) {
+    onSubmit = (e) => {
         e.preventDefault();
         const { redirectToCity } = this.props;
         const { typedCity, selectedMetric } = this.state;
@@ -39,25 +34,25 @@ class CityInputForm extends Component {
         }
     }
 
-    onSelectChange(e) {
+    onSelectChange = (e) => {
         const selectedMetric = e.target.value;
         this.setState({ selectedMetric });
     }
 
-    onDropDownChange(e) {
+    onDropDownChange = (e) => {
         const typedCity = e.target.value;
 
         this.autocompleteCity(typedCity);
         this.setState({ typedCity });
     }
 
-    setDropDownValidationState(newState) {
+    setDropDownValidationState = (newState) => {
         this.setState({
             dropDownValidationState: newState,
         });
     }
 
-    validateDropDown() {
+    validateDropDown = () => {
         const { typedCity } = this.state;
 
         if (validateAddress(typedCity)) {

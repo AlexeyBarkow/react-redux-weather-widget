@@ -1,4 +1,4 @@
-import * as types from '../actions/types';
+import types from '../actions/types';
 import { ACCEPTABLE_METRICS_REGEXP } from '../../utils/constants';
 
 function mainReducer(state, action) {

@@ -6,17 +6,15 @@ class Tooltip extends Component {
         this.state = {
             isHovered: false,
         };
-        this.onHover = this::this.onHover;
-        this.onLeave = this::this.onLeave;
     }
 
-    onHover() {
+    onHover = () => {
         this.setState({
             isHovered: true,
         });
     }
 
-    onLeave() {
+    onLeave = () => {
         this.setState({
             isHovered: false,
         });

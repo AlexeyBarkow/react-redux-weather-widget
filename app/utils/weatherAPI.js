@@ -44,7 +44,7 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
     if ((data.cod || status) === 200) {
         formattedWeather = {
             metric,
-            status: data.cod || status,
+            status: parseInt(data.cod, 10) || status,
             city: data.name || city,
             humidity: data.main.humidity,
             temperature: {

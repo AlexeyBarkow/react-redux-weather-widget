@@ -2,11 +2,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RootContainer from '../RootContainer';
 import { weatherOverallSelector } from '../../selectors/selectors';
-import * as actions from '../../dataflow/actions/actions';
+import * as actions from '../../dataflow/actions/index';
 
 function mapStateToProps(state) {
     return {
-        geolocation: state.geolocation,
         weatherOverall: weatherOverallSelector(state),
         nearestCities: state.nearestCities,
     };
