@@ -7,6 +7,10 @@ import WeatherSummary from '../components/WeatherSummary';
 import WeatherForecastSummary from '../components/WeatherForecastSummary';
 
 class IndexMain extends Component {
+    constructor(props) {
+        super(props);
+        this.changeForecastFilter = this::this.changeForecastFilter;
+    }
     componentWillMount() {
         this.loadCityInfo(this.props);
     }
@@ -48,8 +52,12 @@ class IndexMain extends Component {
         }
     }
 
+    changeForecastFilter(e) {
+        this.props.setForecastFilter(e.target.value);
+    }
+
     render() {
-        const { weather, forecast, forecastFilter, setForecastFilter } = this.props;
+        const { weather, forecast, forecastFilter } = this.props;
         return (
             <TabController defaultSelectedTabIndex="1">
                 <TabContainer headerContainer>
@@ -61,7 +69,7 @@ class IndexMain extends Component {
                         <WeatherSummary weather={weather} className="summary" />
                     </Tab>
                     <Tab index="2">
-                        <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={setForecastFilter} forecast={forecast} className="summary" />
+                        <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={this.changeForecastFilter} forecast={forecast} className="summary" />
                     </Tab>
                 </TabContainer>
             </TabController>

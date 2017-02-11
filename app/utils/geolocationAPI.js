@@ -1,4 +1,4 @@
-function loadLocation() {
+export function loadLocation() {
     return new Promise((success, error) => {
         if (!navigator) {
             error({
@@ -25,9 +25,3 @@ function loadLocation() {
         });
     });
 }
-
-const geolocationAPI = {
-    loadLocation,
-};
-
-export default geolocationAPI;

@@ -1,3 +1,5 @@
+import { VALIDATE_ADDRESS_REGEXP } from './constants';
+
 export function validateAddress(value) {
-    return /^[a-zA-Z-\s']+,\s[a-zA-Z]{1,3}$/.test(value);
+    return VALIDATE_ADDRESS_REGEXP.test(value);
 }

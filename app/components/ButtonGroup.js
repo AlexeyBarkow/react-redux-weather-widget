@@ -10,17 +10,11 @@ function ButtonGroup({
     return (
         <div
           className={`btn-group${
-                vertical
-                ? '-vertical'
-                : ''
+                vertical ? '-vertical' : ''
             }${
-                block
-                ? ' btn-block '
-                : ' '
+                block ? ' btn-block ' : ' '
             }${
-                justified
-                ? ' btn-group-justified '
-                : ' '
+                justified ? ' btn-group-justified ' : ' '
             }${className}`}
         >
             { children }

@@ -15,7 +15,7 @@ function getClosestToLocationUrl(
     resultRows = MAX_ROWS,
     username = USERNAME,
 ) {
-    const qwe = `${GEONAMES_API_URL}/citiesJSON?north=${
+    return `${GEONAMES_API_URL}/citiesJSON?north=${
         latitude - radius
     }&south=${
         latitude + radius
@@ -25,7 +25,6 @@ function getClosestToLocationUrl(
     &east=${
         longitude + radius
     }&username=${username}&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
-    return qwe;
 }
 
 function convertToAcceptable(city) {

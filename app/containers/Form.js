@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ButtonToolbar from '../components/ButtonToolbar';
+import css from '../styles/forms.scss';
 
 class Form extends Component {
     constructor(props) {

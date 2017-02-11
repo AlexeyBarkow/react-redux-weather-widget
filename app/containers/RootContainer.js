@@ -22,9 +22,9 @@ class RootContainer extends Component {
     render() {
         const { children, geolocation, weatherOverall, nearestCities, getLocation } = this.props;
         const markers = [];
-        let mapCenter;
+        let mapCenter = weatherOverall.location;
 
-        if (geolocation) {
+        if (!geolocation.message) {
             markers.push({
                 title: 'You',
                 location: geolocation,
@@ -51,7 +51,7 @@ class RootContainer extends Component {
                                 {children}
                             </MainContainer>
                             <AsideBar nearestCities={nearestCities} className="aside col-sm-3 col-xs-12 panel" />
-                            <GoogleMap className="map panel" location={weatherOverall.location || mapCenter} markers={markers} getLocation={getLocation} />
+                            <GoogleMap className="map panel" location={mapCenter} markers={markers} getLocation={getLocation} />
                         </div>
                     </div>
                 </div>

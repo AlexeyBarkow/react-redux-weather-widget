@@ -14,6 +14,7 @@ module.exports = {
         'indent': [1, 4, { 'SwitchCase': 1 }],
         'jsx-a11y/href-no-hash': 0,
         'linebreak-style': [1, 'windows'],
+        'no-console' : [1, { allow: ["warn", "error"] }],
         'no-multiple-empty-lines': 1,
         'no-unused-vars': [1, { 'varsIgnorePattern': 'css' }],
         'no-nested-ternary': 0,

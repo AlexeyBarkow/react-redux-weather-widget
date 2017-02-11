@@ -97,6 +97,7 @@ class CityInputForm extends Component {
                     <Select name="metric" value={selectedMetric} onChange={this.onSelectChange} className="header__city-search__metric" btnStyle>
                         <DatalistOption value="C">C&deg;</DatalistOption>
                         <DatalistOption value="F">F&deg;</DatalistOption>
+                        <DatalistOption value="K">K</DatalistOption>
                     </Select>
                     <Button type="submit">Get Weather!</Button>
                 </ButtonGroup>

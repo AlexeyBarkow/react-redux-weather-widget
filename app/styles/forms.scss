@@ -1,0 +1,33 @@
+.active-form {
+    .has-error {
+        position: relative;
+        .help-block.panel-danger {
+            position: absolute;
+            display: block;
+            z-index: 3;
+            width: 18em;
+            top: calc(100% + 1em);
+            left: 1em;
+            padding: 1em;
+            &:before, &:after {
+                position: absolute;
+                content: ' ';
+                width: 0;
+                height: 0;
+
+            }
+            &:after {
+                border: 18px solid;
+                border-color: transparent transparent transparent var(--color-white);
+                left: 0;
+                top: -18px;
+            }
+            &:before {
+                border: 19px solid;
+                border-color: transparent transparent transparent #eed3d7;
+                left: -1px;
+                top: -20px
+            }
+        }
+    }
+}

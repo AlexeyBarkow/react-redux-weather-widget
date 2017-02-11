@@ -1,4 +1,4 @@
-import { GOOGLE_MAP_API_KEY } from './constants';
+import { GOOGLE_MAP_API_KEY, GOOGLE_MAP_API_BASE } from './constants';
 
 function convertToLitLng(location) {
     const lat = location.latitude;
@@ -30,7 +30,7 @@ export function setCenter(map, position) {
 }
 
 export function getGoogleMapUrl(key = GOOGLE_MAP_API_KEY) {
-    return `https://maps.googleapis.com/maps/api/js?key=${key}`;
+    return `${GOOGLE_MAP_API_BASE}/js?key=${key}`;
 }
 
 export function initMap(container, position, map) {

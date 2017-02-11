@@ -102,21 +102,22 @@ class GoogleMap extends Component {
 
         return (
             <div className={className}>
-                {
-                    googleScriptLoaded === 'loaded' && !location.message
-                    ? (
-                        <div
-                          style={{
-                              width: '100%',
-                              height: '500px',
-                          }}
-                          id="map"
-                          ref={this.initMapBlock}
-                        />
-                    )
-                    : googleScriptLoaded === 'loading'
-                    ? (<Loading />)
-                    : (
+                {(() => {
+                    if (googleScriptLoaded === 'loaded' && !location.message) {
+                        return (
+                            <div
+                              style={{
+                                  width: '100%',
+                                  height: '500px',
+                              }}
+                              id="map"
+                              ref={this.initMapBlock}
+                            />
+                        );
+                    } else if (googleScriptLoaded === 'loading') {
+                        return <Loading />;
+                    }
+                    return (
                         <div>
                             <p>
                                 {
@@ -127,8 +128,8 @@ class GoogleMap extends Component {
                                 }
                             </p>
                         </div>
-                    )
-                }
+                    );
+                })()}
                 <Script
                   url={getGoogleMapUrl()}
                   onLoad={this.scriptLoaded}
@@ -148,7 +149,9 @@ GoogleMap.propTypes = {
 
 GoogleMap.defaultProps = {
     className: '',
-    location: PropTypes.isRequired,
+    location: {
+        message: 'no location available',
+    },
     markers: [],
 };
 

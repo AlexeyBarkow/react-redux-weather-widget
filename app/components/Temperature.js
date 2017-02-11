@@ -5,7 +5,7 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
         <div className={className}>
             <p className="main-temperature">
                 { currTemperature }
-                <span className="temperature-metric">
+                <span className={`temperature-metric ${metric}`}>
                     { metric }
                 </span>
             </p>
@@ -17,14 +17,14 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
                 (<p className="temperature-range">
                     <span className="min-temperature">
                         { minTemperature }
-                        <span className="temperature-metric">
+                        <span className={`temperature-metric ${metric}`}>
                             { metric }
                         </span>
                     </span>
                     {' — '}
                     <span className="max-temperature">
                         { maxTemperature }
-                        <span className="temperature-metric">
+                        <span className={`temperature-metric ${metric}`}>
                             { metric }
                         </span>
                     </span>

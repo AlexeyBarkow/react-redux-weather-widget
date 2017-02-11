@@ -1,4 +1,4 @@
-import geolocationAPI from '../../utils/geolocationAPI';
+import { loadLocation } from '../../utils/geolocationAPI';
 import * as types from './types';
 
 function changeLocation(geolocation) {
@@ -17,7 +17,7 @@ function setLocationStatus(status) {
 
 export function getLocation() {
     return (dispatch) => {
-        geolocationAPI.loadLocation().then((location) => {
+        loadLocation().then((location) => {
             dispatch(changeLocation(location));
         }).catch((err) => {
             dispatch(setLocationStatus(err));

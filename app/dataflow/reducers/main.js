@@ -1,4 +1,5 @@
 import * as types from '../actions/types';
+import { ACCEPTABLE_METRICS } from '../../utils/constants';
 
 function mainReducer(state, action) {
     switch (action.type) {
@@ -8,11 +9,16 @@ function mainReducer(state, action) {
                 city: action.city,
                 countryCode: action.country,
             };
-        case types.SET_METRIC:
+        case types.SET_METRIC: {
+            let metric = action.metric;
+            if (metric in ACCEPTABLE_METRICS) {
+                metric = 'K';
+            }
             return {
                 ...state,
-                metric: action.metric,
+                metric,
             };
+        }
         case types.SET_AUTOCOMPLETE_ARRAY:
         case types.SET_AUTOCOMPLETE_ERROR:
             return {

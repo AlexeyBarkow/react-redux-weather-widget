@@ -15,6 +15,6 @@ export const save = (key, data) => {
         const serializedData = JSON.stringify(data);
         localStorage.setItem(key, serializedData);
     } catch (e) {
-        // error
+        console.error('local storage is not supported');
     }
 };

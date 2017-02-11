@@ -1,28 +1,24 @@
 import axios, { CancelToken, isCancel } from 'axios';
 import { DEFAULT_API_KEY, API_URL } from './constants';
 
-function getWeatherTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
-    let metric;
+function getMetricUrl(format) {
+    let metric = '';
 
     if (format === 'C') {
-        metric = 'metric';
+        metric = '&units=metric';
     } else if (format === 'F') {
-        metric = 'imperial';
+        metric = '&units=imperial';
     }
 
-    return `${API_URL}/weather?q=${city},${countryCode}&APPID=${apiKey}&units=${metric}`;
+    return metric;
+}
+
+function getWeatherTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
+    return `${API_URL}/weather?q=${city},${countryCode}&APPID=${apiKey}${getMetricUrl(format)}`;
 }
 
 function getWeatherForecastTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
-    let metric;
-
-    if (format === 'C') {
-        metric = 'metric';
-    } else if (format === 'F') {
-        metric = 'imperial';
-    }
-
-    return `${API_URL}/forecast?q=${city},${countryCode}&APPID=${apiKey}&units=${metric}`;
+    return `${API_URL}/forecast?q=${city},${countryCode}&APPID=${apiKey}${getMetricUrl(format)}`;
 }
 
 function mapWeatherType(type) {

@@ -22,7 +22,7 @@
         color: var(--metric-color)
     }
     .temperature-metric, .temperature-pressure {
-        &:before {
+        &:not(.K):before {
             content: "\00b0";
         }
         color: var(--metric-color)
