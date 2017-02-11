@@ -1,5 +1,5 @@
 import * as types from '../actions/types';
-import { ACCEPTABLE_METRICS } from '../../utils/constants';
+import { ACCEPTABLE_METRICS_REGEXP } from '../../utils/constants';
 
 function mainReducer(state, action) {
     switch (action.type) {
@@ -11,7 +11,7 @@ function mainReducer(state, action) {
             };
         case types.SET_METRIC: {
             let metric = action.metric;
-            if (metric in ACCEPTABLE_METRICS) {
+            if (!ACCEPTABLE_METRICS_REGEXP.test(metric)) {
                 metric = 'K';
             }
             return {

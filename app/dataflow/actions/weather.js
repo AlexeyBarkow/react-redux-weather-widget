@@ -88,8 +88,6 @@ export function getForecast(city, code, metric) {
 
 export function redirectToCity(city, countryCode, metric = DEFAULT_METRIC) {
     return (dispatch) => {
-        dispatch(getWeather(city, countryCode, metric));
-        dispatch(getForecast(city, countryCode, metric));
         dispatch(push({
             pathname: `/cities/${countryCode}/${city}`,
             query: { metric },

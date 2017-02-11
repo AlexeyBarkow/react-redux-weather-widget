@@ -16,4 +16,4 @@ export const API_URL = 'http://api.openweathermap.org/data/2.5';
 
 export const VALIDATE_ADDRESS_REGEXP = /^[a-zA-Z-\s']+,\s[a-zA-Z]{1,3}$/;
 
-export const ACCEPTABLE_METRICS = ['C', 'F', 'K'];
+export const ACCEPTABLE_METRICS_REGEXP = /^[cCfFkK]$/;
