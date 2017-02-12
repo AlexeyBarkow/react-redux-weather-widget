@@ -35,6 +35,10 @@ function setAutocompleteError(error) {
 
 export function autocompleteCity(beginning) {
     return (dispatch) => {
+        dispatch(setAutocompleteError({
+            code: 0,
+            message: 'loading...',
+        }));
         getCityAPI.getCityAjax(beginning)
           .then((data) => {
               dispatch(setCityAutocompleteArray(data));
@@ -46,6 +50,10 @@ export function autocompleteCity(beginning) {
 
 export function getNearestTo(location) {
     return (dispatch) => {
+        dispatch(setNearestCitiesError({
+            code: 0,
+            message: 'loading...',
+        }));
         getCityAPI.getClosestCitiesToLocation(location)
           .then((cities) => {
               dispatch(changeNearestCities(cities));

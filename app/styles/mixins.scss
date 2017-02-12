@@ -89,6 +89,11 @@
     }
 }
 
+@mixin text-overflow-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 @mixin class-with-bootstrap-breaks(
     $class,
     $isReverse: false,

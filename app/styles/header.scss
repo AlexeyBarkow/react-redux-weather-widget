@@ -4,14 +4,7 @@
 }
 
 .header {
-    padding-top: 1.25em;
-    padding-bottom: 1.25em;
     @include stretch-width();
-
-    &.line-up {
-        border-bottom: .5em solid var(--color-dark-blue);
-        background-color: var(--color-bright-blue);
-    }
 
     .header__navbar {
         & > * + * {
@@ -27,6 +20,7 @@
     }
 
     .header__content {
+        border-bottom: .5em solid var(--color-dark-blue);
         width: 100%;
         padding-top: 1em;
         background-color: var(--color-dark-gray-semitransparent);
@@ -37,6 +31,7 @@
         .logo-img {
             height: 8.5em;
             transition: height 1s;
+            margin-bottom: 1em;
         }
     }
 

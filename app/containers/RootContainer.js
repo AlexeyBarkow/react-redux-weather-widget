@@ -7,6 +7,11 @@ import AsideBar from '../components/AsideBar';
 import { IMAGES_UNUSUAL_PATH } from '../utils/constants';
 
 class RootContainer extends Component {
+    componentWillMount() {
+        const { getLocation } = this.props;
+        getLocation();
+    }
+
     render() {
         const {
             main,
@@ -42,6 +47,7 @@ RootContainer.propTypes = {
     bottom: PropTypes.node,
     weatherOverall: PropTypes.object.isRequired,
     nearestCities: PropTypes.array.isRequired,
+    getLocation: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {

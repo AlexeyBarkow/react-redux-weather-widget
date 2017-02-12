@@ -7,6 +7,7 @@ import { AppContainer } from 'react-hot-loader';
 
 import configureStore from './dataflow/store/configureStore';
 import Root from './containers/Root';
+import { ROOT_NODE } from './utils/constants';
 
 import './styles/global.scss';
 
@@ -20,8 +21,7 @@ render(
         <AppContainer>
             <Root history={history} store={store} />
         </AppContainer>
-    ),
-    document.getElementById('root'));
+    ), ROOT_NODE);
 
 if (module.hot) {
     module.hot.accept('./containers/Root.js', () => {
@@ -31,7 +31,6 @@ if (module.hot) {
                 <AppContainer>
                     <NewRoot history={history} store={store} />
                 </AppContainer>
-            ),
-            document.getElementById('root'));
+            ), ROOT_NODE);
     });
 }

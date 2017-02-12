@@ -8,42 +8,42 @@ module.exports = {
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
         'react-hot-loader/patch',
-        path.join(__dirname, 'app/index.js')
+        path.join(__dirname, 'app/index.js'),
     ],
     output: {
         path: path.join(__dirname, '/dist/'),
         filename: '[name].js',
-        publicPath: '/'
+        publicPath: '/',
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'app/index.html',
             inject: 'body',
-            filename: 'index.html'
+            filename: 'index.html',
         }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('development')
-            }
-        })
+                'NODE_ENV': JSON.stringify('development'),
+            },
+        }),
     ],
     module: {
         preLoaders: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'eslint'
-            }
+                loader: 'eslint',
+            },
         ],
         loaders: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel'
+                loader: 'babel',
             }, {
                 test: /\.json?$/,
-                loader: 'json'
+                loader: 'json',
             }, {
                 test: /\.scss$/,
                 loaders: [
@@ -51,16 +51,16 @@ module.exports = {
                     'css-loader?sourceMap',
                     'sass-loader?sourceMap',
                     'sass-resources?sourceMap',
-                    'postcss-loader'
-                ]
+                    'postcss-loader',
+                ],
             }, {
                 test: /\.css$/,
                 loaders: [
                     'css-loader',
-                    'postcss-loader'
-                ]
-            }
-        ]
+                    'postcss-loader',
+                ],
+            },
+        ],
     },
-    sassResources: './app/styles/mixins.scss'
-}
+    sassResources: './app/styles/mixins.scss',
+};

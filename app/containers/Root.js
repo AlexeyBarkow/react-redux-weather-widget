@@ -10,7 +10,11 @@ class Root extends Component {
         return (
             <Provider store={store}>
                 <div className="my-app-root-class">
-                    <Router history={history} routes={routes} />
+                    <Router
+                      onUpdate={() => window.scrollTo(0, 0)}
+                      history={history}
+                      routes={routes}
+                    />
                 </div>
             </Provider>
         );

@@ -6,7 +6,7 @@
     --color-bright-blue: rgba(125, 125, 255, .95);
     --color-footer-color: rgba(25, 25, 95, .75);
     --color-light-gray: rgb(215, 215, 215);
-    --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
+    --color-dark-gray-semitransparent: rgba(50, 50, 85, .95);
     --color-white: rgb(255, 255, 255);
     --color-black: rgb(0, 0, 0);
     --color-white-alpha: rgba(255,255,255,.85);
@@ -53,6 +53,8 @@ html, body, .my-app-root-class, #root {
     .footer {
         @include stretch-width();
         position: absolute;
+        padding-top: 1em;
+        padding-bottom: 1em;
         bottom: 0;
         height: 5em;
         background-color: var(--color-footer-color);
@@ -60,6 +62,7 @@ html, body, .my-app-root-class, #root {
         border-top-left-radius: 1em;
         border-top-right-radius: 1em;
         border-bottom: 0;
+        color: var(--color-white);
     }
 
 }
@@ -138,8 +141,6 @@ html, body, .my-app-root-class, #root {
     background-color: var(--color-white-alpha);
     border: 1px solid var(--color-white);
     border-bottom: 0;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
 
     .tab__header > li.active>a {
         background-color: var(--color-white-bright-alpha);
@@ -194,11 +195,9 @@ html, body, .my-app-root-class, #root {
 
 .aside {
     background-color: var(--color-white-alpha);
-    padding: 1em;
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
     border: 1px solid var(--color-white);
     border-top: 0;
+    padding-bottom: 1em;
 }
 
 .fixed-background {
@@ -222,8 +221,7 @@ html, body, .my-app-root-class, #root {
 .aside {
     .closest-cities-container {
         .btn {
-            text-overflow: ellipsis;
-            overflow: hidden;
+            @include text-overflow-ellipsis;
         }
     }
 }
@@ -237,9 +235,6 @@ input[type="radio"] {
     }
     &:focus + label {
         outline: 5px auto -webkit-focus-ring-color;
-        outline-color: -webkit-focus-ring-color;
-        outline-style: auto;
-        outline-width: 5px;
         outline-offset: -2px;
     }
 }
@@ -248,4 +243,11 @@ input[type="radio"] {
     display: table-cell;
     float: none;
     width: 1%;
+}
+
+.divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #cccccc;
 }

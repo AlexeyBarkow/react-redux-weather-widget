@@ -9,17 +9,17 @@ import storeChangeHandler from './onStoreChange';
 
 const middleware = routerMiddleware(browserHistory);
 
-const composeEnhancers =
-  typeof window === 'object' &&
+const composeEnhancers = typeof window === 'object' &&
 /*eslint-disable no-underscore-dangle*/
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 /*eslint-enable no-underscore-dangle*/
 const enhancer = composeEnhancers(applyMiddleware(
     thunk,
     middleware,
     onStateChange(storeChangeHandler),
 ));
+
 export default function configureStore(initialState) {
     const store = createStore(
         rootReducer,
@@ -27,11 +27,15 @@ export default function configureStore(initialState) {
         enhancer,
     );
     store.subscribe(() => {
-        const { city, countryCode, metric } = store.getState();
+        const state = store.getState();
+        const { city, countryCode, metric } = state;
+        const main = state.weather.weatherTypes && state.weather.weatherTypes[0]
+            && state.weather.weatherTypes[0].main;
         save('store', {
             city,
             countryCode,
             metric,
+            main,
         });
     });
     return store;

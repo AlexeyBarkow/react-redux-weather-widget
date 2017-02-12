@@ -4,7 +4,14 @@ import { Link } from 'react-router';
 function Footer({ children, className }) {
     return (
         <footer className={`${className} container`}>
-            <Link to="/about">about</Link>
+            <div className="row">
+                <p className="col-sm-3 col-xs-4">
+                    <Link to="/home">home</Link> / <Link to="/about">about</Link>
+                </p>
+                <p className="col-sm-9 col-xs-8 text-right">
+                    © 2017 Aliaksei Barkou, <a href="mailto:imbarkowal@gmail.com">imbarkowal@gmail.com</a>
+                </p>
+            </div>
             {children}
         </footer>
     );

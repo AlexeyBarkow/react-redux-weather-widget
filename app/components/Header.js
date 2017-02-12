@@ -10,7 +10,7 @@ class Header extends Component {
     render() {
         const { className } = this.props;
         return (
-            <header ref={this.getHeader} className={`${className} line-up`}>
+            <header className={`${className}`}>
                 <div className="header__content container">
                     <div className="row">
                         <Logo logoSrc="http://placehold.it/150x150" className="header__logo col-sm-3 hidden-xs" />

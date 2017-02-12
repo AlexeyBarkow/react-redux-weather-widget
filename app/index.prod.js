@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import configureStore from './dataflow/store/configureStore';
 import Root from './containers/Root';
+import { ROOT_NODE } from './utils/constants';
 
 import './styles/global.scss';
 
@@ -17,5 +18,4 @@ const history = syncHistoryWithStore(browserHistory, store, {
 render(
     (
         <Root history={history} store={store} />
-    ),
-    document.getElementById('root'));
+    ), ROOT_NODE);

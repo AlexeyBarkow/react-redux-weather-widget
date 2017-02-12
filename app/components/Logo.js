@@ -6,7 +6,6 @@ function Logo({ className, height, logoSrc }) {
         <div className={className}>
             <Button noDefaultStyles href="/">
                 <img className="logo-img" height={height} src={logoSrc} alt="logo" />
-                <p>lorem ipsum</p>
             </Button>
         </div>
     );

@@ -33,6 +33,7 @@ class GoogleMap extends Component {
             this.setState({ stateMarkers });
         }
 
+
         if (newLocation !== location) {
             setCenter(map, newLocation);
         }

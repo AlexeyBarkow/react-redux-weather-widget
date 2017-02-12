@@ -2,11 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import GoogleMap from './GoogleMap';
 
 class BottomWrapper extends Component {
-    componentWillMount() {
-        const { getLocation } = this.props;
-        getLocation();
-    }
-
     render() {
         const { weatherOverall, geolocation, getLocation } = this.props;
         const markers = [];
@@ -17,7 +12,7 @@ class BottomWrapper extends Component {
                 title: 'You',
                 location: geolocation,
             });
-            mapCenter = geolocation;
+            mapCenter = mapCenter || geolocation;
         }
 
         if (weatherOverall.city) {
