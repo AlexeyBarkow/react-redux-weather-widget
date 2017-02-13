@@ -34,8 +34,10 @@ function mapWeatherType(type) {
             return 'thunder';
         case 'Snow':
             return 'snowy';
+        case 'Haze':
+            return 'haze';
         default:
-            return '';
+            return 'default';
     }
 }
 //added for unification

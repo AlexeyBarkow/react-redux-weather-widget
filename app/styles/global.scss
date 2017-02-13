@@ -198,6 +198,12 @@ html, body, .my-app-root-class, #root {
     border: 1px solid var(--color-white);
     border-top: 0;
     padding-bottom: 1em;
+    margin-top: 1em;
+    .closest-cities-container {
+        .btn {
+            @include text-overflow-ellipsis;
+        }
+    }
 }
 
 .fixed-background {
@@ -216,14 +222,6 @@ html, body, .my-app-root-class, #root {
 
 .help-block.panel-danger {
     display: none;
-}
-
-.aside {
-    .closest-cities-container {
-        .btn {
-            @include text-overflow-ellipsis;
-        }
-    }
 }
 
 input[type="radio"] {
