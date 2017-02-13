@@ -14,14 +14,13 @@ class CityInputForm extends Component {
     constructor(props) {
         super(props);
 
-        const { autocompleteCity, metric } = props;
+        const { metric } = props;
 
         this.state = {
             typedCity: '',
             selectedMetric: metric,
             dropDownValidationState: '',
         };
-        this.autocompleteCity = _.throttle(autocompleteCity, MIN_AJAX_INTERVAL);
     }
 
     onSubmit = (e) => {
@@ -51,6 +50,8 @@ class CityInputForm extends Component {
             dropDownValidationState: newState,
         });
     }
+
+    autocompleteCity = _.throttle(this.props.autocompleteCity, MIN_AJAX_INTERVAL);
 
     validateDropDown = () => {
         const { typedCity } = this.state;

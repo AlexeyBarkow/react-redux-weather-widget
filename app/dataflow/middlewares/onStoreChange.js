@@ -53,7 +53,7 @@ const storeChangeHandler = (prevState, newState, action, dispatch) => {
             break;
         }
         default:
-            //do nothing
+            break;
     }
 };
 
