@@ -51,6 +51,14 @@
     position: relative;
 }
 
+@mixin clearfix() {
+    &:after {
+        content: ' ';
+        display: block;
+        clear: both;
+    }
+}
+
 @mixin center($left, $top) {
     $top-translate: 0;
     $left-translate: 0;

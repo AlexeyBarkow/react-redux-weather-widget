@@ -1,5 +1,5 @@
 import axios, { CancelToken, isCancel } from 'axios';
-import { DEFAULT_API_KEY, API_URL } from './constants';
+import { DEFAULT_API_KEY, API_URL, ROSE_NAMES } from './constants';
 
 function getMetricUrl(format) {
     let metric = '';
@@ -66,11 +66,11 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
             })),
             clouds: data.clouds.all,
             wind: {
-                direction: data.wind.dir,
+                direction: data.wind.deg,
                 speed: data.wind.speed,
             },
-            rain: data.rain ? data.rain['3h'] : null,
-            snow: data.snow ? data.snow['3h'] : null,
+            rain: data.rain ? Math.trunc(data.rain['3h'] * 100) / 100 : null,
+            snow: data.snow ? Math.trunc(data.snow['3h'] * 100) / 100 : null,
             calculationTime: data.dt * 1000,
         };
     } else {
@@ -142,3 +142,7 @@ const weatherAPI = {
 };
 
 export default weatherAPI;
+
+export function fromMetheoDirection(degree) {
+    return ROSE_NAMES[Math.trunc(((parseInt(degree, 10) + 11.25) % 360) / 22.5)];
+}
