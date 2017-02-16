@@ -12,13 +12,13 @@ class Tooltip extends Component {
         this.setState({
             isHovered: true,
         });
-    }
+    };
 
     onLeave = () => {
         this.setState({
             isHovered: false,
         });
-    }
+    };
 
     render() {
         const { isHovered } = this.state;

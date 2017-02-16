@@ -48,7 +48,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                 <div className="col-md-10">
                                     {
                                         forecast.map((current, index) => (
-                                            <div className="row pseudo-paragraph">
+                                            <div className="row pseudo-paragraph" key={`forecast-${index}`}>
                                                 <WeatherTemperature
                                                   className="pull-left"
                                                   date={new Date((index * forecastInterval)
@@ -58,7 +58,6 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                                   minTemperature={current.temperature.min}
                                                   maxTemperature={current.temperature.max}
                                                   currTemperature={current.temperature.curr}
-                                                  key={`forecast-${index}`}
                                                 />
                                                 <DetailedInfoTable className="pull-left" weather={current} />
                                             </div>

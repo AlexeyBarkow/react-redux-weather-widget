@@ -1,14 +1,10 @@
 import React, { PropTypes } from 'react';
-import ButtonToolbar from './ButtonToolbar';
-
 
 function Navbar({ children, className }) {
     return (
-        <nav className={`${className}`}>
-            <ButtonToolbar>
-                {children}
-            </ButtonToolbar>
-        </nav>
+        <ul role="navigation" className={`${className} nav navbar-nav`}>
+            {children}
+        </ul>
     );
 }
 

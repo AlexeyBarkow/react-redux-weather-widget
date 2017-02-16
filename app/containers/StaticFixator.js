@@ -24,7 +24,7 @@ class StaticFixator extends Component {
             return;
         }
         this.contentElement = element;
-    }
+    };
 
     handleScroll = () => {
         const { isFixed } = this.state;
@@ -40,7 +40,7 @@ class StaticFixator extends Component {
         }
 
         this.setState(newState);
-    }
+    };
 
     render() {
         const { isFixed, contentHeight } = this.state;

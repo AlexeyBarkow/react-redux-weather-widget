@@ -144,5 +144,7 @@ const weatherAPI = {
 export default weatherAPI;
 
 export function fromMetheoDirection(degree) {
-    return ROSE_NAMES[Math.trunc(((parseInt(degree, 10) + 11.25) % 360) / 22.5)];
+    const angleInterval = 360 / ROSE_NAMES.length;
+
+    return ROSE_NAMES[Math.trunc(((parseInt(degree, 10) % 360) / angleInterval) + .5)];
 }

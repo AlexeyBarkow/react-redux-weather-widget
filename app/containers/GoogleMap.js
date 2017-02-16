@@ -54,19 +54,19 @@ class GoogleMap extends Component {
 
         return setMapOnAll(map,
             markers.map(curr => createMarker(map, curr.location, curr.title)));
-    }
+    };
 
     scriptLoadingFailed = () => {
         this.setState({
             googleScriptLoaded: 'failed',
         });
-    }
+    };
 
     scriptLoaded = () => {
         this.setState({
             googleScriptLoaded: 'loaded',
         });
-    }
+    };
 
     initMapBlock = (element) => {
         if (!element) {
@@ -78,7 +78,7 @@ class GoogleMap extends Component {
         const stateMarkers = this.getStateMarkers(map, markers);
 
         this.setState({ map, stateMarkers });
-    }
+    };
 
     updateComponent = () => {
         this.setState({
@@ -86,7 +86,7 @@ class GoogleMap extends Component {
         });
 
         this.props.getLocation();
-    }
+    };
 
     render() {
         const { className, location } = this.props;

@@ -8,12 +8,11 @@ function convertToLitLng(location) {
 
 export function createMarker(map, position, title) {
     if (map) {
-        const marker = new window.google.maps.Marker({
+        return new window.google.maps.Marker({
             map,
             position: convertToLitLng(position),
             title,
         });
-        return marker;
     }
     return null;
 }
@@ -37,13 +36,12 @@ export function initMap(container, position, map) {
     if (!window.google) {
         return null;
     }
-    const newMap = map || new window.google.maps.Map(container,
+    return map || new window.google.maps.Map(container,
         {
             center: convertToLitLng(position),
             scrollwheel: false,
             zoom: 12,
         });
-    return newMap;
 }
 
 export function changeLocation(map, { latitude, longitude }) {

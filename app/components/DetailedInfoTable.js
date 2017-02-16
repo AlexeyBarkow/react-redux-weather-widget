@@ -13,11 +13,11 @@ function DetailedInfoTable({ weather, className }) {
             <ValueBlock tooltip="Wind direction" value={fromMetheoDirection(weather.wind.direction)} />
             {
                 weather.rain
-                && <ValueBlock tooltip="Precipitation chance" value={weather.rain * 100} valueClass="temperature-percent" />
+                ? <ValueBlock tooltip="Precipitation chance" value={weather.rain * 100} valueClass="temperature-percent" /> : null
             }
             {
                 weather.snow
-                && <ValueBlock tooltip="Snow chance" value={weather.snow * 100} valueClass="temperature-percent" />
+                ? <ValueBlock tooltip="Snow chance" value={weather.snow * 100} valueClass="temperature-percent" /> : null
             }
         </Table>
     );

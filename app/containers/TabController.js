@@ -22,7 +22,7 @@ class TabController extends Component {
         this.setState({
             selectedTabIndex: newIndex,
         });
-    }
+    };
 
     render() {
         const { children } = this.props;

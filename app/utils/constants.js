@@ -25,21 +25,4 @@ export const REACT_URL = 'https://facebook.github.io/react/';
 export const REDUX_URL = 'http://redux.js.org';
 
 export const ROOT_NODE = document.getElementById('root');
-export const ROSE_NAMES = [
-    'N',
-    'NNE',
-    'NE',
-    'ENE',
-    'E',
-    'ESE',
-    'SE',
-    'SSE',
-    'S',
-    'SSW',
-    'SW',
-    'WSW',
-    'W',
-    'WNW',
-    'NW',
-    'NNW',
-];
+export const ROSE_NAMES = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];

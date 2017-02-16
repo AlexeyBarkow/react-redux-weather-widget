@@ -25,9 +25,9 @@ const initialState = {
     }],
     forecastFilter: '12H',
     nearestCities: [],
+    metric: metric || DEFAULT_METRIC,
     countryCode,
     city,
-    metric: metric || DEFAULT_METRIC,
 };
 
 const reduce = reduceReducers(

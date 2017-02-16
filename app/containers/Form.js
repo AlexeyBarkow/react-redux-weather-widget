@@ -14,19 +14,25 @@ class Form extends Component {
         this.setState({
             hasFocus: false,
         });
-    }
+    };
 
     onFocusHandler = () => {
         this.setState({
             hasFocus: true,
         });
-    }
+    };
 
     render() {
         const { hasFocus } = this.state;
         const { children, className, submitHandler, autocompleteOff } = this.props;
         return (
-            <form className={`${hasFocus ? 'active-form ' : ''}${className}`} onSubmit={submitHandler} onFocus={this.onFocusHandler} onBlur={this.onBlurHandler} autoComplete={autocompleteOff ? 'off' : null}>
+            <form
+              className={`${hasFocus ? 'active-form ' : ''}${className}`}
+              onSubmit={submitHandler}
+              onFocus={this.onFocusHandler}
+              onBlur={this.onBlurHandler}
+              autoComplete={autocompleteOff ? 'off' : null}
+            >
                 <ButtonToolbar>
                     { children }
                 </ButtonToolbar>

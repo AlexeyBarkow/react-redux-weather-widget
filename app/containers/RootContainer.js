@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Header from '../components/Header';
+import Header from './Header';
 import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
@@ -24,7 +24,7 @@ class RootContainer extends Component {
             <div className="app-wrapper fixed-background" style={{ backgroundImage: `url(${IMAGES_UNUSUAL_PATH}${weatherOverall.main}.jpg)` }}>
                 <div className="sticky-top">
                     <StaticFixator placeholderClass="header__placeholder">
-                        <Header className="header no-padding-top-and-bottom-rsm" />
+                        <Header className="header" />
                     </StaticFixator>
                     <div className="container">
                         <div className="row">

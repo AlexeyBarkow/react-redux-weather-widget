@@ -14,8 +14,8 @@ function mapStateToProps(state) {
         metric,
     } = state;
     return {
-        weather,
         forecast: selectForecastFilter(state),
+        weather,
         forecastFilter,
         nearestCities,
         city,
