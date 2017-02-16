@@ -33,7 +33,7 @@ function WeatherTemperature({
                     </Tooltip>
                 </div>
                 <Temperature
-                  className="pull-left"
+                  className={`${date ? 'stretch-width ' : ''}pull-left`}
                   metric={metric}
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}

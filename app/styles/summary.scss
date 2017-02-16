@@ -1,11 +1,7 @@
 .summary {
     .main-temperature, .weather-text {
-        font-size: 3em;
+        font-size: 2em;
         margin-bottom: 0;
-
-        @include respond(0, 500px) {
-            font-size: 2em;
-        }
     }
     .temperature-range {
         font-size: 1.25em;

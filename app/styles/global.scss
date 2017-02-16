@@ -38,6 +38,10 @@ html, body, .my-app-root-class, #root {
     height: 100%;
 }
 
+.stretch-width {
+    @include stretch-width();
+}
+
 .app-wrapper {
     min-height: 100%;
     position: relative;
