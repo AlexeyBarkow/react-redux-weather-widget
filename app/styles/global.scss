@@ -158,7 +158,7 @@ html, body, .my-app-root-class, #root {
 }
 
 .calendar-wrapper {
-    width: 4.5em;
+    width: 3.5em;
     text-align: center;
     .panel-calendar {
         margin-bottom: 0;
@@ -166,6 +166,10 @@ html, body, .my-app-root-class, #root {
             background-color: var(--color-dark-red);
             color: var(--color-white);
             font-size: 1.25em;
+            padding: 0;
+        }
+        .panel-body {
+            padding: .5em;
         }
     }
     .calendar__time {

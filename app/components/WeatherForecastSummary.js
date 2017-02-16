@@ -4,6 +4,7 @@ import WeatherTemperature from './WeatherTemperature';
 import ErrorMessage from './ErrorMessage';
 import ButtonGroup from './ButtonGroup';
 import Radio from './Radio';
+import DetailedInfoTable from './DetailedInfoTable';
 
 import { FORECAST_INTERVAL } from '../utils/constants';
 
@@ -47,17 +48,20 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                 <div className="col-md-10">
                                     {
                                         forecast.map((current, index) => (
-                                            <WeatherTemperature
-                                              className="pseudo-paragraph"
-                                              date={new Date((index * forecastInterval)
-                                                    + lastForecast)}
-                                              metric={current.metric}
-                                              weatherType={current.weatherTypes[0]}
-                                              minTemperature={current.temperature.min}
-                                              maxTemperature={current.temperature.max}
-                                              currTemperature={current.temperature.curr}
-                                              key={`forecast-${index}`}
-                                            />
+                                            <div className="row pseudo-paragraph">
+                                                <WeatherTemperature
+                                                  className="pull-left"
+                                                  date={new Date((index * forecastInterval)
+                                                        + lastForecast)}
+                                                  metric={current.metric}
+                                                  weatherType={current.weatherTypes[0]}
+                                                  minTemperature={current.temperature.min}
+                                                  maxTemperature={current.temperature.max}
+                                                  currTemperature={current.temperature.curr}
+                                                  key={`forecast-${index}`}
+                                                />
+                                                <DetailedInfoTable className="pull-left" weather={current} />
+                                            </div>
                                         ))
                                     }
                                 </div>
