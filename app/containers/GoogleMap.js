@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import Loading from '../components/Loading';
-import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers } from '../utils/googleMapAPI';
-import css from '../styles/gmap.scss';
+import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
+import '../styles/gmap.scss';
 
 class GoogleMap extends Component {
     constructor(props) {
@@ -15,17 +15,13 @@ class GoogleMap extends Component {
             // markers that are transformed to google.map object
             stateMarkers: [],
         };
-
-        this.scriptLoaded = this::this.scriptLoaded;
-        this.scriptLoadingFailed = this::this.scriptLoadingFailed;
-        this.initMapBlock = this::this.initMapBlock;
-        this.getStateMarkers = this::this.getStateMarkers;
     }
 
-    componentWillReceiveProps(newProps) {
+    componentWillReceiveProps = (newProps) => {
         const { map } = this.state;
-        const { markers } = this.props;
+        const { markers, location } = this.props;
         const newMarkers = newProps.markers;
+        const newLocation = newProps.location;
 
         if (!map) {
             return;
@@ -36,17 +32,21 @@ class GoogleMap extends Component {
 
             this.setState({ stateMarkers });
         }
+
+
+        if (newLocation !== location) {
+            setCenter(map, newLocation);
+        }
     }
 
     shouldComponentUpdate(_, newState) {
-        if (newState.googleScriptLoaded !== this.state.googleScriptLoaded) {
-            return true;
-        }
-        return false;
+        const { map, googleScriptLoaded, location } = this.state;
+        return newState.googleScriptLoaded !== googleScriptLoaded || !map
+            || !!(location && location.message);
     }
 
     // creates an array with google.map markers
-    getStateMarkers(map, markers) {
+    getStateMarkers = (map, markers) => {
         const { stateMarkers } = this.state;
 
         if (stateMarkers.length > 0) {
@@ -55,21 +55,21 @@ class GoogleMap extends Component {
 
         return setMapOnAll(map,
             markers.map(curr => createMarker(map, curr.location, curr.title)));
-    }
+    };
 
-    scriptLoadingFailed() {
+    scriptLoadingFailed = () => {
         this.setState({
             googleScriptLoaded: 'failed',
         });
-    }
+    };
 
-    scriptLoaded() {
+    scriptLoaded = () => {
         this.setState({
             googleScriptLoaded: 'loaded',
         });
-    }
+    };
 
-    initMapBlock(element) {
+    initMapBlock = (element) => {
         if (!element) {
             return;
         }
@@ -79,41 +79,50 @@ class GoogleMap extends Component {
         const stateMarkers = this.getStateMarkers(map, markers);
 
         this.setState({ map, stateMarkers });
-    }
+    };
 
+    updateComponent = () => {
+        this.setState({
+            map: null,
+        });
+
+        this.props.getLocation();
+    };
 
     render() {
-        const { className } = this.props;
+        const { className, location } = this.props;
         const { googleScriptLoaded } = this.state;
 
         return (
             <div className={className}>
-                {
-                    googleScriptLoaded === 'loaded' && location !== null && !location.message
-                    ? (
-                        <div
-                          style={{
-                              width: '100%',
-                              height: '500px',
-                          }}
-                          id="map"
-                          ref={this.initMapBlock}
-                        />
-                    )
-                    : googleScriptLoaded === 'loading'
-                    ? (<Loading />)
-                    : (
+                {(() => {
+                    if (googleScriptLoaded === 'loaded' && !location.message) {
+                        return (
+                            <div
+                              style={{
+                                  width: '100%',
+                                  height: '500px',
+                              }}
+                              id="map"
+                              ref={this.initMapBlock}
+                            />
+                        );
+                    } else if (googleScriptLoaded === 'loading') {
+                        return <Loading />;
+                    }
+                    return (
                         <div>
                             <p>
                                 {
-                                    location
-                                    ? location.message
-                                    : 'Google Maps service is not responding or google location service is not enabled'
+                                    <span>
+                                        { location.message
+                                        || 'Google Maps service is not responding or google location service is not enabled.'} <a href="#" onClick={this.updateComponent}>Retry?</a>
+                                    </span>
                                 }
                             </p>
                         </div>
-                    )
-                }
+                    );
+                })()}
                 <Script
                   url={getGoogleMapUrl()}
                   onLoad={this.scriptLoaded}
@@ -128,11 +137,14 @@ GoogleMap.propTypes = {
     className: PropTypes.string,
     location: PropTypes.object,
     markers: PropTypes.array,
+    getLocation: PropTypes.func.isRequired,
 };
 
 GoogleMap.defaultProps = {
     className: '',
-    location: null,
+    location: {
+        message: 'No location available',
+    },
     markers: [],
 };
 

@@ -1,67 +1,58 @@
 import React, { Component, PropTypes } from 'react';
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
-import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
-import Select from '../components/Select';
-import DatalistOption from '../components/DatalistOption';
-import DropDown from '../components/DropDown';
-import Form from '../components/Form';
-import css from '../styles/header.scss';
+import Collapse from '../components/Collapse';
+import CityInputForm from '../containers/connectors/CityInputFormConnector';
+import '../styles/header.scss';
 
 class Header extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            typedCity: '',
+            collapsed: true,
         };
-        this.onDropDownChange = this::this.onDropDownChange;
     }
 
-    onDropDownChange(e) {
+    onCollapseButtonClick = () => {
         this.setState({
-            typedCity: e.target.value,
+            collapsed: !this.state.collapsed,
         });
-    }
+    };
 
     render() {
         const { className } = this.props;
-        const { typedCity } = this.state;
+        const { collapsed } = this.state;
+
         return (
-            <header ref={this.getHeader} className={`${className} line-up`}>
-                <div className="header__content container">
-                    <div className="row">
-                        <Logo logoSrc="http://placehold.it/150x150" className="header__logo col-sm-3 hidden-xs" />
-                        <div className="header__navbar col-sm-9 col-xs-12">
-                            <Navbar>
-                                <ButtonGroup>
-                                    <Button href="/home">
-                                        Home
-                                    </Button>
-                                    <Button href="/about">
-                                        About
-                                    </Button>
-                                </ButtonGroup>
-                            </Navbar>
-                            <Form className="header__city-search">
-                                <ButtonGroup>
-                                    <DropDown
-                                      className="header__city-search__name"
-                                      name="city"
-                                      placeholder="Type city here"
-                                      value={typedCity}
-                                      listId="city-input"
-                                      onInputChange={this.onDropDownChange}
-                                    />
-                                    <Select name="metric" className="header__city-search__metric" btnStyle>
-                                        <DatalistOption value="C">C&deg;</DatalistOption>
-                                        <DatalistOption value="F">F&deg;</DatalistOption>
-                                    </Select>
-                                    <Button type="submit">Get Weather!</Button>
-                                </ButtonGroup>
-                            </Form>
-                        </div>
+            <header className={`navbar navbar-default ${className}`}>
+                <div className="container">
+                    <div className="navbar-header">
+                        <Logo className="navbar-left" />
+                        <Button noDefaultStyles onClickHandler={this.onCollapseButtonClick} className={`${collapsed ? '' : 'collapsed'} navbar-toggle`}>
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar" />
+                            <span className="icon-bar" />
+                            <span className="icon-bar" />
+                        </Button>
+                        <CityInputForm className="navbar-left header__city-search" />
                     </div>
+                    <Collapse className="navbar-collapse" collapsed={collapsed}>
+                        <Navbar>
+                            <li>
+                                <Button noDefaultStyles href="/home">
+                                    Home
+                                </Button>
+                            </li>
+                            <li>
+                                <Button noDefaultStyles href="/about">
+                                    About
+                                </Button>
+                            </li>
+                        </Navbar>
+                    </Collapse>
+
                 </div>
             </header>
         );
@@ -76,8 +67,5 @@ Header.defaultProps = {
     className: '',
 };
 
-// Header.contextTypes = {
-//     weather: PropTypes.object,
-// };
 
 export default Header;

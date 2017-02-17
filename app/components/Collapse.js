@@ -1,0 +1,22 @@
+import React, { PropTypes } from 'react';
+
+function Collapse({ children, className, collapsed }) {
+    return (
+        <div className={`${className} collapse${collapsed ? '' : ' in'}`}>
+            { children }
+        </div>
+    );
+}
+
+Collapse.propTypes = {
+    children: PropTypes.node.isRequired,
+    collapsed: PropTypes.bool,
+    className: PropTypes.string,
+};
+
+Collapse.defaultProps = {
+    collapsed: false,
+    className: '',
+};
+
+export default Collapse;

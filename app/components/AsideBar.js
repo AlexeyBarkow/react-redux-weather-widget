@@ -1,33 +1,45 @@
 import React, { PropTypes } from 'react';
 import ClosestCities from './ClosestCities';
-import css from '../styles/aside.scss';
+import Loading from './Loading';
 
-// temporary data filler
-const closestCities = [
-    'City1',
-    'City2',
-    'City3',
-    'City4',
-    'City5',
-];
-
-function AsideBar({ className }) {
+function AsideBar({ className, nearestCities }) {
     return (
         <aside className={className}>
-            <ClosestCities
-              title={(<h3>Closest cities to your current location</h3>)}
-              list={closestCities}
-            />
+            {(() => {
+                if (nearestCities.length === 0) {
+                    if (nearestCities.error && nearestCities.error.code === 0) {
+                        return (
+                            <div>
+                                <h3>Loading...</h3>
+                                <Loading />
+                            </div>
+                        );
+                    }
+                    return (
+                        <div className="error-container">
+                            <h3>No cities found</h3>
+                        </div>
+                    );
+                }
+                return (
+                    <ClosestCities
+                      title={<h3>Nearest cities to your current location</h3>}
+                      list={nearestCities}
+                    />
+                );
+            })()}
         </aside>
     );
 }
 
 AsideBar.propTypes = {
     className: PropTypes.string,
+    nearestCities: PropTypes.array,
 };
 
 AsideBar.defaultProps = {
     className: '',
+    nearestCities: [],
 };
 
 export default AsideBar;

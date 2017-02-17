@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 function MenuItem({
@@ -14,7 +14,10 @@ function MenuItem({
     switch (true) {
         case header:
             return (
-                <li className={className} title={title}>
+                <li
+                  className={className}
+                  title={title}
+                >
                     {children}
                 </li>
             );
@@ -23,7 +26,7 @@ function MenuItem({
                 <li
                   className={`divider ${className}`}
                   title={title}
-                ></li>
+                />
             );
         default:
             return (
@@ -40,7 +43,7 @@ function MenuItem({
                 </li>
             );
     }
-};
+}
 
 MenuItem.propTypes = {
     children: PropTypes.object,

@@ -6,14 +6,16 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import configureStore from './dataflow/store/configureStore';
 import Root from './containers/Root';
+import { ROOT_NODE } from './utils/constants';
 
-import css from './styles/global.scss';
+import './styles/global.scss';
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(browserHistory, store, {
+    selectLocationState: state => state,
+});
 
 render(
     (
         <Root history={history} store={store} />
-    ),
-    document.getElementById('root'));
+    ), ROOT_NODE);

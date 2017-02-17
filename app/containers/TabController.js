@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import css from '../styles/tabs.scss';
+import '../styles/tabs.scss';
 
 class TabController extends Component {
     constructor(props) {
@@ -7,7 +7,6 @@ class TabController extends Component {
         this.state = {
             selectedTabIndex: props.defaultSelectedTabIndex,
         };
-        this.setSelectedTabIndex = this::this.setSelectedTabIndex;
     }
 
     getChildContext() {
@@ -19,11 +18,11 @@ class TabController extends Component {
         };
     }
 
-    setSelectedTabIndex(newIndex) {
+    setSelectedTabIndex = (newIndex) => {
         this.setState({
             selectedTabIndex: newIndex,
         });
-    }
+    };
 
     render() {
         const { children } = this.props;

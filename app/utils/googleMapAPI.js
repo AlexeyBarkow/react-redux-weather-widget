@@ -1,4 +1,4 @@
-import { GOOGLE_MAP_API_KEY } from './constants';
+import { GOOGLE_MAP_API_KEY, GOOGLE_MAP_API_BASE } from './constants';
 
 function convertToLitLng(location) {
     const lat = location.latitude;
@@ -8,12 +8,11 @@ function convertToLitLng(location) {
 
 export function createMarker(map, position, title) {
     if (map) {
-        const marker = new window.google.maps.Marker({
+        return new window.google.maps.Marker({
             map,
             position: convertToLitLng(position),
             title,
         });
-        return marker;
     }
     return null;
 }
@@ -25,21 +24,24 @@ export function setMapOnAll(map, markers) {
     return markers;
 }
 
+export function setCenter(map, position) {
+    map.setCenter(convertToLitLng(position));
+}
+
 export function getGoogleMapUrl(key = GOOGLE_MAP_API_KEY) {
-    return `https://maps.googleapis.com/maps/api/js?key=${key}`;
+    return `${GOOGLE_MAP_API_BASE}/js?key=${key}`;
 }
 
 export function initMap(container, position, map) {
     if (!window.google) {
         return null;
     }
-    const newMap = map || new window.google.maps.Map(container,
+    return map || new window.google.maps.Map(container,
         {
             center: convertToLitLng(position),
             scrollwheel: false,
             zoom: 12,
         });
-    return newMap;
 }
 
 export function changeLocation(map, { latitude, longitude }) {

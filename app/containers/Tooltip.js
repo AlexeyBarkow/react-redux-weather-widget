@@ -6,21 +6,19 @@ class Tooltip extends Component {
         this.state = {
             isHovered: false,
         };
-        this.onHover = this::this.onHover;
-        this.onLeave = this::this.onLeave;
     }
 
-    onHover() {
+    onHover = () => {
         this.setState({
             isHovered: true,
         });
-    }
+    };
 
-    onLeave() {
+    onLeave = () => {
         this.setState({
             isHovered: false,
         });
-    }
+    };
 
     render() {
         const { isHovered } = this.state;
@@ -29,14 +27,13 @@ class Tooltip extends Component {
             <div onMouseOver={this.onHover} onMouseOut={this.onLeave} className={`${className} tooltip-container`}>
                 { children }
                 {
-                    isHovered
-                    ? <div className={`tooltip in ${placement}`}>
+                    isHovered &&
+                    (<div className={`tooltip in ${placement}`}>
                         <div className="tooltip-inner">
                             {tooltipText}
                         </div>
                         <div className="tooltip-arrow" />
-                    </div>
-                    : undefined
+                    </div>)
                 }
             </div>
         );

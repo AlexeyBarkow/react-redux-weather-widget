@@ -1,15 +1,18 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-
-import RootContainer from './containers/RootContainer';
+import RootContainer from './containers/connectors/RootContainerConnector';
 import About from './components/About';
-import IndexMain from './containers/IndexMain';
+import IndexMain from './containers/connectors/IndexMainConnector';
+import WrongPath from './components/WrongPath';
+import BottomWrapper from './containers/connectors/BottomWrapperConnector';
 
-const router = (
+const routes = (
     <Route path="/" component={RootContainer}>
-        <Route path="/about" component={About} />
-        <Route path="/home" component={IndexMain} />
-        <IndexRoute component={IndexMain} />
+        <IndexRoute components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="/about" components={{ main: About, bottom: null }} />
+        <Route path="/:name" components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="/cities/:country/:cityname" components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="*" components={{ main: WrongPath, bottom: null }} />
     </Route>
 );
-export default router;
+export default routes;

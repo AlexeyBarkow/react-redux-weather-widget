@@ -7,9 +7,12 @@ function ClosestCities({ list, className, title, keySeed }) {
         <div className={`${className} closest-cities-container`}>
             { title }
             <ButtonGroup vertical block>
-                { list.map((city, index) => (
-                    <Button key={`${keySeed}-${index}`} className="" href={city}>{ city }</Button>
-                )) }
+                { list.map((city, index) => {
+                    const text = `${city.name}, ${city.countryCode}`;
+                    return (
+                        <Button title={text} key={`${keySeed}-${index}`} className="" href={`/cities/${city.countryCode}/${city.name}`}>{ text }</Button>
+                    );
+                }) }
             </ButtonGroup>
         </div>
     );
@@ -24,7 +27,7 @@ ClosestCities.propTypes = {
 
 ClosestCities.defaultProps = {
     list: [],
-    className: null,
+    className: '',
     keySeed: 'closest-city',
 };
 

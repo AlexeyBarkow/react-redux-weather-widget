@@ -10,9 +10,13 @@ function DropDown({
     placeholder,
     listId,
     onInputChange,
+    errorBlock,
+    onBlur,
+    onFocus,
+    validationState,
 }) {
     return (
-        <div className={`${className} form-group`}>
+        <div className={`${className} form-group ${validationState}`}>
             <input
               className={`${inputClassName} form-control`}
               type="text"
@@ -21,10 +25,13 @@ function DropDown({
               placeholder={placeholder}
               list={listId}
               onChange={onInputChange}
+              onBlur={onBlur}
+              onFocus={onFocus}
             />
             <datalist id={listId} className={dataListClassName}>
-                {children}
+                { children }
             </datalist>
+            { validationState === 'has-error' && errorBlock }
         </div>
     );
 }
@@ -39,6 +46,10 @@ DropDown.propTypes = {
     onInputChange: PropTypes.func,
     placeholder: PropTypes.string,
     value: PropTypes.string,
+    errorBlock: PropTypes.element,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    validationState: PropTypes.string,
 };
 
 DropDown.defaultProps = {
@@ -50,6 +61,10 @@ DropDown.defaultProps = {
     onInputChange: null,
     placeholder: '',
     value: '',
+    errorBlock: null,
+    onBlur: null,
+    onFocus: null,
+    validationState: '',
 };
 
 export default DropDown;

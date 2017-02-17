@@ -1,22 +1,17 @@
 :root {
-    //put global css variables here
+    //put the global css variables here
     --color-dark-red: rgb(185, 0 , 0);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
     --color-bright-blue: rgba(125, 125, 255, .95);
     --color-footer-color: rgba(25, 25, 95, .75);
     --color-light-gray: rgb(215, 215, 215);
-    --color-dark-gray-semitransparent: rgba(25, 25, 25, .75);
+    --color-dark-gray-semitransparent: rgba(50, 50, 85, .95);
     --color-white: rgb(255, 255, 255);
     --color-black: rgb(0, 0, 0);
     --color-white-alpha: rgba(255,255,255,.85);
     --color-white-bright-alpha: rgba(255, 255, 255, .45);
     --metric-color: rgb(180, 0, 0);
-
-    --cloudy-url: url('http://epam.2i.by/barkou/images/cloudy.jpg');
-    --clear-url: url('http://epam.2i.by/barkou/images/clear.jpg');
-    --snowy-url: url('http://epam.2i.by/barkou/images/snowy.jpg');
-    --rainy-url: url('http://epam.2i.by/barkou/images/rainy.jpg');
 }
 
 .tooltip-container {
@@ -39,7 +34,15 @@
     }
 }
 
-html {
+html, body, .my-app-root-class, #root {
+    height: 100%;
+}
+
+.stretch-width {
+    @include stretch-width();
+}
+
+.app-wrapper {
     min-height: 100%;
     position: relative;
 }
@@ -54,6 +57,8 @@ html {
     .footer {
         @include stretch-width();
         position: absolute;
+        padding-top: 1em;
+        padding-bottom: 1em;
         bottom: 0;
         height: 5em;
         background-color: var(--color-footer-color);
@@ -61,6 +66,7 @@ html {
         border-top-left-radius: 1em;
         border-top-right-radius: 1em;
         border-bottom: 0;
+        color: var(--color-white);
     }
 
 }
@@ -77,6 +83,57 @@ html {
     }
 }
 
+.btn-group-justified-sm {
+    @include respond(780px) {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: separate;
+        & > .form-group {
+            display: table-cell;
+            float: none;
+            width: 1%;
+        }
+    }
+}
+
+@mixin btn-group-vertical {
+    & > .form-group {
+        display: block;
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
+        &:not(:first-child):not(:last-child) .form-control {
+            border-radius: 0;
+        }
+        &:first-child:not(:last-child) .form-control {
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        &:last-child:not(:first-child) .form-control {
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+    }
+}
+
+.btn-group-vertical {
+    @include btn-group-vertical;
+}
+
+.btn-group-vertical-rsm {
+    @include respond(0, 780px) {
+        width: 100%;
+        @include btn-group-vertical;
+    }
+}
+
+
 .main {
     margin-top: 1em;
     padding-top: 1em;
@@ -88,8 +145,6 @@ html {
     background-color: var(--color-white-alpha);
     border: 1px solid var(--color-white);
     border-bottom: 0;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
 
     .tab__header > li.active>a {
         background-color: var(--color-white-bright-alpha);
@@ -107,7 +162,7 @@ html {
 }
 
 .calendar-wrapper {
-    width: 4.5em;
+    width: 3.5em;
     text-align: center;
     .panel-calendar {
         margin-bottom: 0;
@@ -115,6 +170,10 @@ html {
             background-color: var(--color-dark-red);
             color: var(--color-white);
             font-size: 1.25em;
+            padding: 0;
+        }
+        .panel-body {
+            padding: .5em;
         }
     }
     .calendar__time {
@@ -142,13 +201,21 @@ html {
     }
 }
 
+.sticky-top {
+
+}
+
 .aside {
     background-color: var(--color-white-alpha);
-    padding: 1em;
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
     border: 1px solid var(--color-white);
     border-top: 0;
+    padding-bottom: 1em;
+    margin-top: 1em;
+    .closest-cities-container {
+        .btn {
+            @include text-overflow-ellipsis;
+        }
+    }
 }
 
 .fixed-background {
@@ -156,21 +223,48 @@ html {
     background-size: cover;
 }
 
-.background-cloudy {
-    background-image: var(--cloudy-url);
-}
-
-.background-snowy {
-    background-image: var(--snowy-url);
-}
-
-.background-clear {
-    background-image: var(--clear-url);
-}
-.background-rainy {
-    background-image: var(--rainy-url);
-}
 
 @include class-with-bootstrap-breaks('no-padding-top-and-bottom', true) {
     padding: 0;
 };
+
+@include class-with-bootstrap-breaks('no-padding') {
+    padding: 0;
+}
+
+.clear-500 {
+    @include respond(0, 550px) {
+        float: none !important;
+        clear: both;
+    }
+}
+
+.help-block.panel-danger {
+    display: none;
+}
+
+input[type="radio"] {
+    position: absolute;
+    left: -99999px;
+    &:checked + label.btn {
+        background-image: none;
+        box-shadow: inset 0 3px 5px rgba(0,0,0,0.125)
+    }
+    &:focus + label {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+}
+
+.btn-group-justified > .form-group{
+    display: table-cell;
+    float: none;
+    width: 1%;
+}
+
+.divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #cccccc;
+}
