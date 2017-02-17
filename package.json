@@ -52,6 +52,7 @@
     "babel-polyfill": "^6.20.0",
     "date-format": "^1.0.0",
     "dateformat": "^2.0.0",
+    "history": "2.1.2",
     "lodash": "^4.17.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",

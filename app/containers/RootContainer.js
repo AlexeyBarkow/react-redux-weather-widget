@@ -21,7 +21,7 @@ class RootContainer extends Component {
         } = this.props;
 
         return (
-            <div className="app-wrapper fixed-background" style={{ backgroundImage: `url(${IMAGES_UNUSUAL_PATH}${weatherOverall.main}.jpg)` }}>
+            <div className="app-wrapper fixed-background" style={{ backgroundImage: `url(${IMAGES_UNUSUAL_PATH}${weatherOverall.main || 'default'}.jpg)` }}>
                 <div className="sticky-top">
                     <StaticFixator placeholderClass="header__placeholder">
                         <Header className="header" />

@@ -1,57 +1,29 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
 import types from '../actions/types';
-import { getWeather, getForecast, changeCity, setMetric, redirectToCity, getNearestTo } from '../actions/index';
+import { handleCityChange, handleNearesetCitiesSet } from './handleCityChange';
+import { handleLocationChange, handleLocationUpdate } from './handleLocationChange';
 
-const storeChangeHandler = (prevState, newState, action, dispatch) => {
+
+const storeChangeHandler = (...args) => {
+    const action = args[2];
+
     switch (action.type) {
         case LOCATION_CHANGE: {
-            const { city, countryCode } = prevState;
-            const path = action.payload.pathname
-            .match(/^\/cities\/([a-zA-Z']{1,3})\/([a-zA-Z\s-']*)$/) || [];
-            const countryName = path && path[1];
-            const cityName = path && path[2];
-            const metricTitle = action.payload.query && action.payload.query.metric;
-
-            if (cityName || countryName) {
-                dispatch(changeCity(cityName, countryName));
-            } else if ((city || countryCode) && action.payload.pathname !== '/about') {
-                dispatch(redirectToCity(city, countryCode, metricTitle));
-            }
-            if (metricTitle) {
-                dispatch(setMetric(metricTitle));
-            }
+            handleLocationChange(...args);
             break;
         }
         case types.UPDATE_LOCATION: {
-            const { geolocation } = newState;
-            if (geolocation && prevState.geolocation !== geolocation) {
-                dispatch(getNearestTo(geolocation));
-            }
+            handleLocationUpdate(...args);
             break;
         }
         case types.SET_NEAREST_CITIES: {
-            const { city, countryCode } = newState;
-            const nearestCities = action.nearestCities[0];
-            if (newState.locationBeforeTransitions.pathname === '/' && nearestCities && (!city || !countryCode)) {
-                dispatch(redirectToCity(nearestCities.name, nearestCities.countryCode));
-            }
+            handleNearesetCitiesSet(...args);
             break;
         }
         case types.SET_CITY:
-        case types.SET_METRIC: {
-            const { city, countryCode, metric, weather } = newState;
-            const oldCity = prevState.city;
-            const oldCountryCode = prevState.countryCode;
-            const oldMetric = prevState.metric;
-
-            if (city && countryCode &&
-                (city !== oldCity || countryCode !== oldCountryCode
-                || metric !== oldMetric || weather.status === 0)) {
-                dispatch(getWeather(city, countryCode, metric));
-                dispatch(getForecast(city, countryCode, metric));
-            }
+        case types.SET_METRIC:
+            handleCityChange(...args);
             break;
-        }
         default:
             break;
     }

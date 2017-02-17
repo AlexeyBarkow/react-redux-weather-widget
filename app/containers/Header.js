@@ -27,7 +27,7 @@ class Header extends Component {
 
         return (
             <header className={`navbar navbar-default ${className}`}>
-                <div className="container-fluid">
+                <div className="container">
                     <div className="navbar-header">
                         <Logo className="navbar-left" />
                         <Button noDefaultStyles onClickHandler={this.onCollapseButtonClick} className={`${collapsed ? '' : 'collapsed'} navbar-toggle`}>

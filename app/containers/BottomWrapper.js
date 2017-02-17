@@ -5,14 +5,13 @@ class BottomWrapper extends Component {
     render() {
         const { weatherOverall, geolocation, getLocation } = this.props;
         const markers = [];
-        let mapCenter = weatherOverall.location;
+        const mapCenter = weatherOverall.location || geolocation;
 
         if (!geolocation.message) {
             markers.push({
                 title: 'You',
                 location: geolocation,
             });
-            mapCenter = mapCenter || geolocation;
         }
 
         if (weatherOverall.city) {
@@ -23,7 +22,7 @@ class BottomWrapper extends Component {
         }
 
         return (
-            <GoogleMap className="map panel" location={mapCenter} markers={markers} getLocation={getLocation} />
+            <GoogleMap className="map panel col-xs-12" location={mapCenter} markers={markers} getLocation={getLocation} />
         );
     }
 }

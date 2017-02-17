@@ -40,8 +40,9 @@ class GoogleMap extends Component {
     }
 
     shouldComponentUpdate(_, newState) {
-        const { map, googleScriptLoaded } = this.state;
-        return newState.googleScriptLoaded !== googleScriptLoaded || !map;
+        const { map, googleScriptLoaded, location } = this.state;
+        return newState.googleScriptLoaded !== googleScriptLoaded || !map
+            || !!(location && location.message);
     }
 
     // creates an array with google.map markers
@@ -142,7 +143,7 @@ GoogleMap.propTypes = {
 GoogleMap.defaultProps = {
     className: '',
     location: {
-        message: 'no location available',
+        message: 'No location available',
     },
     markers: [],
 };

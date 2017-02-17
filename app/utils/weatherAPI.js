@@ -29,7 +29,7 @@ function mapWeatherType(type) {
         case 'Rain':
             return 'rainy';
         case 'Clear':
-            return 'cloudy';
+            return 'clear';
         case 'Extreme':
             return 'thunder';
         case 'Snow':

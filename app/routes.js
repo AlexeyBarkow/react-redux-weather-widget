@@ -9,9 +9,9 @@ import BottomWrapper from './containers/connectors/BottomWrapperConnector';
 const routes = (
     <Route path="/" component={RootContainer}>
         <IndexRoute components={{ main: IndexMain, bottom: BottomWrapper }} />
-        <Route path="/home" components={{ main: IndexMain, bottom: BottomWrapper }} />
-        <Route path="/cities/:country/:cityname" components={{ main: IndexMain, bottom: BottomWrapper }} />
         <Route path="/about" components={{ main: About, bottom: null }} />
+        <Route path="/:name" components={{ main: IndexMain, bottom: BottomWrapper }} />
+        <Route path="/cities/:country/:cityname" components={{ main: IndexMain, bottom: BottomWrapper }} />
         <Route path="*" components={{ main: WrongPath, bottom: null }} />
     </Route>
 );

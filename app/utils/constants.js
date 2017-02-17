@@ -1,3 +1,6 @@
+// export const BASEPATH_URL = 'http://epam.2i.by/barkou';
+export const BASEPATH_URL = 'http://localhost:3000/barkou';
+
 export const IMAGES_BASE_PATH = 'http://openweathermap.org/img/w/';
 export const IMAGES_UNUSUAL_PATH = 'http://epam.2i.by/barkou/images/';
 export const WEATHER_API_URL = 'https://openweathermap.org/api';
@@ -18,6 +21,8 @@ export const DEFAULT_API_KEY = '1c11f4e7692bb5e0526e72c0e6baaa3b';
 export const API_URL = 'http://api.openweathermap.org/data/2.5';
 
 export const VALIDATE_ADDRESS_REGEXP = /^[a-zA-Z-\s']+,\s[a-zA-Z]{1,3}$/;
+export const CITY_PATH_REGEXP = /^\/cities\/([a-zA-Z']{1,3})\/([a-zA-Z\s-']*)$/;
+export const DEFAULT_PATH_REGEXP = /^\/(|home)$/;
 
 export const ACCEPTABLE_METRICS_REGEXP = /^[cCfFkK]$/;
 
