@@ -45,7 +45,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                         </ButtonGroup>
                                     </div>
                                 </div>
-                                <div className="col-md-10">
+                                <div className="col-md-9 col-lg-7">
                                     {
                                         forecast.map((current, index) => (
                                             <div className="row pseudo-paragraph" key={`forecast-${index}`}>
@@ -59,7 +59,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                                   maxTemperature={current.temperature.max}
                                                   currTemperature={current.temperature.curr}
                                                 />
-                                                <DetailedInfoTable className="pull-left" weather={current} />
+                                                <DetailedInfoTable className="pull-right clear-500" weather={current} />
                                             </div>
                                         ))
                                     }

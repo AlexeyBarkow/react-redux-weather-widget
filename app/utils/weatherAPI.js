@@ -69,8 +69,8 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
                 direction: data.wind.deg,
                 speed: data.wind.speed,
             },
-            rain: data.rain ? Math.trunc(data.rain['3h'] * 100) / 100 : null,
-            snow: data.snow ? Math.trunc(data.snow['3h'] * 100) / 100 : null,
+            rain: data.rain ? Math.trunc(data.rain['3h'] * 100) : null,
+            snow: data.snow ? Math.trunc(data.snow['3h'] * 100) : null,
             calculationTime: data.dt * 1000,
         };
     } else {

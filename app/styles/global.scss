@@ -232,6 +232,13 @@ html, body, .my-app-root-class, #root {
     padding: 0;
 }
 
+.clear-500 {
+    @include respond(0, 550px) {
+        float: none !important;
+        clear: both;
+    }
+}
+
 .help-block.panel-danger {
     display: none;
 }
