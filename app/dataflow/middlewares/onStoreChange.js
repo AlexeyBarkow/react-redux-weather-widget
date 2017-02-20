@@ -21,7 +21,6 @@ const storeChangeHandler = (...args) => {
             break;
         }
         case types.SET_CITY:
-        case types.SET_METRIC:
             handleCityChange(...args);
             break;
         default:

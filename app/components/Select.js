@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 
-function Select({ children, className, onChange, name, id, btnStyle }) {
+function Select({ children, className, onChange, name, id, btnStyle, value }) {
     return (
         <div className={`${className} form-group`}>
             <select
               className={`${className}${btnStyle ? ' btn btn-default' : ''} form-control`}
               name={name}
               id={id}
+              value={value}
               onChange={onChange}
             >
                 { children }
@@ -23,6 +24,7 @@ Select.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
     btnStyle: PropTypes.bool,
+    value: PropTypes.string,
 };
 
 Select.defaultProps = {
@@ -32,6 +34,7 @@ Select.defaultProps = {
     name: null,
     id: null,
     btnStyle: false,
+    value: null,
 };
 
 export default Select;

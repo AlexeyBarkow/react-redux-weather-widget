@@ -8,7 +8,7 @@ import DetailedInfoTable from './DetailedInfoTable';
 
 import { FORECAST_INTERVAL } from '../utils/constants';
 
-function WeatherForecastSummary({ className, forecast, forecastFilter, changeFilter }) {
+function WeatherForecastSummary({ className, forecast, forecastFilter, changeFilter, metric }) {
     const lastForecast = forecast.length > 0 ? forecast[0].calculationTime : 0;
     const forecastInterval = forecastFilter === '12H' ? FORECAST_INTERVAL * 4 : FORECAST_INTERVAL;
     return (
@@ -53,7 +53,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                                   className="pull-left"
                                                   date={new Date((index * forecastInterval)
                                                         + lastForecast)}
-                                                  metric={current.metric}
+                                                  metric={metric}
                                                   weatherType={current.weatherTypes[0]}
                                                   minTemperature={current.temperature.min}
                                                   maxTemperature={current.temperature.max}
@@ -90,6 +90,7 @@ WeatherForecastSummary.propTypes = {
     forecast: PropTypes.array,
     forecastFilter: PropTypes.string.isRequired,
     changeFilter: PropTypes.func.isRequired,
+    metric: PropTypes.string.isRequired,
 };
 
 WeatherForecastSummary.defaultProps = {

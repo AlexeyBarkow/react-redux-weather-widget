@@ -12,7 +12,7 @@ class IndexMain extends Component {
     }
 
     render() {
-        const { weather, forecast, forecastFilter } = this.props;
+        const { weather, forecast, forecastFilter, metric } = this.props;
         return (
             <TabController defaultSelectedTabIndex="1">
                 <TabContainer headerContainer>
@@ -21,10 +21,10 @@ class IndexMain extends Component {
                 </TabContainer>
                 <TabContainer>
                     <Tab index="1">
-                        <WeatherSummary weather={weather} className="summary" />
+                        <WeatherSummary weather={weather} className="summary" metric={metric} />
                     </Tab>
                     <Tab index="2">
-                        <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={this.changeForecastFilter} forecast={forecast} className="summary" />
+                        <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={this.changeForecastFilter} forecast={forecast} className="summary" metric={metric} />
                     </Tab>
                 </TabContainer>
             </TabController>
@@ -37,6 +37,7 @@ IndexMain.propTypes = {
     forecast: PropTypes.array,
     forecastFilter: PropTypes.string.isRequired,
     setForecastFilter: PropTypes.func.isRequired,
+    metric: PropTypes.string.isRequired,
 };
 
 IndexMain.defaultProps = {

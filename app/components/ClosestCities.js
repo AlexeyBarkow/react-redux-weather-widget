@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
+import { DEFAULT_COUNTRY_CODE } from '../utils/constants';
 
 function ClosestCities({ list, className, title, keySeed }) {
     return (
@@ -8,7 +9,10 @@ function ClosestCities({ list, className, title, keySeed }) {
             { title }
             <ButtonGroup vertical block>
                 { list.map((city, index) => {
-                    const text = `${city.name}, ${city.countryCode}`;
+                    const text = `${city.name}${
+                        city.countryCode !== DEFAULT_COUNTRY_CODE
+                        ? `, ${city.countryCode}`
+                        : ''}`;
                     return (
                         <Button title={text} key={`${keySeed}-${index}`} className="" href={`/cities/${city.countryCode}/${city.name}`}>{ text }</Button>
                     );

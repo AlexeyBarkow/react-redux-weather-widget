@@ -28,6 +28,7 @@ const initialState = {
     metric: metric || DEFAULT_METRIC,
     countryCode,
     city,
+    cache: {},
 };
 
 const reduce = reduceReducers(

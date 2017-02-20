@@ -1,5 +1,21 @@
 import axios, { CancelToken, isCancel } from 'axios';
-import { DEFAULT_API_KEY, API_URL, ROSE_NAMES } from './constants';
+import { DEFAULT_API_KEY, API_URL, ROSE_NAMES, DEFAULT_METRIC, MAX_ROWS, DEFAULT_COUNTRY_CODE } from './constants';
+
+function fromCelsiumToKelvin(value) {
+    return Math.trunc(value + 273);
+}
+
+function fromFahrenheitToKelvin(value) {
+    return Math.trunc(((value + 459.67) * 5) / 9);
+}
+
+function fromKelvinToCelsium(value) {
+    return Math.trunc(value - 273);
+}
+
+function fromKelvinToFahrenheit(value) {
+    return Math.trunc(((value * 9) / 5) - 459.67);
+}
 
 function getMetricUrl(format) {
     let metric = '';
@@ -13,12 +29,39 @@ function getMetricUrl(format) {
     return metric;
 }
 
-function getWeatherTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
-    return `${API_URL}/weather?q=${city},${countryCode}&APPID=${apiKey}${getMetricUrl(format)}`;
+function getWeatherTemplate(
+    city,
+    countryCode,
+    format = DEFAULT_METRIC,
+    apiKey = DEFAULT_API_KEY,
+) {
+    return `${API_URL}/weather?q=${city}${
+        countryCode !== DEFAULT_COUNTRY_CODE
+        ? `,${countryCode}`
+        : ''
+    }&APPID=${apiKey}${getMetricUrl(format)}`;
 }
 
-function getWeatherForecastTemplate(city, countryCode, format = 'C', apiKey = DEFAULT_API_KEY) {
-    return `${API_URL}/forecast?q=${city},${countryCode}&APPID=${apiKey}${getMetricUrl(format)}`;
+function getWeatherForecastTemplate(
+    city,
+    countryCode,
+    format = DEFAULT_METRIC,
+    apiKey = DEFAULT_API_KEY,
+) {
+    return `${API_URL}/forecast?q=${city}${
+        countryCode !== DEFAULT_COUNTRY_CODE
+        ? `,${countryCode}`
+        : ''
+    }&APPID=${apiKey}${getMetricUrl(format)}`;
+}
+
+function getClosestCitiesToLocationURL(
+    { longitude, latitude },
+    resultRows = MAX_ROWS,
+    format = DEFAULT_METRIC,
+    apiKey = DEFAULT_API_KEY,
+) {
+    return `${API_URL}/find?lat=${latitude}&lon=${longitude}&cnt=${resultRows}&APPID=${apiKey}${getMetricUrl(format)}`;
 }
 
 function mapWeatherType(type) {
@@ -29,7 +72,7 @@ function mapWeatherType(type) {
         case 'Rain':
             return 'rainy';
         case 'Clear':
-            return 'clear';
+            return 'cloudy';
         case 'Extreme':
             return 'thunder';
         case 'Snow':
@@ -41,13 +84,13 @@ function mapWeatherType(type) {
     }
 }
 //added for unification
-function convertWeatherToAcceptableFormat(metric, city, status, data) {
+function convertWeatherToAcceptableFormat(city, status, data) {
     let formattedWeather;
     if ((data.cod || status) === 200) {
         formattedWeather = {
-            metric,
             status: parseInt(data.cod, 10) || status,
             city: data.name || city,
+            country: data.sys.country || DEFAULT_COUNTRY_CODE,
             humidity: data.main.humidity,
             temperature: {
                 curr: Math.trunc(data.main.temp),
@@ -69,8 +112,8 @@ function convertWeatherToAcceptableFormat(metric, city, status, data) {
                 direction: data.wind.deg,
                 speed: data.wind.speed,
             },
-            rain: data.rain ? Math.trunc(data.rain['3h'] * 100) : null,
-            snow: data.snow ? Math.trunc(data.snow['3h'] * 100) : null,
+            rain: data.rain ? Math.trunc(data.rain['3h'] * 100) / 100 : null,
+            snow: data.snow ? Math.trunc(data.snow['3h'] * 100) / 100 : null,
             calculationTime: data.dt * 1000,
         };
     } else {
@@ -88,20 +131,20 @@ let cancelWeatherAjax = null;
 let cancelForecastAjax = null;
 
 const weatherAPI = {
-    fetchCurrentWeather(city, country, metric = 'C') {
+    fetchCurrentWeather(city, country) {
         if (cancelWeatherAjax) {
             cancelWeatherAjax();
         }
 
         return axios
-            .get(getWeatherTemplate(city, country, metric), {
+            .get(getWeatherTemplate(city, country), {
                 cancelToken: new CancelToken((cancel) => {
                     cancelWeatherAjax = cancel;
                 }),
             })
             .then((res) => {
                 cancelWeatherAjax = null;
-                return convertWeatherToAcceptableFormat(metric, city, null, res.data);
+                return convertWeatherToAcceptableFormat(city, null, res.data);
             })
             .catch((error) => {
                 if (isCancel(error)) {
@@ -113,14 +156,14 @@ const weatherAPI = {
                 return error;
             });
     },
-    fetchWeatherForecast(city, country, metric = 'C') {
+    fetchWeatherForecast(city, country) {
         if (cancelForecastAjax) {
             cancelForecastAjax();
         }
 
-        const mapper = convertWeatherToAcceptableFormat.bind(null, metric, city, 200);
+        const mapper = convertWeatherToAcceptableFormat.bind(null, city, 200);
         return axios
-            .get(getWeatherForecastTemplate(city, country, metric), {
+            .get(getWeatherForecastTemplate(city, country), {
                 cancelToken: new CancelToken((cancel) => {
                     cancelForecastAjax = cancel;
                 }),
@@ -139,6 +182,13 @@ const weatherAPI = {
                 return error;
             });
     },
+    getClosestCitiesToLocation(location) {
+        return axios.get(getClosestCitiesToLocationURL(location))
+          .then((respond) => {
+              const mapper = convertWeatherToAcceptableFormat.bind(null, null, 200);
+              return respond.data.list.map(mapper);
+          });
+    },
 };
 
 export default weatherAPI;
@@ -146,5 +196,28 @@ export default weatherAPI;
 export function fromMetheoDirection(degree) {
     const angleInterval = 360 / ROSE_NAMES.length;
 
-    return ROSE_NAMES[Math.trunc(((parseInt(degree, 10) % 360) / angleInterval) + .5)];
+    return ROSE_NAMES[Math.trunc(((parseInt(degree, 10) + 11.25) % 360) / angleInterval)];
+}
+
+export function convertValueToMetric(value, metric, prevMetric = DEFAULT_METRIC) {
+    if (prevMetric === metric) {
+        return value;
+    }
+
+    let valueInKelvin;
+    if (prevMetric === 'C') {
+        valueInKelvin = fromCelsiumToKelvin(value);
+    } else if (prevMetric === 'F') {
+        valueInKelvin = fromFahrenheitToKelvin(value);
+    } else {
+        valueInKelvin = value;
+    }
+
+    if (metric === 'C') {
+        return fromKelvinToCelsium(valueInKelvin);
+    } else if (metric === 'F') {
+        return fromKelvinToFahrenheit(valueInKelvin);
+    }
+
+    return valueInKelvin;
 }

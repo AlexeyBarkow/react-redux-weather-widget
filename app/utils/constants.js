@@ -20,7 +20,7 @@ export const DEFAULT_API_KEY = '1c11f4e7692bb5e0526e72c0e6baaa3b';
 export const API_URL = 'http://api.openweathermap.org/data/2.5';
 
 export const VALIDATE_ADDRESS_REGEXP = /^[a-zA-Z-\s']+,\s[a-zA-Z]{1,3}$/;
-export const CITY_PATH_REGEXP = /^\/cities\/([a-zA-Z']{1,3})\/([a-zA-Z\s-']*)$/;
+export const CITY_PATH_REGEXP = /^\/cities\/([a-zA-Z]{1,3})\/([a-zA-Z\s-'’а-яА-ЯёëЁ]*)$/;
 export const DEFAULT_PATH_REGEXP = /^\/(|home)$/;
 
 export const ACCEPTABLE_METRICS_REGEXP = /^[cCfFkK]$/;
@@ -30,3 +30,5 @@ export const REDUX_URL = 'http://redux.js.org';
 
 export const ROOT_NODE = document.getElementById('root');
 export const ROSE_NAMES = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+
+export const DEFAULT_COUNTRY_CODE = 'any';

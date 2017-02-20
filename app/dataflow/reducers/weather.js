@@ -19,6 +19,21 @@ function weatherReducer(state, action) {
                 ...state,
                 forecastFilter: action.forecastFilter,
             };
+        case types.CACHE_PUSH: {
+            const { cache } = state;
+            const cacheKey = action.key || `${action.cache.city}/${action.cache.country}`;
+
+            if (!cache[cacheKey]) {
+                return {
+                    ...state,
+                    cache: {
+                        ...cache,
+                        [cacheKey]: action.cache,
+                    },
+                };
+            }
+            return state;
+        }
         default:
             return state;
     }

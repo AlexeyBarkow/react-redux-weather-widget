@@ -6,7 +6,7 @@ import Loading from './Loading';
 import DetailedInfoTable from './DetailedInfoTable';
 import '../styles/summary.scss';
 
-function WeatherSummary({ className, weather }) {
+function WeatherSummary({ className, weather, metric }) {
     const date = new Date(weather.calculationTime);
     const formattedDate = formatDate(date);
     return (
@@ -20,7 +20,7 @@ function WeatherSummary({ className, weather }) {
                                 <h3>Today (gathered in {formattedDate})</h3>
                                 <WeatherTemperature
                                   className="row"
-                                  metric={weather.metric}
+                                  metric={metric}
                                   weatherType={weather.weatherTypes[0]}
                                   minTemperature={weather.temperature.min}
                                   maxTemperature={weather.temperature.max}
@@ -53,6 +53,7 @@ function WeatherSummary({ className, weather }) {
 WeatherSummary.propTypes = {
     className: PropTypes.string,
     weather: PropTypes.object,
+    metric: PropTypes.string.isRequired,
 };
 
 WeatherSummary.defaultProps = {

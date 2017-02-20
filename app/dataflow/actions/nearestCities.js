@@ -1,13 +1,6 @@
 import types from './types';
 import getCityAPI from '../../utils/getCityAPI';
 
-function changeNearestCities(nearestCities) {
-    return {
-        type: types.SET_NEAREST_CITIES,
-        nearestCities,
-    };
-}
-
 function setCityAutocompleteArray(autocomplete) {
     return {
         type: types.SET_AUTOCOMPLETE_ARRAY,
@@ -15,14 +8,14 @@ function setCityAutocompleteArray(autocomplete) {
     };
 }
 
-function setNearestCitiesError(error) {
-    const nearestCities = [];
-    nearestCities.error = error;
-    return {
-        type: types.SET_NEAREST_CITIES_ERROR,
-        nearestCities,
-    };
-}
+// function setNearestCitiesError(error) {
+//     const nearestCities = [];
+//     nearestCities.error = error;
+//     return {
+//         type: types.SET_NEAREST_CITIES_ERROR,
+//         nearestCities,
+//     };
+// }
 
 function setAutocompleteError(error) {
     const autocomplete = [];
@@ -48,17 +41,17 @@ export function autocompleteCity(beginning) {
     };
 }
 
-export function getNearestTo(location) {
-    return (dispatch) => {
-        dispatch(setNearestCitiesError({
-            code: 0,
-            message: 'loading...',
-        }));
-        getCityAPI.getClosestCitiesToLocation(location)
-          .then((cities) => {
-              dispatch(changeNearestCities(cities));
-          }).catch((error) => {
-              dispatch(setNearestCitiesError(error));
-          });
-    };
-}
+// export function getNearestTo(location) {
+//     return (dispatch) => {
+//         dispatch(setNearestCitiesError({
+//             code: 0,
+//             message: 'loading...',
+//         }));
+//         getCityAPI.getClosestCitiesToLocation(location)
+//           .then((cities) => {
+//               dispatch(changeNearestCities(cities));
+//           }).catch((error) => {
+//               dispatch(setNearestCitiesError(error));
+//           });
+//     };
+// }
