@@ -1,6 +1,6 @@
 import types from '../actions/types';
 
-function locationReducer(state, action) {
+function locationReducer(state = {}, action) {
     switch (action.type) {
         case types.SET_NEAREST_CITIES:
         case types.SET_NEAREST_CITIES_ERROR:

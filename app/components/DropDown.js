@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import InputError from '../components/InputError';
 
 function DropDown({
     children,
@@ -9,14 +10,25 @@ function DropDown({
     value,
     placeholder,
     listId,
-    onInputChange,
-    errorBlock,
+    onChange,
     onBlur,
     onFocus,
-    validationState,
+    input,
+    meta: {
+        error,
+        touched,
+    },
 }) {
+    let validationStatus = '';
+    if (touched) {
+        if (error) {
+            validationStatus = ' has-error';
+        } else {
+            validationStatus = ' has-success';
+        }
+    }
     return (
-        <div className={`${className} form-group ${validationState}`}>
+        <div className={`${className} form-group${validationStatus}`}>
             <input
               className={`${inputClassName} form-control`}
               type="text"
@@ -24,14 +36,15 @@ function DropDown({
               value={value}
               placeholder={placeholder}
               list={listId}
-              onChange={onInputChange}
+              onChange={onChange}
               onBlur={onBlur}
               onFocus={onFocus}
+              {...input}
             />
             <datalist id={listId} className={dataListClassName}>
                 { children }
             </datalist>
-            { validationState === 'has-error' && errorBlock }
+            { error && <InputError popupPanel errorMessage={error} /> }
         </div>
     );
 }
@@ -43,13 +56,13 @@ DropDown.propTypes = {
     inputClassName: PropTypes.string,
     listId: PropTypes.string.isRequired,
     name: PropTypes.string,
-    onInputChange: PropTypes.func,
+    onChange: PropTypes.func,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    errorBlock: PropTypes.element,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
-    validationState: PropTypes.string,
+    input: PropTypes.object,
+    meta: PropTypes.object,
 };
 
 DropDown.defaultProps = {
@@ -58,13 +71,13 @@ DropDown.defaultProps = {
     dataListClassName: '',
     inputClassName: '',
     name: '',
-    onInputChange: null,
+    onChange: null,
     placeholder: '',
-    value: '',
-    errorBlock: null,
+    value: undefined,
     onBlur: null,
     onFocus: null,
-    validationState: '',
+    input: {},
+    meta: {},
 };
 
 export default DropDown;

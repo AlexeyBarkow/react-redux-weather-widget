@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
+import _ from 'lodash';
 import Loading from '../components/Loading';
 import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
 import '../styles/gmap.scss';
@@ -22,14 +23,13 @@ class GoogleMap extends Component {
         const { markers, location } = this.props;
         const newMarkers = newProps.markers;
         const newLocation = newProps.location;
-
-        if (!map) {
+        // ToDo: find out why reselect does not return equal objects
+        if (!map || _.isEqual(newProps, this.props)) {
             return;
         }
 
         if (markers !== newMarkers) {
             const stateMarkers = this.getStateMarkers(map, newMarkers);
-
             this.setState({ stateMarkers });
         }
 
@@ -39,7 +39,7 @@ class GoogleMap extends Component {
         }
     }
 
-    shouldComponentUpdate(_, newState) {
+    shouldComponentUpdate(__, newState) {
         const { map, googleScriptLoaded, location } = this.state;
         return newState.googleScriptLoaded !== googleScriptLoaded || !map
             || !!(location && location.message);

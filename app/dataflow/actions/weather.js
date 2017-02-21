@@ -44,6 +44,15 @@ function setForecastStatus(error) {
     };
 }
 
+function setNearestCitiesError(error) {
+    const nearestCities = [];
+    nearestCities.error = error;
+    return {
+        type: types.SET_NEAREST_CITIES_ERROR,
+        nearestCities,
+    };
+}
+
 function cacheFetchedData(weather, key) {
     return {
         type: types.CACHE_PUSH,
@@ -61,7 +70,7 @@ function changeNearestCities(nearestCities) {
 
 export function getWeather(city, code) {
     return (dispatch, getState) => {
-        const { cache } = getState();
+        const { weather: { cache } } = getState();
         const cached = cache[`${city}/${code}`];
         if (cached) {
             dispatch(changeWeatherInfo(cached));
@@ -120,6 +129,10 @@ export function redirectToCity(city, countryCode, metric = DEFAULT_METRIC) {
 
 export function getNearestTo(location) {
     return (dispatch) => {
+        dispatch(setNearestCitiesError({
+            code: 0,
+            message: 'loading...',
+        }));
         getWeatherAjax.getClosestCitiesToLocation(location).then((res) => {
             const nearestCities = res.map((curr) => {
                 dispatch(cacheFetchedData(curr));
@@ -129,6 +142,8 @@ export function getNearestTo(location) {
                 };
             });
             dispatch(changeNearestCities(nearestCities));
+        }).catch((error) => {
+            dispatch(setNearestCitiesError(error));
         });
     };
 }

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Header from './Header';
+import Header from './connectors/HeaderConnector';
 import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';

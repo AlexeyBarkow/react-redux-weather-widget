@@ -6,7 +6,7 @@ import * as actions from '../../dataflow/actions/index';
 
 function mapStateToProps(state) {
     return {
-        geolocation: state.geolocation,
+        geolocation: state.location.geolocation,
         weatherOverall: weatherOverallSelector(state),
     };
 }

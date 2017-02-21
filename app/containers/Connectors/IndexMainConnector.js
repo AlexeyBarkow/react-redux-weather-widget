@@ -6,12 +6,18 @@ import { selectForecastFilter } from '../../selectors/selectors';
 
 function mapStateToProps(state) {
     const {
-        weather,
-        forecastFilter,
-        nearestCities,
-        city,
-        countryCode,
-        metric,
+        weather: {
+            weather,
+            forecastFilter,
+        },
+        main: {
+            city,
+            countryCode,
+            metric,
+        },
+        location: {
+            nearestCities,
+        },
     } = state;
     return {
         forecast: selectForecastFilter(state),

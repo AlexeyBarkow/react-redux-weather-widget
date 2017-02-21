@@ -8,15 +8,6 @@ function setCityAutocompleteArray(autocomplete) {
     };
 }
 
-// function setNearestCitiesError(error) {
-//     const nearestCities = [];
-//     nearestCities.error = error;
-//     return {
-//         type: types.SET_NEAREST_CITIES_ERROR,
-//         nearestCities,
-//     };
-// }
-
 function setAutocompleteError(error) {
     const autocomplete = [];
     autocomplete.error = error;
@@ -40,18 +31,3 @@ export function autocompleteCity(beginning) {
           });
     };
 }
-
-// export function getNearestTo(location) {
-//     return (dispatch) => {
-//         dispatch(setNearestCitiesError({
-//             code: 0,
-//             message: 'loading...',
-//         }));
-//         getCityAPI.getClosestCitiesToLocation(location)
-//           .then((cities) => {
-//               dispatch(changeNearestCities(cities));
-//           }).catch((error) => {
-//               dispatch(setNearestCitiesError(error));
-//           });
-//     };
-// }

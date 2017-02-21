@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import CityInputForm from '../CityInputForm';
 import * as actions from '../../dataflow/actions/index';
 
-function mapStateToProps(state) {
-    return {
-        autocomplete: state.autocomplete,
-        metric: state.metric,
-    };
+function mapStateToProps({ main: { autocomplete, metric } }) {
+    return { initialValues: { metric }, autocomplete };
 }
 
 function mapDispatchToProps(dispatch) {

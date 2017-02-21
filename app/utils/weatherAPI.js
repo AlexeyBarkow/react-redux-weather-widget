@@ -70,6 +70,7 @@ function mapWeatherType(type) {
         case 'Clouds':
             return 'cloudy';
         case 'Rain':
+        case 'Drizzle':
             return 'rainy';
         case 'Clear':
             return 'cloudy';

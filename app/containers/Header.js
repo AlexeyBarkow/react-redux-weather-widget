@@ -21,6 +21,12 @@ class Header extends Component {
         });
     };
 
+    cityInputFormSubmit = ({ city, metric }) => {
+        const { redirectToCity } = this.props;
+        const splitted = city.split(', ');
+        redirectToCity(splitted[0], splitted[1], metric);
+    }
+
     render() {
         const { className } = this.props;
         const { collapsed } = this.state;
@@ -36,7 +42,7 @@ class Header extends Component {
                             <span className="icon-bar" />
                             <span className="icon-bar" />
                         </Button>
-                        <CityInputForm className="navbar-left header__city-search" />
+                        <CityInputForm className="navbar-left header__city-search" onSubmit={this.cityInputFormSubmit} />
                     </div>
                     <Collapse className="navbar-collapse" collapsed={collapsed}>
                         <Navbar>
@@ -61,6 +67,7 @@ class Header extends Component {
 
 Header.propTypes = {
     className: PropTypes.string,
+    redirectToCity: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
+import { Field, reduxForm } from 'redux-form';
 import Select from '../components/Select';
 import DatalistOption from '../components/DatalistOption';
 import DropDown from '../components/DropDown';
-import InputError from '../components/InputError';
 import Form from '../containers/Form';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
@@ -11,87 +11,40 @@ import { validateAddress } from '../utils/validateFunctions';
 import { MIN_AJAX_INTERVAL } from '../utils/constants';
 
 class CityInputForm extends Component {
-    constructor(props) {
-        super(props);
+    autocompleteCity = _.throttle(({ target }) => {
+        this.props.autocompleteCity(target.value);
+    }, MIN_AJAX_INTERVAL);
 
-        const { metric } = props;
-
-        this.state = {
-            typedCity: '',
-            selectedMetric: metric,
-            dropDownValidationState: '',
-        };
-    }
-
-    onSubmit = (e) => {
-        e.preventDefault();
-        const { redirectToCity } = this.props;
-        const { typedCity, selectedMetric } = this.state;
-        const splitted = typedCity.split(', ');
-        if (this.validateDropDown()) {
-            redirectToCity(splitted[0], splitted[1], selectedMetric);
-        }
-    };
-
-    onSelectChange = (e) => {
-        const selectedMetric = e.target.value;
-        this.setState({ selectedMetric });
-    };
-
-    onDropDownChange = (e) => {
-        const typedCity = e.target.value;
-
-        this.autocompleteCity(typedCity);
-        this.setState({ typedCity });
-    };
-
-    setDropDownValidationState = (newState) => {
-        this.setState({
-            dropDownValidationState: newState,
-        });
-    };
-
-    autocompleteCity = _.throttle(this.props.autocompleteCity, MIN_AJAX_INTERVAL);
-
-    validateDropDown = () => {
-        const { typedCity } = this.state;
-
-        if (validateAddress(typedCity)) {
-            this.setDropDownValidationState('has-success');
-            return true;
-        }
-        this.setDropDownValidationState('has-error');
-        return false;
-    };
+    validateDropDown = value => (validateAddress(value)
+            ? undefined
+            : 'Address should be presented in format "City name, Country code"');
 
     render() {
-        const { className, autocomplete } = this.props;
-        const { typedCity, selectedMetric, dropDownValidationState } = this.state;
+        const { className, autocomplete, handleSubmit } = this.props;
+
         return (
-            <Form className={className} autocompleteOff submitHandler={this.onSubmit}>
+            <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>
-                    <DropDown
+                    <Field
+                      component={DropDown}
                       className="header__city-search__name"
                       name="city"
                       placeholder="Type city here"
-                      value={typedCity}
                       listId="city-input"
-                      onInputChange={this.onDropDownChange}
-                      onBlur={this.validateDropDown}
-                      validationState={dropDownValidationState}
-                      errorBlock={<InputError popupPanel errorMessage="Address should be presented in format 'City name, Country code'" />}
+                      onChange={this.autocompleteCity}
+                      validate={this.validateDropDown}
                     >
                         {
                             autocomplete.map((curr, index) => (
                                 <DatalistOption value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
                             ))
                         }
-                    </DropDown>
-                    <Select name="metric" value={selectedMetric} onChange={this.onSelectChange} className="header__city-search__metric" btnStyle>
+                    </Field>
+                    <Field component={Select} name="metric" className="header__city-search__metric" btnStyle>
                         <DatalistOption value="C">C&deg;</DatalistOption>
                         <DatalistOption value="F">F&deg;</DatalistOption>
                         <DatalistOption value="K">K</DatalistOption>
-                    </Select>
+                    </Field>
                     <Button type="submit">Get Weather!</Button>
                 </ButtonGroup>
             </Form>
@@ -103,8 +56,7 @@ CityInputForm.propTypes = {
     className: PropTypes.string,
     autocompleteCity: PropTypes.func.isRequired,
     autocomplete: PropTypes.array,
-    redirectToCity: PropTypes.func.isRequired,
-    metric: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
 };
 
 CityInputForm.defaultProps = {
@@ -112,4 +64,9 @@ CityInputForm.defaultProps = {
     autocomplete: [],
 };
 
-export default CityInputForm;
+const ReduxCityInputForm = reduxForm({
+    form: 'cityInputForm',
+})(CityInputForm);
+
+
+export default ReduxCityInputForm;

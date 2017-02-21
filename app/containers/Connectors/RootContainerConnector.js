@@ -7,7 +7,7 @@ import * as actions from '../../dataflow/actions/index';
 function mapStateToProps(state) {
     return {
         weatherOverall: weatherOverallSelector(state),
-        nearestCities: state.nearestCities,
+        nearestCities: state.location.nearestCities,
     };
 }
 

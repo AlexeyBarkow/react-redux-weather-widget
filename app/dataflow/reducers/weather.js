@@ -1,6 +1,6 @@
 import types from '../actions/types';
 
-function weatherReducer(state, action) {
+function weatherReducer(state = {}, action) {
     switch (action.type) {
         case types.UPDATE_WEATHER_INFO:
         case types.SET_WEATHER_STATUS:

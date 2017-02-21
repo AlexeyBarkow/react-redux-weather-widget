@@ -1,7 +1,7 @@
 import types from '../actions/types';
 import { ACCEPTABLE_METRICS_REGEXP } from '../../utils/constants';
 
-function mainReducer(state, action) {
+function mainReducer(state = {}, action) {
     switch (action.type) {
         case types.SET_CITY:
             return {

@@ -14,7 +14,7 @@ class BottomWrapper extends Component {
             });
         }
 
-        if (weatherOverall.city) {
+        if (weatherOverall.city && weatherOverall.location) {
             markers.push({
                 title: weatherOverall.city,
                 location: weatherOverall.location,

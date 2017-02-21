@@ -12,7 +12,7 @@ import './styles/global.scss';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store, {
-    selectLocationState: state => state,
+    selectLocationState: state => state.routing,
 });
 
 render(
