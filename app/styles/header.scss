@@ -21,13 +21,16 @@
             margin-bottom: 0;
         }
         .header__city-search__metric {
-            width: 3em;
-            appearance: button;
             position: relative;
+            select {
+                width: 3em;
+                appearance: button;
+            }
             .caret {
                 @include center(false, true);
                 right: .3em;
                 color: var(--color-white);
+                pointer-events: none;
             }
         }
     }

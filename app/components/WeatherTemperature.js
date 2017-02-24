@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 import Tooltip from '../containers/Tooltip';
 import Temperature from './Temperature';
 import CalendarPage from './CalendarPage';
@@ -19,7 +20,7 @@ function WeatherTemperature({
             { !!title && (<h3>{title}</h3>) }
             { !!date && <CalendarPage className="pull-left" date={date} showTime /> }
             <div className={date ? 'col-xs-7' : ''}>
-                <div className={`pull-left${date ? ' stretch-width' : ''}`}>
+                <div className={classnames('pull-left', date && 'stretch-width')}>
                     <Tooltip
                       className="weather-pictures"
                       placement="bottom"
@@ -33,7 +34,7 @@ function WeatherTemperature({
                     </Tooltip>
                 </div>
                 <Temperature
-                  className={`${date ? 'stretch-width ' : ''}pull-left`}
+                  className={classnames(date && 'stretch-width', 'pull-left')}
                   metric={metric}
                   minTemperature={minTemperature}
                   maxTemperature={maxTemperature}

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames/dedupe';
+import FormGroup from './FormGroup';
 
 function Select({
     input,
@@ -14,14 +15,14 @@ function Select({
     assistiveLabel,
 }) {
     return (
-        <div className={`${className} form-group`}>
+        <FormGroup className={className}>
             {
                 labelText && id
-                ? <label className={assistiveLabel ? 'sr-only' : undefined} htmlFor={id}>{ labelText }</label>
+                ? <label className={classnames(assistiveLabel && 'sr-only')} htmlFor={id}>{ labelText }</label>
                 : undefined
             }
             <select
-              className={`${className}${btnStyle ? ' btn btn-default' : ''} form-control`}
+              className={classnames(btnStyle && 'btn btn-default', 'form-control')}
               name={name}
               id={id}
               value={value}
@@ -31,7 +32,7 @@ function Select({
                 { children }
             </select>
             <span className="caret" aria-hidden="true" />
-        </div>
+        </FormGroup>
     );
 }
 

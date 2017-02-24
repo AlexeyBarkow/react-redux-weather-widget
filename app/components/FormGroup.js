@@ -1,16 +1,17 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function FormGroup({ className, children, meta: { touched, error } }) {
     let validationStatus = '';
     if (touched) {
         if (error) {
-            validationStatus = ' has-error';
+            validationStatus = 'has-error';
         } else {
-            validationStatus = ' has-success';
+            validationStatus = 'has-success';
         }
     }
     return (
-        <div className={`${className} form-group${validationStatus}`}>
+        <div className={classnames(className, 'form-group', validationStatus)}>
             { children }
         </div>
     );

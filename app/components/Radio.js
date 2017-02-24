@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
+import FormGroup from './FormGroup';
 
 function Radio({
     className,
@@ -12,14 +14,14 @@ function Radio({
     defaultChecked,
 }) {
     return (
-        <div className={`${className} form-group`}>
+        <FormGroup className={className}>
             {
                 defaultChecked
                 ? <input defaultChecked={defaultChecked} type="radio" name={name} value={value} id={id} onChange={onChange} />
             : <input checked={checked} type="radio" name={name} value={value} id={id} onChange={onChange} />
             }
-            <label className={`form-control ${buttonStyle ? ' btn btn-default' : ''}`} htmlFor={id}>{ children }</label>
-        </div>
+            <label className={classnames('form-control', buttonStyle && 'btn btn-default')} htmlFor={id}>{ children }</label>
+        </FormGroup>
     );
 }
 

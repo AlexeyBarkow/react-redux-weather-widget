@@ -30,7 +30,7 @@ class CityInputForm extends Component {
                       className="header__city-search__name"
                       name="city"
                       placeholder="Type city here"
-                      listId="city-input"
+                      listId="city-input-list"
                       id="city-input"
                       assistiveLabel
                       labelText="City"

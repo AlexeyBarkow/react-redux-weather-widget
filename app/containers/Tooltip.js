@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import classnames from 'classnames/dedupe';
 
 class Tooltip extends Component {
     constructor(props) {
@@ -24,11 +25,11 @@ class Tooltip extends Component {
         const { isHovered } = this.state;
         const { className, tooltipText, children, placement } = this.props;
         return (
-            <div onMouseOver={this.onHover} onMouseOut={this.onLeave} className={`${className} tooltip-container`}>
+            <div onMouseOver={this.onHover} onMouseOut={this.onLeave} className={classnames(className, 'tooltip-container')}>
                 { children }
                 {
                     isHovered &&
-                    (<div className={`tooltip in ${placement}`}>
+                    (<div className={classnames('tooltip in', placement)}>
                         <div className="tooltip-inner">
                             {tooltipText}
                         </div>

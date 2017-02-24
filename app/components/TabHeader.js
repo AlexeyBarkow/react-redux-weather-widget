@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function TabHeader({
     children,
@@ -9,7 +10,7 @@ function TabHeader({
     setSelectedTabIndex,
 }) {
     return (
-        <li className={`${index === selectedTabIndex ? 'active' : ''} ${className}`}>
+        <li className={classnames(index === selectedTabIndex && 'active', className)}>
             <a href="#" className="btn btn-link" onClick={() => setSelectedTabIndex(index)}>
                 {children}
             </a>

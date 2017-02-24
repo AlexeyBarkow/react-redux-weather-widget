@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 import InputError from '../components/InputError';
 import Input from '../components/Input';
 import FormGroup from '../components/FormGroup';
@@ -26,7 +27,7 @@ function DropDown({
         <FormGroup meta={meta} className={className}>
             {
                 labelText && id
-                ? <label className={assistiveLabel ? 'sr-only' : undefined} htmlFor={id}>{ labelText }</label>
+                ? <label className={classnames(assistiveLabel && 'sr-only')} htmlFor={id}>{ labelText }</label>
                 : undefined
             }
             <Input

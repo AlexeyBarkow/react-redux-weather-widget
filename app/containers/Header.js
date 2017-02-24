@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import Button from '../components/Button';
@@ -32,11 +33,11 @@ class Header extends Component {
         const { collapsed } = this.state;
 
         return (
-            <header className={`navbar navbar-default ${className}`}>
+            <header className={classnames('navbar navbar-default', className)}>
                 <div className="container">
                     <div className="navbar-header">
                         <Logo className="navbar-left" />
-                        <Button noDefaultStyles onClickHandler={this.onCollapseButtonClick} className={`${collapsed ? '' : 'collapsed'} navbar-toggle`}>
+                        <Button noDefaultStyles onClickHandler={this.onCollapseButtonClick} className={classnames(collapsed && 'collapsed', 'navbar-toggle')}>
                             <span className="sr-only">Toggle navigation</span>
                             <span className="icon-bar" />
                             <span className="icon-bar" />

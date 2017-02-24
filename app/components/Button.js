@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import classnames from 'classnames/dedupe';
 
 function Button({
     children,
@@ -12,7 +13,7 @@ function Button({
     type,
     title,
 }) {
-    const classesToPass = `${noDefaultStyles ? '' : `btn btn-${link ? 'link ' : 'default '}`}${className}`;
+    const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link ' : 'default '}`, className);
 
     return (
         href !== ''

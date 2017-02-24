@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 import Input from './Input';
 import InputError from './InputError';
 import FormGroup from './FormGroup';
@@ -8,7 +9,7 @@ function TemperatureFilterFields({ className, prefix, minTemperature, maxTempera
     const maxInputName = `${prefix}MaxTemperature`;
 
     return (
-        <div className={`${className} form-inline`}>
+        <div className={classnames(className, 'form-inline')}>
             <h2>Filter by temperature</h2>
             <FormGroup meta={minTemperature.meta}>
                 <label className="sr-only-sm" htmlFor={minInputName}>Min temperature</label>

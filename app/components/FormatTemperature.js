@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 import { convertValueToMetric } from '../utils/weatherAPI';
 
 function FormatTemperature({ value, metric, className }) {
     return (
         <span className={className}>
             { convertValueToMetric(value, metric) }
-            <span className={`temperature-metric ${metric}`}>
+            <span className={classnames(metric, 'temperature-metric')}>
                 { metric }
             </span>
         </span>

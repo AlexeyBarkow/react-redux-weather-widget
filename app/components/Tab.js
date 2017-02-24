@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function Tab({ children, className, index }, { selectedTabIndex }) {
     return (
-        <li className={`${index === selectedTabIndex ? '' : 'hidden'} className`}>
+        <li className={classnames(index !== selectedTabIndex && 'hidden', className)}>
             {children}
         </li>
     );

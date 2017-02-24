@@ -49,7 +49,7 @@ class StaticFixator extends Component {
         const { placeholderClass, children } = this.props;
 
         return (
-            <div className={`${isFixed ? 'fixed-children' : ''}`}>
+            <div className={isFixed ? 'fixed-children' : ''}>
                 <div className="fixed-wrapper" ref={this.getContent}>
                     { children }
                 </div>

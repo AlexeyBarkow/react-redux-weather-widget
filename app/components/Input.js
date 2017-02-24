@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function Input({
     className,
@@ -15,7 +16,7 @@ function Input({
 }) {
     return (
         <input
-          className={`form-control ${className}`}
+          className={classnames('form-control', className)}
           type={type}
           name={name}
           value={value}

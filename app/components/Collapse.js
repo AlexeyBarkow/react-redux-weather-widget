@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function Collapse({ children, className, collapsed }) {
     return (
-        <div className={`${className} collapse${collapsed ? '' : ' in'}`}>
+        <div className={classnames(className, 'collapse', collapsed && 'in')}>
             { children }
         </div>
     );
