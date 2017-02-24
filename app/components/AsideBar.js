@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ClosestCities from './ClosestCities';
 import Loading from './Loading';
 
-function AsideBar({ className, nearestCities }) {
+function AsideBar({ className, nearestCities, getNearestTo }) {
     return (
         <aside className={className}>
             {(() => {
@@ -17,7 +17,10 @@ function AsideBar({ className, nearestCities }) {
                     }
                     return (
                         <div className="error-container">
-                            <h3>No cities found</h3>
+                            <h3>{ (nearestCities.error && nearestCities.error.message) || 'No cities found' }</h3>
+                            <p>
+                                <a href="#" onClick={getNearestTo}>Retry?</a>
+                            </p>
                         </div>
                     );
                 }
@@ -35,6 +38,7 @@ function AsideBar({ className, nearestCities }) {
 AsideBar.propTypes = {
     className: PropTypes.string,
     nearestCities: PropTypes.array,
+    getNearestTo: PropTypes.func.isRequired,
 };
 
 AsideBar.defaultProps = {

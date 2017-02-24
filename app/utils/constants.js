@@ -32,4 +32,16 @@ export const REDUX_URL = 'http://redux.js.org';
 export const ROOT_NODE = document.getElementById('root');
 export const ROSE_NAMES = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 
+export const WEATHER_ICON_TYPES_MAP = {
+    'i01': 'clear sky',
+    'i02': 'few clouds',
+    'i03': 'scattered clouds',
+    'i04': 'broken clouds',
+    'i09': 'shower rain',
+    'i10': 'rain',
+    'i11': 'thunderstorm',
+    'i13': 'snow',
+    'i50': 'mist',
+};
+
 export const DEFAULT_COUNTRY_CODE = 'any';

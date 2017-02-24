@@ -1,0 +1,34 @@
+.filters-form {
+    .filters-form__min-max-temperature {
+        label {
+            @include respond(768px) {
+                @include sr-only;
+            }
+        }
+    }
+
+    .filters-form__icons-list {
+        padding-left: 0;
+        & > li {
+            display: inline-block;
+        }
+        .filters-form__icons-list__icon {
+            label .icon {
+                opacity: .25;
+            }
+
+            input:focus + label {
+                outline: none;
+                .icon-wrapper {
+                    outline: 5px auto -webkit-focus-ring-color;
+                }
+            }
+
+            input:checked + label {
+                .icon {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

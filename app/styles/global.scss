@@ -71,75 +71,6 @@ html, body, .my-app-root-class, #root {
 
 }
 
-.form-inline > .form-group:not(:last-child) {
-    @include respond(768px) {
-        margin-right: 1em;
-    }
-}
-
-.btn-group > .form-group {
-    float: left;
-    &:not(:first-child) .form-control {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-    &:not(:last-child) .form-control {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-}
-
-.btn-group-justified-sm {
-    @include respond(780px) {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: separate;
-        & > .form-group {
-            display: table-cell;
-            float: none;
-            width: 1%;
-        }
-    }
-}
-
-@mixin btn-group-vertical {
-    & > .form-group {
-        display: block;
-        float: none;
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 0;
-        &:not(:first-child):not(:last-child) .form-control {
-            border-radius: 0;
-        }
-        &:first-child:not(:last-child) .form-control {
-            border-top-right-radius: 4px;
-            border-top-left-radius: 4px;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-        &:last-child:not(:first-child) .form-control {
-            border-top-right-radius: 0;
-            border-top-left-radius: 0;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-    }
-}
-
-.btn-group-vertical {
-    @include btn-group-vertical;
-}
-
-.btn-group-vertical-rsm {
-    @include respond(0, 780px) {
-        width: 100%;
-        @include btn-group-vertical;
-    }
-}
-
-
 .main {
     margin-top: 1em;
     padding-top: 1em;
@@ -207,10 +138,6 @@ html, body, .my-app-root-class, #root {
     }
 }
 
-.sticky-top {
-
-}
-
 .aside {
     background-color: var(--color-white-alpha);
     border: 1px solid var(--color-white);
@@ -238,21 +165,6 @@ html, body, .my-app-root-class, #root {
     padding: 0;
 }
 
-@include class-with-bootstrap-breaks('sr-only') {
-    position:absolute;
-    width:1px;
-    height:1px;
-    margin:-1px;
-    padding:0;
-    overflow:hidden;
-    clip:rect(0, 0, 0, 0);
-    border:0;
-}
-
-.form-group:last-child {
-    margin-bottom: 0;
-}
-
 .clear-500 {
     @include respond(0, 550px) {
         float: none !important;
@@ -262,25 +174,6 @@ html, body, .my-app-root-class, #root {
 
 .help-block.panel-danger {
     display: none;
-}
-
-input[type="radio"] {
-    position: absolute;
-    left: -99999px;
-    &:checked + label.btn {
-        background-image: none;
-        box-shadow: inset 0 3px 5px rgba(0,0,0,0.125)
-    }
-    &:focus + label {
-        outline: 5px auto -webkit-focus-ring-color;
-        outline-offset: -2px;
-    }
-}
-
-.btn-group-justified > .form-group{
-    display: table-cell;
-    float: none;
-    width: 1%;
 }
 
 .divider {

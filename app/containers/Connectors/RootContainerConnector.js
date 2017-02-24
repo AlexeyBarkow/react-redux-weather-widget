@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RootContainer from '../RootContainer';
 import { weatherOverallSelector } from '../../selectors/selectors';
-import { getLocation } from '../../dataflow/actions/index';
+import { getLocation, getNearestTo } from '../../dataflow/actions/index';
 
 function mapStateToProps(state) {
     return {
@@ -12,7 +12,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ getLocation }, dispatch);
+    return bindActionCreators({ getLocation, getNearestTo }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

@@ -9,6 +9,7 @@ import '../styles/summary.scss';
 function WeatherSummary({ className, weather, metric }) {
     const date = new Date(weather.calculationTime);
     const formattedDate = formatDate(date);
+
     return (
         <section className={className}>
             {(() => {

@@ -15,7 +15,7 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
                 (<p className="temperature-range">
                     <FormatTemperature className="min-temperature" value={minTemperature} metric={metric} />
                     {' — '}
-                    <FormatTemperature className="max-temperature" value={minTemperature} metric={metric} />
+                    <FormatTemperature className="max-temperature" value={maxTemperature} metric={metric} />
                 </p>)
             }
         </div>

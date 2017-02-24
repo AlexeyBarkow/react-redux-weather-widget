@@ -66,19 +66,19 @@ function getClosestCitiesToLocationURL(
 
 function mapWeatherType(type) {
     switch (type) {
-        case 'Mist':
         case 'Clouds':
             return 'cloudy';
         case 'Rain':
         case 'Drizzle':
             return 'rainy';
         case 'Clear':
-            return 'cloudy';
+            return 'clear';
         case 'Extreme':
             return 'thunder';
         case 'Snow':
             return 'snowy';
         case 'Haze':
+        case 'Mist':
             return 'haze';
         default:
             return 'default';

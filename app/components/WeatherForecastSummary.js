@@ -3,7 +3,7 @@ import Loading from './Loading';
 import WeatherTemperature from './WeatherTemperature';
 import ErrorMessage from './ErrorMessage';
 import ButtonGroup from './ButtonGroup';
-import Radio from './Radio';
+import CustomInput from './CustomInput';
 import DetailedInfoTable from './DetailedInfoTable';
 
 import { FORECAST_INTERVAL } from '../utils/constants';
@@ -23,7 +23,8 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                     <div className="panel panel-heading col-xs-3">
                                         <span>Interval:</span>
                                         <ButtonGroup className="btn-group-justified-sm btn-group-vertical-rsm" >
-                                            <Radio
+                                            <CustomInput
+                                              type="radio"
                                               buttonStyle
                                               id="forecast-rad-1"
                                               name="forecast-filter"
@@ -31,8 +32,9 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                               checked={forecastFilter === '12H'} value="12H"
                                             >
                                                 12h
-                                            </Radio>
-                                            <Radio
+                                            </CustomInput>
+                                            <CustomInput
+                                              type="radio"
                                               buttonStyle
                                               id="forecast-rad-2"
                                               name="forecast-filter"
@@ -41,7 +43,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                               value="3H"
                                             >
                                                 3h
-                                            </Radio>
+                                            </CustomInput>
                                         </ButtonGroup>
                                     </div>
                                 </div>

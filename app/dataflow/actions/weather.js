@@ -138,12 +138,20 @@ export function redirectToCity(city, countryCode, metric = DEFAULT_METRIC) {
 }
 
 export function getNearestTo(location) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const geolocation = location || getState().location.geolocation;
+        if (!geolocation.latitude || !geolocation.longitude) {
+            dispatch(setNearestCitiesError({
+                code: -1,
+                message: 'Could not get geolocation',
+            }));
+            return;
+        }
         dispatch(setNearestCitiesError({
             code: 0,
             message: 'loading...',
         }));
-        getWeatherAjax.getClosestCitiesToLocation(location).then((res) => {
+        getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
             const nearestCities = res.map((curr) => {
                 const { city, country } = curr;
                 dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));

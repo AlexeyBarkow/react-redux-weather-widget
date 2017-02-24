@@ -18,6 +18,7 @@ class RootContainer extends Component {
             bottom,
             weatherOverall,
             nearestCities,
+            getNearestTo,
         } = this.props;
 
         return (
@@ -31,7 +32,7 @@ class RootContainer extends Component {
                             <MainContainer className="main col-sm-9 col-xs-12 panel">
                                 { main }
                             </MainContainer>
-                            <AsideBar nearestCities={nearestCities} className="aside col-sm-3 col-xs-12 panel" />
+                            <AsideBar nearestCities={nearestCities} getNearestTo={getNearestTo} className="aside col-sm-3 col-xs-12 panel" />
                             { bottom }
                         </div>
                     </div>
@@ -48,6 +49,7 @@ RootContainer.propTypes = {
     weatherOverall: PropTypes.object.isRequired,
     nearestCities: PropTypes.array.isRequired,
     getLocation: PropTypes.func.isRequired,
+    getNearestTo: PropTypes.func.isRequired,
 };
 
 RootContainer.defaultProps = {

@@ -37,7 +37,7 @@ class Header extends Component {
                 <div className="container">
                     <div className="navbar-header">
                         <Logo className="navbar-left" />
-                        <Button noDefaultStyles onClickHandler={this.onCollapseButtonClick} className={classnames(collapsed && 'collapsed', 'navbar-toggle')}>
+                        <Button noDefaultStyles onClickHandler={this.onCollapseButtonClick} className={classnames(!collapsed && 'collapsed', 'navbar-toggle')}>
                             <span className="sr-only">Toggle navigation</span>
                             <span className="icon-bar" />
                             <span className="icon-bar" />
