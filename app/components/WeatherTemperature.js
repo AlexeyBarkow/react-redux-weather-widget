@@ -19,7 +19,7 @@ function WeatherTemperature({
             { !!title && (<h3>{title}</h3>) }
             { !!date && <CalendarPage className="pull-left" date={date} showTime /> }
             <div className={date ? 'col-xs-7' : ''}>
-                <div className="pull-left">
+                <div className={`pull-left${date ? ' stretch-width' : ''}`}>
                     <Tooltip
                       className="weather-pictures"
                       placement="bottom"

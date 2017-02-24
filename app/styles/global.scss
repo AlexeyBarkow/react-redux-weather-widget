@@ -71,6 +71,12 @@ html, body, .my-app-root-class, #root {
 
 }
 
+.form-inline > .form-group:not(:last-child) {
+    @include respond(768px) {
+        margin-right: 1em;
+    }
+}
+
 .btn-group > .form-group {
     float: left;
     &:not(:first-child) .form-control {
@@ -230,6 +236,21 @@ html, body, .my-app-root-class, #root {
 
 @include class-with-bootstrap-breaks('no-padding') {
     padding: 0;
+}
+
+@include class-with-bootstrap-breaks('sr-only') {
+    position:absolute;
+    width:1px;
+    height:1px;
+    margin:-1px;
+    padding:0;
+    overflow:hidden;
+    clip:rect(0, 0, 0, 0);
+    border:0;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
 }
 
 .clear-500 {

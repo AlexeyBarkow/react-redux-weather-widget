@@ -32,10 +32,6 @@
 
     .weather-pictures, .weather-desc {
         text-align: center;
-        width: 6em;
-        @include respond(0, 500px) {
-            width: 5em;
-        }
     }
 
     .weather-desc-text {

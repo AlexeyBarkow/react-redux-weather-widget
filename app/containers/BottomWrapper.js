@@ -22,7 +22,7 @@ class BottomWrapper extends Component {
         }
 
         return (
-            <GoogleMap className="map panel col-xs-12" location={mapCenter} markers={markers} getLocation={getLocation} />
+            <GoogleMap className="map panel col-xs-12" location={mapCenter} markers={markers} locationServiceMessage={geolocation.message} getLocation={getLocation} />
         );
     }
 }

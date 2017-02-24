@@ -35,6 +35,9 @@
 
 .fixed-wrapper {
     @include clearfix();
+    > * {
+        margin: 0;
+    }
 }
 
 .fixed-children {

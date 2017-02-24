@@ -45,7 +45,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                         </ButtonGroup>
                                     </div>
                                 </div>
-                                <div className="col-md-9 col-lg-7">
+                                <div className="col-md-9 col-lg-8">
                                     {
                                         forecast.map((current, index) => (
                                             <div className="row pseudo-paragraph" key={`forecast-${index}`}>

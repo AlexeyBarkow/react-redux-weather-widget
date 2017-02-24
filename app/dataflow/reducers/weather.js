@@ -21,14 +21,13 @@ function weatherReducer(state = {}, action) {
             };
         case types.CACHE_PUSH: {
             const { cache } = state;
-            const cacheKey = action.key || `${action.cache.city}/${action.cache.country}`;
 
-            if (!cache[cacheKey]) {
+            if (!cache[action.key]) {
                 return {
                     ...state,
                     cache: {
                         ...cache,
-                        [cacheKey]: action.cache,
+                        [action.key]: action.cache,
                     },
                 };
             }

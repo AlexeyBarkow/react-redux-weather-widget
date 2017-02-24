@@ -31,6 +31,9 @@ class CityInputForm extends Component {
                       name="city"
                       placeholder="Type city here"
                       listId="city-input"
+                      id="city-input"
+                      assistiveLabel
+                      labelText="City"
                       onChange={this.autocompleteCity}
                       validate={this.validateDropDown}
                     >
@@ -40,7 +43,15 @@ class CityInputForm extends Component {
                             ))
                         }
                     </Field>
-                    <Field component={Select} name="metric" className="header__city-search__metric" btnStyle>
+                    <Field
+                      component={Select}
+                      name="metric"
+                      className="header__city-search__metric"
+                      btnStyle
+                      id="metric-input"
+                      assistiveLabel
+                      labelText="Metric"
+                    >
                         <DatalistOption value="C">C&deg;</DatalistOption>
                         <DatalistOption value="F">F&deg;</DatalistOption>
                         <DatalistOption value="K">K</DatalistOption>
@@ -64,9 +75,6 @@ CityInputForm.defaultProps = {
     autocomplete: [],
 };
 
-const ReduxCityInputForm = reduxForm({
+export default reduxForm({
     form: 'cityInputForm',
 })(CityInputForm);
-
-
-export default ReduxCityInputForm;

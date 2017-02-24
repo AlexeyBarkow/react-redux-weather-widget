@@ -1,11 +1,16 @@
 import React, { PropTypes } from 'react';
 import InputError from '../components/InputError';
+import Input from '../components/Input';
+import FormGroup from '../components/FormGroup';
 
 function DropDown({
     children,
     className,
     inputClassName,
     dataListClassName,
+    labelText,
+    assistiveLabel,
+    id,
     name,
     value,
     placeholder,
@@ -14,24 +19,19 @@ function DropDown({
     onBlur,
     onFocus,
     input,
-    meta: {
-        error,
-        touched,
-    },
+    meta,
 }) {
-    let validationStatus = '';
-    if (touched) {
-        if (error) {
-            validationStatus = ' has-error';
-        } else {
-            validationStatus = ' has-success';
-        }
-    }
+    const { error } = meta;
     return (
-        <div className={`${className} form-group${validationStatus}`}>
-            <input
-              className={`${inputClassName} form-control`}
-              type="text"
+        <FormGroup meta={meta} className={className}>
+            {
+                labelText && id
+                ? <label className={assistiveLabel ? 'sr-only' : undefined} htmlFor={id}>{ labelText }</label>
+                : undefined
+            }
+            <Input
+              className={inputClassName}
+              id={id}
               name={name}
               value={value}
               placeholder={placeholder}
@@ -45,7 +45,7 @@ function DropDown({
                 { children }
             </datalist>
             { error && <InputError popupPanel errorMessage={error} /> }
-        </div>
+        </FormGroup>
     );
 }
 
@@ -63,6 +63,9 @@ DropDown.propTypes = {
     onFocus: PropTypes.func,
     input: PropTypes.object,
     meta: PropTypes.object,
+    id: PropTypes.string,
+    labelText: PropTypes.string,
+    assistiveLabel: PropTypes.bool,
 };
 
 DropDown.defaultProps = {
@@ -70,14 +73,17 @@ DropDown.defaultProps = {
     className: '',
     dataListClassName: '',
     inputClassName: '',
-    name: '',
+    name: undefined,
     onChange: null,
     placeholder: '',
     value: undefined,
+    id: undefined,
     onBlur: null,
     onFocus: null,
     input: {},
     meta: {},
+    labelText: '',
+    assistiveLabel: false,
 };
 
 export default DropDown;

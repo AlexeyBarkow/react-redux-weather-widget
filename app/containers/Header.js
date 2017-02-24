@@ -52,6 +52,11 @@ class Header extends Component {
                                 </Button>
                             </li>
                             <li>
+                                <Button noDefaultStyles href="/filters">
+                                    Filters
+                                </Button>
+                            </li>
+                            <li>
                                 <Button noDefaultStyles href="/about">
                                     About
                                 </Button>

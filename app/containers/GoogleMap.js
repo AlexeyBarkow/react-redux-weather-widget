@@ -39,10 +39,11 @@ class GoogleMap extends Component {
         }
     }
 
-    shouldComponentUpdate(__, newState) {
-        const { map, googleScriptLoaded, location } = this.state;
-        return newState.googleScriptLoaded !== googleScriptLoaded || !map
-            || !!(location && location.message);
+    shouldComponentUpdate(newProps, newState) {
+        const { map, googleScriptLoaded } = this.state;
+        const { locationServiceMessage } = this.props;
+        return newState.googleScriptLoaded !== googleScriptLoaded || !map ||
+            locationServiceMessage !== newProps.locationServiceMessage;
     }
 
     // creates an array with google.map markers
@@ -81,7 +82,8 @@ class GoogleMap extends Component {
         this.setState({ map, stateMarkers });
     };
 
-    updateComponent = () => {
+    updateComponent = (e) => {
+        e.preventDefault();
         this.setState({
             map: null,
         });
@@ -90,15 +92,16 @@ class GoogleMap extends Component {
     };
 
     render() {
-        const { className, location } = this.props;
+        const { className, location, locationServiceMessage } = this.props;
         const { googleScriptLoaded } = this.state;
 
         return (
             <div className={className}>
                 {(() => {
-                    if (googleScriptLoaded === 'loaded' && !location.message) {
+                    if (googleScriptLoaded === 'loaded' && location.longitude && location.latitude) {
                         return (
                             <div
+                              className="pseudo-paragraph"
                               style={{
                                   width: '100%',
                                   height: '500px',
@@ -110,19 +113,23 @@ class GoogleMap extends Component {
                     } else if (googleScriptLoaded === 'loading') {
                         return <Loading />;
                     }
-                    return (
-                        <div>
+                    return undefined;
+                })()}
+                { locationServiceMessage
+                    ? (
+                        <div className="pseudo-paragraph">
                             <p>
                                 {
                                     <span>
-                                        { location.message
+                                        { locationServiceMessage
                                         || 'Google Maps service is not responding or google location service is not enabled.'} <a href="#" onClick={this.updateComponent}>Retry?</a>
                                     </span>
                                 }
                             </p>
                         </div>
-                    );
-                })()}
+                    )
+                    : undefined
+                }
                 <Script
                   url={getGoogleMapUrl()}
                   onLoad={this.scriptLoaded}
@@ -138,6 +145,7 @@ GoogleMap.propTypes = {
     location: PropTypes.object,
     markers: PropTypes.array,
     getLocation: PropTypes.func.isRequired,
+    locationServiceMessage: PropTypes.string,
 };
 
 GoogleMap.defaultProps = {
@@ -146,6 +154,7 @@ GoogleMap.defaultProps = {
         message: 'No location available',
     },
     markers: [],
+    locationServiceMessage: '',
 };
 
 export default GoogleMap;

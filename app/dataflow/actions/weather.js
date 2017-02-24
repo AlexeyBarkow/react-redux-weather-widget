@@ -53,10 +53,10 @@ function setNearestCitiesError(error) {
     };
 }
 
-function cacheFetchedData(weather, key) {
+function cacheFetchedData(data, key) {
     return {
         type: types.CACHE_PUSH,
-        cache: weather,
+        cache: data,
         key,
     };
 }
@@ -71,7 +71,8 @@ function changeNearestCities(nearestCities) {
 export function getWeather(city, code) {
     return (dispatch, getState) => {
         const { weather: { cache } } = getState();
-        const cached = cache[`${city}/${code}`];
+        const cached = cache[`weather/${city}/${code}`];
+
         if (cached) {
             dispatch(changeWeatherInfo(cached));
             return;
@@ -88,7 +89,7 @@ export function getWeather(city, code) {
               }
               if (!data.response) {
                   dispatch(changeWeatherInfo(data));
-                  dispatch(cacheFetchedData(data, `${city}/${code}`));
+                  dispatch(cacheFetchedData(data, `weather/${city}/${code}`));
               } else {
                   const { response: { data: { cod, message } } } = data;
                   dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
@@ -98,7 +99,15 @@ export function getWeather(city, code) {
 }
 
 export function getForecast(city, code) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { weather: { cache } } = getState();
+        const cached = cache[`forecast/${city}/${code}`];
+
+        if (cached) {
+            dispatch(changeForecastInfo(cached));
+            return;
+        }
+
         dispatch(setForecastStatus({
             cod: 1,
             message: 'loading...',
@@ -110,6 +119,7 @@ export function getForecast(city, code) {
               }
               if (!data.response) {
                   dispatch(changeForecastInfo(data));
+                  dispatch(cacheFetchedData(data, `forecast/${city}/${code}`));
               } else {
                   const { response: { data: { cod, message } } } = data;
                   dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
@@ -135,10 +145,11 @@ export function getNearestTo(location) {
         }));
         getWeatherAjax.getClosestCitiesToLocation(location).then((res) => {
             const nearestCities = res.map((curr) => {
-                dispatch(cacheFetchedData(curr));
+                const { city, country } = curr;
+                dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));
                 return {
-                    name: curr.city,
-                    countryCode: curr.country,
+                    name: city,
+                    countryCode: country,
                 };
             });
             dispatch(changeNearestCities(nearestCities));

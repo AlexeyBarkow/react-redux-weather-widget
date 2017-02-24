@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function Select({
     input,
@@ -9,9 +10,16 @@ function Select({
     id,
     btnStyle,
     value,
+    labelText,
+    assistiveLabel,
 }) {
     return (
         <div className={`${className} form-group`}>
+            {
+                labelText && id
+                ? <label className={assistiveLabel ? 'sr-only' : undefined} htmlFor={id}>{ labelText }</label>
+                : undefined
+            }
             <select
               className={`${className}${btnStyle ? ' btn btn-default' : ''} form-control`}
               name={name}
@@ -36,6 +44,8 @@ Select.propTypes = {
     btnStyle: PropTypes.bool,
     value: PropTypes.string,
     input: PropTypes.object,
+    labelText: PropTypes.string,
+    assistiveLabel: PropTypes.bool,
 };
 
 Select.defaultProps = {
@@ -47,6 +57,8 @@ Select.defaultProps = {
     btnStyle: false,
     value: undefined,
     input: {},
+    labelText: '',
+    assistiveLabel: false,
 };
 
 export default Select;
