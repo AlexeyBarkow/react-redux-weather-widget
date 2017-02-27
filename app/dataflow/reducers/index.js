@@ -8,7 +8,7 @@ import { load } from '../../utils/localStorage';
 import { DEFAULT_METRIC } from '../../utils/constants';
 
 const stored = load('store') || {};
-const { city, countryCode, metric, main } = stored;
+const { city, countryCode, metric, main, location } = stored;
 
 const initialState = {
     location: {
@@ -23,6 +23,7 @@ const initialState = {
             status: 0,
             message: 'No location API available to get initial state',
             weatherTypes: [{ main }],
+            location,
         },
         forecast: [{
             status: 0,

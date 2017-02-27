@@ -98,6 +98,35 @@ export function getWeather(city, code) {
     };
 }
 
+export function getWeatherByLocation(location, cityname) {
+    return (dispatch, getState) => {
+        const { weather: { cache } } = getState();
+        const cached = cache[`weather/${cityname}/any`];
+
+        if (cached) {
+            dispatch(changeWeatherInfo(cached));
+            return;
+        }
+        dispatch(setWeatherStatus({
+            cod: 1,
+            message: 'loading...',
+        }));
+        getWeatherAjax.getCityInfoByLocation(location).then((data) => {
+            if (data.cod === -1) {
+                return;
+            }
+            if (!data.response) {
+                dispatch(changeWeatherInfo(data));
+                const { city, country } = data;
+                dispatch(cacheFetchedData(data, `weather/${city}/${country || 'any'}`));
+            } else {
+                const { response: { data: { cod, message } } } = data;
+                dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
+            }
+        });
+    };
+}
+
 export function getForecast(city, code) {
     return (dispatch, getState) => {
         const { weather: { cache } } = getState();
@@ -120,6 +149,36 @@ export function getForecast(city, code) {
               if (!data.response) {
                   dispatch(changeForecastInfo(data));
                   dispatch(cacheFetchedData(data, `forecast/${city}/${code}`));
+              } else {
+                  const { response: { data: { cod, message } } } = data;
+                  dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
+              }
+          });
+    };
+}
+
+export function getForecastByLocation(location, cityname) {
+    return (dispatch, getState) => {
+        const { weather: { cache } } = getState();
+        const cached = cache[`forecast/${cityname}/any`];
+
+        if (cached) {
+            dispatch(changeWeatherInfo(cached));
+            return;
+        }
+        dispatch(setWeatherStatus({
+            cod: 1,
+            message: 'loading...',
+        }));
+        getWeatherAjax.getForecastInfoByLocation(location, cityname)
+          .then((data) => {
+              if (data.cod === -1) {
+                  return;
+              }
+              if (!data.response) {
+                  const { city, country } = data;
+                  dispatch(changeForecastInfo(data));
+                  dispatch(cacheFetchedData(data, `forecast/${city}/${country || 'any'}`));
               } else {
                   const { response: { data: { cod, message } } } = data;
                   dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
@@ -152,6 +211,8 @@ export function getNearestTo(location) {
             message: 'loading...',
         }));
         getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
+            // ToDo: there is an error when the service does not respond
+            console.log(res);
             const nearestCities = res.map((curr) => {
                 const { city, country } = curr;
                 dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));

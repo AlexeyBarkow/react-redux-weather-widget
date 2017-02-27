@@ -45,7 +45,7 @@ class Header extends Component {
                         </Button>
                         <CityInputForm className="navbar-left header__city-search" onSubmit={this.cityInputFormSubmit} />
                     </div>
-                    <Collapse className="navbar-collapse" collapsed={collapsed}>
+                    <Collapse className="navbar-collapse" collapsed={!collapsed}>
                         <Navbar>
                             <li>
                                 <Button noDefaultStyles href="/home">

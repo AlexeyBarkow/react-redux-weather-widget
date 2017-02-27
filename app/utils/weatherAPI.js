@@ -64,6 +64,22 @@ function getClosestCitiesToLocationURL(
     return `${API_URL}/find?lat=${latitude}&lon=${longitude}&cnt=${resultRows}&APPID=${apiKey}${getMetricUrl(format)}`;
 }
 
+function getWeatherByLocationURL(
+    { latitude, longitude },
+    format = DEFAULT_METRIC,
+    apiKey = DEFAULT_API_KEY,
+) {
+    return `${API_URL}/weather?lat=${latitude}&lon=${longitude}&APPID=${apiKey}${getMetricUrl(format)}`;
+}
+
+function getForecastByLocationURL(
+    { latitude, longitude },
+    format = DEFAULT_METRIC,
+    apiKey = DEFAULT_API_KEY,
+) {
+    return `${API_URL}/forecast?lat=${latitude}&lon=${longitude}&APPID=${apiKey}${getMetricUrl(format)}`;
+}
+
 function mapWeatherType(type) {
     switch (type) {
         case 'Clouds':
@@ -128,68 +144,59 @@ function convertWeatherToAcceptableFormat(city, status, data) {
     return formattedWeather;
 }
 
-let cancelWeatherAjax = null;
-let cancelForecastAjax = null;
+function weatherFetchInit(getTemplateUrl, onFetch, onError, sliceTemplateArgs) {
+    let cancelAjaxToken = null;
+    return (...args) => {
+        if (cancelAjaxToken) {
+            cancelAjaxToken();
+        }
+
+        return axios
+        .get(getTemplateUrl(...args.slice(0, sliceTemplateArgs || args.length)), {
+            cancelToken: new CancelToken((cancel) => {
+                cancelAjaxToken = cancel;
+            }),
+        })
+        .then((res) => {
+            cancelAjaxToken = null;
+            return onFetch(res, ...args);
+        })
+        .catch((error) => {
+            if (isCancel(error)) {
+                return {
+                    cod: -1,
+                    message: 'another ajax sent',
+                };
+            }
+            return onError ? onError(error, ...args) : error;
+        });
+    };
+}
 
 const weatherAPI = {
-    fetchCurrentWeather(city, country) {
-        if (cancelWeatherAjax) {
-            cancelWeatherAjax();
-        }
-
-        return axios
-            .get(getWeatherTemplate(city, country), {
-                cancelToken: new CancelToken((cancel) => {
-                    cancelWeatherAjax = cancel;
-                }),
-            })
-            .then((res) => {
-                cancelWeatherAjax = null;
-                return convertWeatherToAcceptableFormat(city, null, res.data);
-            })
-            .catch((error) => {
-                if (isCancel(error)) {
-                    return {
-                        cod: -1,
-                        message: 'another ajax sent',
-                    };
-                }
-                return error;
-            });
-    },
-    fetchWeatherForecast(city, country) {
-        if (cancelForecastAjax) {
-            cancelForecastAjax();
-        }
-
-        const mapper = convertWeatherToAcceptableFormat.bind(null, city, 200);
-        return axios
-            .get(getWeatherForecastTemplate(city, country), {
-                cancelToken: new CancelToken((cancel) => {
-                    cancelForecastAjax = cancel;
-                }),
-            })
-            .then((res) => {
-                cancelForecastAjax = null;
-                return res.data.list.map(mapper);
-            })
-            .catch((error) => {
-                if (isCancel(error)) {
-                    return {
-                        cod: -1,
-                        message: 'another ajax sent',
-                    };
-                }
-                return error;
-            });
-    },
-    getClosestCitiesToLocation(location) {
-        return axios.get(getClosestCitiesToLocationURL(location))
-          .then((respond) => {
-              const mapper = convertWeatherToAcceptableFormat.bind(null, null, 200);
-              return respond.data.list.map(mapper);
-          });
-    },
+    fetchCurrentWeather: weatherFetchInit(
+        getWeatherTemplate,
+        (res, city) => convertWeatherToAcceptableFormat(city, null, res.data),
+    ),
+    fetchWeatherForecast: weatherFetchInit(
+        getWeatherForecastTemplate,
+        (res, city) => res.data.list.map(convertWeatherToAcceptableFormat.bind(null, city, 200)),
+    ),
+    getClosestCitiesToLocation: weatherFetchInit(
+        getClosestCitiesToLocationURL,
+        res => res.data.list.map(convertWeatherToAcceptableFormat.bind(null, null, 200)),
+    ),
+    getCityInfoByLocation: weatherFetchInit(
+        getWeatherByLocationURL,
+        res => convertWeatherToAcceptableFormat(null, null, res.data),
+    ),
+    getForecastInfoByLocation: weatherFetchInit(
+        getForecastByLocationURL,
+        (res, __, city) =>
+            res.data.list.map(convertWeatherToAcceptableFormat.bind(null, city, 200)),
+        null,
+        1,
+    ),
 };
 
 export default weatherAPI;

@@ -11,7 +11,7 @@ export default function configureStore(initialState) {
     );
     store.subscribe(() => {
         const state = store.getState();
-        const { main: { city, countryCode, metric } } = state;
+        const { main: { city, countryCode, metric }, weather: { weather: { location } } } = state;
         const main = state.weather.weather.weatherTypes && state.weather.weather.weatherTypes[0]
             && state.weather.weather.weatherTypes[0].main;
         save('store', {
@@ -19,6 +19,7 @@ export default function configureStore(initialState) {
             countryCode,
             metric,
             main,
+            location,
         });
     });
 
