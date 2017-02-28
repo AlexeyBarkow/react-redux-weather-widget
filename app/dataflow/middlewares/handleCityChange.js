@@ -10,8 +10,8 @@ export const handleCityChange = (prevState, newState, action, dispatch) => {
     const isNotSameAsPrev = (city !== oldCity || countryCode !== oldCountryCode
         || status === 0);
 
-    if (isCitySet && isNotSameAsPrev) {
-        if (status === 0 && location) {
+    if (status === 0 || (isCitySet && isNotSameAsPrev)) {
+        if (location) {
             dispatch(getWeatherByLocation(location, city));
             dispatch(getForecastByLocation(location, city));
         } else {

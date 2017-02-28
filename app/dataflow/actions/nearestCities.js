@@ -1,7 +1,9 @@
 import types from './types';
 import getCityAPI from '../../utils/getCityAPI';
 
-function setCityAutocompleteArray(autocomplete) {
+function setCityAutocompleteArray(autocompleteRaw, input) {
+    const autocomplete = autocompleteRaw;
+    autocomplete.input = input;
     return {
         type: types.SET_AUTOCOMPLETE_ARRAY,
         autocomplete,
@@ -17,7 +19,7 @@ function setAutocompleteError(error) {
     };
 }
 
-export function autocompleteCity(beginning) {
+export function autocompleteCity(beginning, input = 'all') {
     return (dispatch) => {
         dispatch(setAutocompleteError({
             code: 0,
@@ -25,7 +27,7 @@ export function autocompleteCity(beginning) {
         }));
         getCityAPI.getCityAjax(beginning)
           .then((data) => {
-              dispatch(setCityAutocompleteArray(data));
+              dispatch(setCityAutocompleteArray(data, input));
           }).catch((error) => {
               dispatch(setAutocompleteError(error));
           });

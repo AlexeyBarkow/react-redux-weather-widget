@@ -107,11 +107,13 @@ export function getWeatherByLocation(location, cityname) {
             dispatch(changeWeatherInfo(cached));
             return;
         }
+
         dispatch(setWeatherStatus({
             cod: 1,
             message: 'loading...',
         }));
-        getWeatherAjax.getCityInfoByLocation(location).then((data) => {
+
+        getWeatherAjax.getWeatherInfoByLocation(location).then((data) => {
             if (data.cod === -1) {
                 return;
             }
@@ -163,10 +165,10 @@ export function getForecastByLocation(location, cityname) {
         const cached = cache[`forecast/${cityname}/any`];
 
         if (cached) {
-            dispatch(changeWeatherInfo(cached));
+            dispatch(changeForecastInfo(cached));
             return;
         }
-        dispatch(setWeatherStatus({
+        dispatch(setForecastStatus({
             cod: 1,
             message: 'loading...',
         }));

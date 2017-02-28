@@ -1,18 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import _ from 'lodash';
 import { Field, reduxForm } from 'redux-form';
-import Select from '../components/Select';
-import DatalistOption from '../components/DatalistOption';
+import _ from 'lodash';
+import Form from './Form';
 import DropDown from '../components/DropDown';
-import Form from '../containers/Form';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
+import DatalistOption from '../components/DatalistOption';
 import { validateAddress } from '../utils/validateFunctions';
 import { MIN_AJAX_INTERVAL } from '../utils/constants';
 
-const autocompleteName = 'city-input';
+const autocompleteName = 'add-city';
 
-class CityInputForm extends Component {
+class AddCityForm extends Component {
     autocompleteCity = _.throttle(({ target }) => {
         this.props.autocompleteCity(target.value, autocompleteName);
     }, MIN_AJAX_INTERVAL);
@@ -22,25 +21,23 @@ class CityInputForm extends Component {
             : 'Address should be presented in format "City name, Country code"');
 
     render() {
-        const { className, autocomplete, handleSubmit } = this.props;
-
+        const { handleSubmit, className, autocomplete } = this.props;
         return (
             <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>
                     <Field
                       component={DropDown}
-                      className="header__city-search__name"
-                      name="city"
-                      placeholder="Type city here"
-                      listId="city-input-list"
-                      id="city-input"
-                      assistiveLabel
+                      name="tableCity"
+                      id="city-table-input"
+                      listId="city-table-list"
                       labelText="City"
+                      assistiveLabel
+                      placeholder="Type city here"
                       onChange={this.autocompleteCity}
                       validate={this.validateDropDown}
                     >
                         {
-                            autocomplete.input === autocompleteName
+                            autocompleteName === autocomplete.input
                             ?
                             autocomplete.map((curr, index) => (
                                 <DatalistOption value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
@@ -48,38 +45,25 @@ class CityInputForm extends Component {
                             : undefined
                         }
                     </Field>
-                    <Field
-                      component={Select}
-                      name="metric"
-                      className="header__city-search__metric"
-                      btnStyle
-                      id="metric-input"
-                      assistiveLabel
-                      labelText="Metric"
-                    >
-                        <DatalistOption value="C">C&deg;</DatalistOption>
-                        <DatalistOption value="F">F&deg;</DatalistOption>
-                        <DatalistOption value="K">K</DatalistOption>
-                    </Field>
-                    <Button type="submit">Get Weather!</Button>
+                    <Button type="submit">Add city</Button>
                 </ButtonGroup>
             </Form>
         );
     }
 }
 
-CityInputForm.propTypes = {
-    className: PropTypes.string,
+AddCityForm.propTypes = {
     autocompleteCity: PropTypes.func.isRequired,
-    autocomplete: PropTypes.array,
     handleSubmit: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    autocomplete: PropTypes.array,
 };
 
-CityInputForm.defaultProps = {
+AddCityForm.defaultProps = {
     className: '',
     autocomplete: [],
 };
 
 export default reduxForm({
-    form: 'cityInputForm',
-})(CityInputForm);
+    form: 'addCityForm',
+})(AddCityForm);

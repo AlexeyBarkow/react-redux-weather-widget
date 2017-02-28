@@ -186,7 +186,7 @@ const weatherAPI = {
         getClosestCitiesToLocationURL,
         res => res.data.list.map(convertWeatherToAcceptableFormat.bind(null, null, 200)),
     ),
-    getCityInfoByLocation: weatherFetchInit(
+    getWeatherInfoByLocation: weatherFetchInit(
         getWeatherByLocationURL,
         res => convertWeatherToAcceptableFormat(null, null, res.data),
     ),

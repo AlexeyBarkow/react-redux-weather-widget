@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import BottomWrapper from '../BottomWrapper';
+import BottomMapWrapper from '../BottomMapWrapper';
 import { weatherOverallSelector } from '../../selectors/selectors';
 import { getLocation } from '../../dataflow/actions/index';
 
@@ -15,4 +15,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ getLocation }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BottomWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(BottomMapWrapper);

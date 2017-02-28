@@ -4,11 +4,12 @@ import { combineReducers } from 'redux';
 import weatherReducer from './weather';
 import mainReducer from './main';
 import locationReducer from './location';
+import favoritesReducer from './favorites';
 import { load } from '../../utils/localStorage';
 import { DEFAULT_METRIC } from '../../utils/constants';
 
 const stored = load('store') || {};
-const { city, countryCode, metric, main, location } = stored;
+const { city, countryCode, metric, main, location, favoriteCities } = stored;
 
 const initialState = {
     location: {
@@ -38,6 +39,9 @@ const initialState = {
         metric: metric || DEFAULT_METRIC,
         autocomplete: [],
     },
+    favorites: {
+        favoriteCities: favoriteCities || [],
+    },
     form: {},
 };
 
@@ -47,6 +51,7 @@ const finalReducer = combineReducers({
     weather: weatherReducer,
     main: mainReducer,
     routing: routerReducer,
+    favorites: favoritesReducer,
 });
 
 function rootReducer(state = initialState, action) {
