@@ -19,6 +19,7 @@ module.exports = {
         'no-multiple-empty-lines': 1,
         'no-nested-ternary': 0,
         'no-floating-decimal': 0,
+        'no-restricted-syntax': 0,
         'object-curly-spacing': 1,
         'quote-props': 0,
         'react/forbid-prop-types': 0,

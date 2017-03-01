@@ -11,7 +11,7 @@ export const handleCityChange = (prevState, newState, action, dispatch) => {
         || status === 0);
 
     if (status === 0 || (isCitySet && isNotSameAsPrev)) {
-        if (location) {
+        if (location && !countryCode) {
             dispatch(getWeatherByLocation(location, city));
             dispatch(getForecastByLocation(location, city));
         } else {

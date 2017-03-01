@@ -14,7 +14,8 @@ const autocompleteName = 'city-input';
 
 class CityInputForm extends Component {
     autocompleteCity = _.throttle(({ target }) => {
-        this.props.autocompleteCity(target.value, autocompleteName);
+        const { value } = target;
+        this.props.autocompleteCity(value, autocompleteName);
     }, MIN_AJAX_INTERVAL);
 
     validateDropDown = value => (validateAddress(value)
@@ -43,7 +44,7 @@ class CityInputForm extends Component {
                             autocomplete.input === autocompleteName
                             ?
                             autocomplete.map((curr, index) => (
-                                <DatalistOption value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
+                                <DatalistOption hiddenValue={index} value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
                             ))
                             : undefined
                         }

@@ -3,7 +3,7 @@ import types from '../actions/types';
 function favoritesReducer(state = {}, action) {
     switch (action.type) {
         case types.PUSH_FAVORITE: {
-            const { favorites: { favoriteCities } } = state;
+            const { favoriteCities } = state;
             const { city } = action;
             city.index = favoriteCities.length;
             return {
@@ -12,7 +12,7 @@ function favoritesReducer(state = {}, action) {
             };
         }
         case types.REMOVE_FAVORITE: {
-            const { favorites: { favoriteCities } } = state;
+            const { favoriteCities } = state;
             const index = action;
             return {
                 ...state,

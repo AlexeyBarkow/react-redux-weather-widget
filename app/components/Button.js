@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames/dedupe';
 
+
 function Button({
     children,
     onClickHandler,
@@ -12,11 +13,12 @@ function Button({
     noDefaultStyles,
     type,
     title,
+    close,
 }) {
-    const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link ' : 'default '}`, className);
+    const classesToPass = classnames(!noDefaultStyles && !close && `btn btn-${link ? 'link ' : 'default '}`, close && 'close', className);
 
     return (
-        href !== ''
+        href !== undefined
         ?
             <Link
               disabled={disabled}
@@ -49,18 +51,20 @@ Button.propTypes = {
     type: PropTypes.string,
     link: PropTypes.bool,
     title: PropTypes.string,
+    close: PropTypes.bool,
 };
 
 Button.defaultProps = {
     children: null,
     onClickHandler: null,
     className: '',
-    href: '',
+    href: undefined,
     disabled: false,
     noDefaultStyles: false,
     type: null,
     link: false,
     title: null,
+    close: false,
 };
 
 export default Button;

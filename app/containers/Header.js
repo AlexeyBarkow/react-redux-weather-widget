@@ -4,8 +4,9 @@ import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import Button from '../components/Button';
 import Collapse from '../components/Collapse';
-import CityInputForm from '../containers/connectors/CityInputFormConnector';
+import CityInputForm from '../containers/CityInputForm';
 import '../styles/header.scss';
+import { VALIDATE_ADDRESS_REGEXP } from '../utils/constants';
 
 class Header extends Component {
     constructor(props) {
@@ -24,12 +25,12 @@ class Header extends Component {
 
     cityInputFormSubmit = ({ city, metric }) => {
         const { redirectToCity } = this.props;
-        const splitted = city.split(', ');
-        redirectToCity(splitted[0], splitted[1], metric);
+        const [cityName, countryCode] = city.match(VALIDATE_ADDRESS_REGEXP).slice(1);
+        redirectToCity(cityName, countryCode, metric);
     }
 
     render() {
-        const { className } = this.props;
+        const { className, autocomplete, autocompleteCity, metric } = this.props;
         const { collapsed } = this.state;
 
         return (
@@ -43,7 +44,7 @@ class Header extends Component {
                             <span className="icon-bar" />
                             <span className="icon-bar" />
                         </Button>
-                        <CityInputForm className="navbar-left header__city-search" onSubmit={this.cityInputFormSubmit} />
+                        <CityInputForm initialValues={{ metric }} autocomplete={autocomplete} autocompleteCity={autocompleteCity} className="navbar-left header__city-search" onSubmit={this.cityInputFormSubmit} />
                     </div>
                     <Collapse className="navbar-collapse" collapsed={!collapsed}>
                         <Navbar>
@@ -74,10 +75,14 @@ class Header extends Component {
 Header.propTypes = {
     className: PropTypes.string,
     redirectToCity: PropTypes.func.isRequired,
+    autocomplete: PropTypes.array,
+    autocompleteCity: PropTypes.func.isRequired,
+    metric: PropTypes.string.isRequired,
 };
 
 Header.defaultProps = {
     className: '',
+    autocomplete: [],
 };
 
 

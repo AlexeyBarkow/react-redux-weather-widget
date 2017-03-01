@@ -1,6 +1,7 @@
 :root {
     //put the global css variables here
     --color-dark-red: rgb(185, 0 , 0);
+    --color-light-red: rgb(185, 75 , 75);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
     --color-bright-blue: rgba(125, 125, 255, .95);
@@ -181,4 +182,13 @@ html, body, .my-app-root-class, #root {
     margin: 9px 0;
     overflow: hidden;
     background-color: #cccccc;
+}
+
+.close.remove-cross {
+    opacity: 1;
+    font-size: 2em;
+    color: var(--color-light-red);
+    &:hover {
+        color: var(--color-dark-red)
+    }
 }

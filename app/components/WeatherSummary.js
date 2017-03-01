@@ -19,7 +19,7 @@ class WeatherSummary extends Component {
     }
 
     render() {
-        const { className, weather, metric, showDetailedWithinDropDown } = this.props;
+        const { className, weather, metric, shortView } = this.props;
         const date = new Date(weather.calculationTime);
         const formattedDate = formatDate(date);
 
@@ -29,9 +29,18 @@ class WeatherSummary extends Component {
                     if (weather.status === 200) {
                         return (
                             <div className="clearfix">
-                                <h1>Weather in { weather.city }</h1>
+                                {
+                                    shortView
+                                    ? <h3>{ weather.city }</h3>
+                                    : <h1>{ weather.city }</h1>
+                                }
+
                                 <div className="row col-md-7">
-                                    <h3>Today (gathered in {formattedDate})</h3>
+                                    {
+                                        shortView
+                                        ? undefined
+                                        : <h3>Today (gathered in {formattedDate})</h3>
+                                    }
                                     <WeatherTemperature
                                       className="row"
                                       metric={metric}
@@ -41,7 +50,7 @@ class WeatherSummary extends Component {
                                       currTemperature={weather.temperature.curr}
                                     />
                                     {
-                                        showDetailedWithinDropDown
+                                        shortView
                                         ? undefined
                                         : <DetailedInfoTable weather={weather} />
                                     }
@@ -74,7 +83,7 @@ WeatherSummary.propTypes = {
     className: PropTypes.string,
     weather: PropTypes.object,
     metric: PropTypes.string.isRequired,
-    showDetailedWithinDropDown: PropTypes.bool,
+    shortView: PropTypes.bool,
 // these props are for standalone weather summary blocks
     getWeatherToCache: PropTypes.func,
     city: PropTypes.string,
@@ -88,7 +97,7 @@ WeatherSummary.defaultProps = {
         message: 'No weather data fetched',
         status: 0,
     },
-    showDetailedWithinDropDown: false,
+    shortView: false,
     getWeatherToCache: null,
     city: undefined,
     countryCode: undefined,

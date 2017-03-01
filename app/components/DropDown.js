@@ -8,7 +8,6 @@ function DropDown({
     children,
     className,
     inputClassName,
-    dataListClassName,
     labelText,
     assistiveLabel,
     id,
@@ -42,7 +41,7 @@ function DropDown({
               onFocus={onFocus}
               {...input}
             />
-            <datalist id={listId} className={dataListClassName}>
+            <datalist id={listId}>
                 { children }
             </datalist>
             { error && <InputError popupPanel errorMessage={error} /> }
@@ -53,7 +52,6 @@ function DropDown({
 DropDown.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-    dataListClassName: PropTypes.string,
     inputClassName: PropTypes.string,
     listId: PropTypes.string.isRequired,
     name: PropTypes.string,
@@ -72,7 +70,6 @@ DropDown.propTypes = {
 DropDown.defaultProps = {
     children: null,
     className: '',
-    dataListClassName: '',
     inputClassName: '',
     name: undefined,
     onChange: null,

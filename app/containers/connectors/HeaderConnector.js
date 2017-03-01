@@ -1,10 +1,14 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from '../Header';
-import { redirectToCity } from '../../dataflow/actions/index';
+import { redirectToCity, autocompleteCity } from '../../dataflow/actions/index';
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ redirectToCity }, dispatch);
+function mapStateToProps({ main: { autocomplete, metric } }) {
+    return { metric, autocomplete };
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ redirectToCity, autocompleteCity }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

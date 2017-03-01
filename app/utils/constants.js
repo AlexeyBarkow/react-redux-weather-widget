@@ -19,7 +19,7 @@ export const GOOGLE_MAP_SITE_URL = 'https://developers.google.com/maps/documenta
 export const DEFAULT_API_KEY = '1c11f4e7692bb5e0526e72c0e6baaa3b';
 export const API_URL = 'http://api.openweathermap.org/data/2.5';
 
-export const VALIDATE_ADDRESS_REGEXP = /^[a-zA-Z-\s']+,\s[a-zA-Z]{1,3}$/;
+export const VALIDATE_ADDRESS_REGEXP = /^([a-zA-Z-\s']+),\s([a-zA-Z]{1,3})$/;
 export const VALIDATE_TEMPERATURE_REGEXP = /^([0-9]|-?[1-9][0-9]{0,2})$/;
 export const CITY_PATH_REGEXP = /^\/cities\/([a-zA-Z]{1,3})\/([a-zA-Z\s-'’а-яА-ЯёëЁ]*)$/;
 export const DEFAULT_PATH_REGEXP = /^\/(|home)$/;

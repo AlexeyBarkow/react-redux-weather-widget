@@ -1,18 +1,30 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FiltersBottomWrapper from '../FiltersBottomWrapper';
-import { autocompleteCity } from '../../dataflow/actions/index';
+import { autocompleteCity, addToFavoritesAndFetchWeather, removeFromFavorites, getAllFavoritesWeather } from '../../dataflow/actions/index';
+import { selectFavoriteCache } from '../../selectors/selectors';
 
-function mapStateToProps({ main: { autocomplete, metric }, favorites: { favoriteCities } }) {
+function mapStateToProps(state) {
+    const {
+        main: { autocomplete, metric },
+        favorites: { favoriteCities },
+    } = state;
+
     return {
         autocomplete,
         metric,
         favorites: favoriteCities,
+        cache: selectFavoriteCache(state),
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ autocompleteCity }, dispatch);
+    return bindActionCreators({
+        autocompleteCity,
+        addToFavoritesAndFetchWeather,
+        removeFromFavorites,
+        getAllFavoritesWeather,
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FiltersBottomWrapper);

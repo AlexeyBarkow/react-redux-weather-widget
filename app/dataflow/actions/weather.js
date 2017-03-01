@@ -68,126 +68,115 @@ function changeNearestCities(nearestCities) {
     };
 }
 
-export function getWeather(city, code) {
-    return (dispatch, getState) => {
-        const { weather: { cache } } = getState();
-        const cached = cache[`weather/${city}/${code}`];
+export function getWeatherCacheWrapper(
+    cacheKeyTemplate,
+    fetchPromiseCreator,
+    doInAdvanceCallback = () => undefined,
+    successCallback = () => undefined,
+    failCallback = () => undefined,
+    cacheActionCreator = cacheFetchedData,
+) {
+    return (...args) =>
+        (dispatch, getState) => {
+            console.log('dispatch', args)
+            const { weather: { cache } } = getState();
+            const cacheKey = cacheKeyTemplate(...args);
+            const cached = cache[cacheKey];
 
-        if (cached) {
-            dispatch(changeWeatherInfo(cached));
-            return;
-        }
-
-        dispatch(setWeatherStatus({
-            cod: 1,
-            message: 'loading...',
-        }));
-        getWeatherAjax.fetchCurrentWeather(city, code)
-          .then((data) => {
-              if (data.cod === -1) {
-                  return;
-              }
-              if (!data.response) {
-                  dispatch(changeWeatherInfo(data));
-                  dispatch(cacheFetchedData(data, `weather/${city}/${code}`));
-              } else {
-                  const { response: { data: { cod, message } } } = data;
-                  dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
-              }
-          });
-    };
-}
-
-export function getWeatherByLocation(location, cityname) {
-    return (dispatch, getState) => {
-        const { weather: { cache } } = getState();
-        const cached = cache[`weather/${cityname}/any`];
-
-        if (cached) {
-            dispatch(changeWeatherInfo(cached));
-            return;
-        }
-
-        dispatch(setWeatherStatus({
-            cod: 1,
-            message: 'loading...',
-        }));
-
-        getWeatherAjax.getWeatherInfoByLocation(location).then((data) => {
-            if (data.cod === -1) {
+            if (cached) {
+                successCallback(dispatch, cached, ...args);
                 return;
             }
-            if (!data.response) {
-                dispatch(changeWeatherInfo(data));
-                const { city, country } = data;
-                dispatch(cacheFetchedData(data, `weather/${city}/${country || 'any'}`));
-            } else {
-                const { response: { data: { cod, message } } } = data;
-                dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
-            }
-        });
-    };
+            doInAdvanceCallback(dispatch, ...args);
+
+            fetchPromiseCreator(...args)
+                .then((data) => {
+                    console.log(data, args)
+                    if (data.cod === -1) {
+                        return;
+                    }
+
+                    if (!data.response) {
+                        dispatch(cacheActionCreator(data, cacheKey));
+                        successCallback(dispatch, data, ...args);
+                        return;
+                    }
+                    failCallback(dispatch, data, ...args);
+                });
+        };
 }
 
-export function getForecast(city, code) {
-    return (dispatch, getState) => {
-        const { weather: { cache } } = getState();
-        const cached = cache[`forecast/${city}/${code}`];
+export const getWeather = getWeatherCacheWrapper(
+    (city, code) => `weather/${city}/${code}`,
+    getWeatherAjax.fetchCurrentWeather,
+    (dispatch) => {
+        dispatch(setWeatherStatus({
+            cod: 1,
+            message: 'loading...',
+        }));
+    },
+    (dispatch, data) => {
+        dispatch(changeWeatherInfo(data));
+    },
+    (dispatch, data) => {
+        const { response: { data: { cod, message } } } = data;
+        dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
+    },
+);
 
-        if (cached) {
-            dispatch(changeForecastInfo(cached));
-            return;
-        }
+export const getWeatherByLocation = getWeatherCacheWrapper(
+    (_, cityname) => `weather/${cityname}/any`,
+    getWeatherAjax.getWeatherInfoByLocation,
+    (dispatch) => {
+        dispatch(setWeatherStatus({
+            cod: 1,
+            message: 'loading...',
+        }));
+    },
+    (dispatch, data) => {
+        dispatch(changeWeatherInfo(data));
+    },
+    (dispatch, data) => {
+        const { response: { data: { cod, message } } } = data;
+        dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
+    },
+);
 
+export const getForecast = getWeatherCacheWrapper(
+    (city, code) => `forecast/${city}/${code}`,
+    getWeatherAjax.fetchWeatherForecast,
+    (dispatch) => {
         dispatch(setForecastStatus({
             cod: 1,
             message: 'loading...',
         }));
-        getWeatherAjax.fetchWeatherForecast(city, code)
-          .then((data) => {
-              if (data.cod === -1) {
-                  return;
-              }
-              if (!data.response) {
-                  dispatch(changeForecastInfo(data));
-                  dispatch(cacheFetchedData(data, `forecast/${city}/${code}`));
-              } else {
-                  const { response: { data: { cod, message } } } = data;
-                  dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
-              }
-          });
-    };
-}
+    },
+    (dispatch, data) => {
+        dispatch(changeForecastInfo(data));
+    },
+    (dispatch, data) => {
+        const { response: { data: { cod, message } } } = data;
+        dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
+    },
+);
 
-export function getForecastByLocation(location, cityname) {
-    return (dispatch, getState) => {
-        const { weather: { cache } } = getState();
-        const cached = cache[`forecast/${cityname}/any`];
-
-        if (cached) {
-            dispatch(changeForecastInfo(cached));
-            return;
-        }
+export const getForecastByLocation = getWeatherCacheWrapper(
+    (_, cityname) => `forecast/${cityname}/any`,
+    getWeatherAjax.getForecastInfoByLocation,
+    (dispatch) => {
         dispatch(setForecastStatus({
             cod: 1,
             message: 'loading...',
         }));
-        getWeatherAjax.getForecastInfoByLocation(location, cityname)
-          .then((data) => {
-              if (data.cod === -1) {
-                  return;
-              }
-              if (!data.response) {
-                  const { city, country } = data;
-                  dispatch(changeForecastInfo(data));
-                  dispatch(cacheFetchedData(data, `forecast/${city}/${country || 'any'}`));
-              } else {
-                  const { response: { data: { cod, message } } } = data;
-                  dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
-              }
-          });
-    };
-}
+    },
+    (dispatch, data) => {
+        dispatch(changeForecastInfo(data));
+    },
+    (dispatch, data) => {
+        const { response: { data: { cod, message } } } = data;
+        dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
+    },
+);
 
 export function redirectToCity(city, countryCode, metric = DEFAULT_METRIC) {
     return (dispatch) => {

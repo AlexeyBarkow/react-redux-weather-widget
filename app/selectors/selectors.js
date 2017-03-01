@@ -30,3 +30,22 @@ export const selectForecastFilter = createSelector(
         return forecast.filter((weather, index) => index % 4 === 0);
     },
 );
+
+const getCache = ({ weather: { cache } }) => cache;
+const getWeatherKeys = ({ favorites: { favoriteCities } }) =>
+    favoriteCities.map(city => `weather/${city.cityname}/${city.countryCode}`);
+const getForecastKeys = ({ favorites: { favoriteCities } }) =>
+    favoriteCities.map(city => `forecast/${city.cityname}/${city.countryCode}`);
+
+export const selectFavoriteCache = createSelector(
+    [getCache, getWeatherKeys, getForecastKeys],
+    (cache, weatherKeys, forecastKeys) => {
+        const keys = [...weatherKeys, ...forecastKeys];
+        return keys.reduce((res, curr) => (
+            {
+                ...res,
+                [curr]: cache[curr],
+            }
+        ), {});
+    },
+);

@@ -27,10 +27,10 @@ function getClosestToLocationUrl(
     }&username=${username}&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
 }
 
-function convertToAcceptable(city) {
+function convertToAcceptable({ countryCode, countrycode, name }) {
     return {
-        countryCode: city.countryCode || city.countrycode,
-        name: city.name,
+        countryCode: countryCode || countrycode,
+        name,
     };
 }
 

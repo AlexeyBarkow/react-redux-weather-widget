@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import WeatherSummary from './WeatherSummary';
+import SingleFavorite from './SingleFavorite';
 
 function Favorites({ className, favorites, metric }) {
     return (
@@ -10,7 +10,7 @@ function Favorites({ className, favorites, metric }) {
                 : (
                     <div>
                         { favorites.map((curr, index) => (
-                            <WeatherSummary key={`fav-${index}`} metric={metric} />
+                            <SingleFavorite key={`fav-${index}`} favorite={curr} metric={metric} />
                         )) }
                     </div>
                 )
