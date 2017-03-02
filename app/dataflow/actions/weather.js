@@ -61,6 +61,14 @@ function cacheFetchedData(data, key) {
     };
 }
 
+function setCacheKeyStatus(status, key) {
+    return {
+        type: types.SET_CACHE_STATUS,
+        key,
+        status,
+    };
+}
+
 function changeNearestCities(nearestCities) {
     return {
         type: types.SET_NEAREST_CITIES,
@@ -75,31 +83,39 @@ export function getWeatherCacheWrapper(
     successCallback = () => undefined,
     failCallback = () => undefined,
     cacheActionCreator = cacheFetchedData,
+    cacheStatusActionCreator = setCacheKeyStatus,
 ) {
     return (...args) =>
         (dispatch, getState) => {
-            console.log('dispatch', args)
             const { weather: { cache } } = getState();
             const cacheKey = cacheKeyTemplate(...args);
             const cached = cache[cacheKey];
 
-            if (cached) {
+            if (cached && cached.status !== 1) {
                 successCallback(dispatch, cached, ...args);
                 return;
+            }
+
+            if (cacheStatusActionCreator) {
+                dispatch(cacheStatusActionCreator(1, cacheKey));
             }
             doInAdvanceCallback(dispatch, ...args);
 
             fetchPromiseCreator(...args)
                 .then((data) => {
-                    console.log(data, args)
                     if (data.cod === -1) {
                         return;
                     }
 
                     if (!data.response) {
-                        dispatch(cacheActionCreator(data, cacheKey));
+                        if (cacheActionCreator) {
+                            dispatch(cacheActionCreator(data, cacheKey));
+                        }
                         successCallback(dispatch, data, ...args);
                         return;
+                    }
+                    if (cacheStatusActionCreator) {
+                        dispatch(cacheStatusActionCreator(data.cod, cacheKey));
                     }
                     failCallback(dispatch, data, ...args);
                 });

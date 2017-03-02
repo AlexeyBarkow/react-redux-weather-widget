@@ -1,12 +1,21 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 import { formatDate } from '../utils/unifiedDateFormat';
 import WeatherTemperature from './WeatherTemperature';
 import ErrorMessage from './ErrorMessage';
+import Button from './Button';
 import Loading from './Loading';
 import DetailedInfoTable from './DetailedInfoTable';
 import '../styles/summary.scss';
 
 class WeatherSummary extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showTable: !props.shortView || false,
+        };
+    }
 
     componentWillMount() {
         const { getWeatherToCache } = this.props;
@@ -18,41 +27,59 @@ class WeatherSummary extends Component {
         }
     }
 
+    chevronToggle = () => {
+        const { showTable } = this.state;
+
+        this.setState({
+            showTable: !showTable,
+        });
+    }
+
     render() {
         const { className, weather, metric, shortView } = this.props;
+        const { showTable } = this.state;
         const date = new Date(weather.calculationTime);
         const formattedDate = formatDate(date);
-
         return (
-            <section className={className}>
+            <section className={classnames('summary', className)}>
                 {(() => {
                     if (weather.status === 200) {
                         return (
                             <div className="clearfix">
                                 {
                                     shortView
-                                    ? <h3>{ weather.city }</h3>
+                                    ? undefined
                                     : <h1>{ weather.city }</h1>
                                 }
 
-                                <div className="row col-md-7">
+                                <div className="row col-xs-12">
                                     {
                                         shortView
                                         ? undefined
                                         : <h3>Today (gathered in {formattedDate})</h3>
                                     }
-                                    <WeatherTemperature
-                                      className="row"
-                                      metric={metric}
-                                      weatherType={weather.weatherTypes[0]}
-                                      minTemperature={weather.temperature.min}
-                                      maxTemperature={weather.temperature.max}
-                                      currTemperature={weather.temperature.curr}
-                                    />
+                                    <div className="row col-xs-12">
+                                        <WeatherTemperature
+                                          className="pull-left"
+                                          metric={metric}
+                                          weatherType={weather.weatherTypes[0]}
+                                          minTemperature={weather.temperature.min}
+                                          maxTemperature={weather.temperature.max}
+                                          currTemperature={weather.temperature.curr}
+                                        />
+                                        {
+                                            shortView
+                                            ?
+                                                <Button onClickHandler={this.chevronToggle} className="pull-left chevron center-vertical">
+                                                    <span className={`glyphicon glyphicon-chevron-${showTable ? 'up' : 'down'}`} aria-hidden="true" />
+                                                </Button>
+                                            : undefined
+                                        }
+                                    </div>
                                     {
-                                        shortView
-                                        ? undefined
-                                        : <DetailedInfoTable weather={weather} />
+                                        showTable
+                                        ? <DetailedInfoTable className="clear-left" weather={weather} />
+                                        : undefined
                                     }
                                 </div>
                             </div>

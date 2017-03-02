@@ -1,7 +1,7 @@
 :root {
     //put the global css variables here
     --color-dark-red: rgb(185, 0 , 0);
-    --color-light-red: rgb(185, 75 , 75);
+    --color-light-red: rgb(185, 125, 125);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
     --color-bright-blue: rgba(125, 125, 255, .95);
@@ -13,6 +13,10 @@
     --color-white-alpha: rgba(255,255,255,.85);
     --color-white-bright-alpha: rgba(255, 255, 255, .45);
     --metric-color: rgb(180, 0, 0);
+}
+
+.center-vertical {
+    @include center(false, true);
 }
 
 .tooltip-container {
@@ -32,6 +36,9 @@
     .tooltip.bottom {
         @include center(true, false);
         top: calc(100% - 1em);
+    }
+    .tooltip {
+        pointer-events: none;
     }
 }
 
@@ -80,7 +87,6 @@ html, body, .my-app-root-class, #root {
         padding-left: 0;
         padding-right: 0;
     }
-    background-color: var(--color-white-alpha);
     border: 1px solid var(--color-white);
     border-bottom: 0;
 
@@ -139,8 +145,11 @@ html, body, .my-app-root-class, #root {
     }
 }
 
-.aside {
+.app-content > .panel {
     background-color: var(--color-white-alpha);
+}
+
+.aside {
     border: 1px solid var(--color-white);
     border-top: 0;
     padding-bottom: 1em;
@@ -184,11 +193,43 @@ html, body, .my-app-root-class, #root {
     background-color: #cccccc;
 }
 
-.close.remove-cross {
-    opacity: 1;
-    font-size: 2em;
-    color: var(--color-light-red);
-    &:hover {
-        color: var(--color-dark-red)
+.close {
+    button {
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        -webkit-appearance: none;
+    }
+
+    &.remove-cross {
+        opacity: 1;
+        font-size: 2em;
+        color: var(--color-light-red);
+        &:hover {
+            color: var(--color-dark-red)
+        }
+    }
+}
+
+.favorite {
+    margin: 30px 0 30px 0;
+}
+
+.float-fixer {
+    @include respond(768px, 992px) {
+        .col-sm-6:nth-child(2n + 1) {
+            clear: left;
+        }
+    };
+    @include respond(992px, 1200px) {
+        .col-md-4:nth-child(3n + 1) {
+            clear: left;
+        }
+    }
+    @include respond(1200px) {
+        .col-lg-3:nth-child(4n + 1) {
+            clear: left;
+        }
     }
 }

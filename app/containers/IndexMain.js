@@ -21,7 +21,7 @@ class IndexMain extends Component {
                 </TabContainer>
                 <TabContainer>
                     <Tab index="1">
-                        <WeatherSummary weather={weather} className="summary" metric={metric} />
+                        <WeatherSummary weather={weather} metric={metric} />
                     </Tab>
                     <Tab index="2">
                         <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={this.changeForecastFilter} forecast={forecast} className="summary" metric={metric} />

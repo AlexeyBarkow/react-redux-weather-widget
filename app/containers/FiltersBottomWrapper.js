@@ -1,17 +1,21 @@
 import React, { Component, PropTypes } from 'react';
+import { SubmissionError } from 'redux-form';
 import AddCityForm from './AddCityForm';
 import Favorites from '../components/Favorites';
 import { VALIDATE_ADDRESS_REGEXP } from '../utils/constants';
 
 class FiltersBottomWrapper extends Component {
     componentWillMount() {
-        console.log('wat')
         this.props.getAllFavoritesWeather();
     }
 
     submitAddToFav = ({ tableCity }) => {
-        const { addToFavoritesAndFetchWeather } = this.props;
+        const { addToFavoritesAndFetchWeather, favorites } = this.props;
         const [cityname, countryCode] = tableCity.match(VALIDATE_ADDRESS_REGEXP).slice(1);
+        if (favorites.find(city =>
+            cityname === city.cityname && countryCode === city.countryCode)) {
+            throw new SubmissionError({ tableCity: 'Already added' });
+        }
         addToFavoritesAndFetchWeather(cityname, countryCode);
     };
 
@@ -22,6 +26,8 @@ class FiltersBottomWrapper extends Component {
             metric,
             favorites,
             removeFromFavorites,
+            cache,
+            changeFavoriteIndex,
         } = this.props;
 
         return (
@@ -33,9 +39,11 @@ class FiltersBottomWrapper extends Component {
                   onSubmit={this.submitAddToFav}
                 />
                 <Favorites
+                  info={cache}
                   metric={metric}
                   favorites={favorites}
                   removeHandler={removeFromFavorites}
+                  changeFavoriteIndex={changeFavoriteIndex}
                 />
             </section>
         );
@@ -50,6 +58,8 @@ FiltersBottomWrapper.propTypes = {
     addToFavoritesAndFetchWeather: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
     getAllFavoritesWeather: PropTypes.func.isRequired,
+    changeFavoriteIndex: PropTypes.func.isRequired,
+    cache: PropTypes.object.isRequired,
 };
 
 FiltersBottomWrapper.defaultProps = {

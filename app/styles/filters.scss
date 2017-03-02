@@ -32,3 +32,35 @@
         }
     }
 }
+
+
+.favorite {
+    .modal-body {
+        padding-top: .5em;
+        padding-bottom: .5em;
+        .chevron {
+            margin-left: 1em;
+            border-radius: 50%;
+        }
+    }
+}
+
+.drop-container {
+    position: relative;
+    .dropzone {
+        position: absolute;
+        width: 1em;
+        height: 100%;
+        top: 0;
+
+        &.over {
+            background: black;
+        }
+        &.right {
+            right: 0;
+        }
+        &.left {
+            left: 0;
+        }
+    }
+}

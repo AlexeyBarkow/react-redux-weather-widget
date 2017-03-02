@@ -24,6 +24,7 @@ class Tooltip extends Component {
     render() {
         const { isHovered } = this.state;
         const { className, tooltipText, children, placement } = this.props;
+
         return (
             <div onMouseOver={this.onHover} onMouseOut={this.onLeave} className={classnames(className, 'tooltip-container')}>
                 { children }

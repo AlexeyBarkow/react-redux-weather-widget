@@ -28,7 +28,7 @@ class RootContainer extends Component {
                         <Header className="header" />
                     </StaticFixator>
                     <div className="container">
-                        <div className="row">
+                        <div className="row app-content">
                             <MainContainer className="main col-sm-9 col-xs-12 panel">
                                 { main }
                             </MainContainer>

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FiltersBottomWrapper from '../FiltersBottomWrapper';
-import { autocompleteCity, addToFavoritesAndFetchWeather, removeFromFavorites, getAllFavoritesWeather } from '../../dataflow/actions/index';
+import { autocompleteCity, addToFavoritesAndFetchWeather, removeFromFavorites, getAllFavoritesWeather, changeFavoriteIndex } from '../../dataflow/actions/index';
 import { selectFavoriteCache } from '../../selectors/selectors';
 
 function mapStateToProps(state) {
@@ -24,6 +24,7 @@ function mapDispatchToProps(dispatch) {
         addToFavoritesAndFetchWeather,
         removeFromFavorites,
         getAllFavoritesWeather,
+        changeFavoriteIndex,
     }, dispatch);
 }
 

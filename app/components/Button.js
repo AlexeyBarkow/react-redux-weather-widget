@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames/dedupe';
+import Tooltip from '../containers/Tooltip';
 
 
 function Button({
@@ -13,23 +14,37 @@ function Button({
     noDefaultStyles,
     type,
     title,
-    close,
+    tooltip,
 }) {
-    const classesToPass = classnames(!noDefaultStyles && !close && `btn btn-${link ? 'link ' : 'default '}`, close && 'close', className);
-
-    return (
-        href !== undefined
-        ?
-            <Link
-              disabled={disabled}
-              className={classesToPass}
-              title={title}
-              to={href}
-              onClick={onClickHandler}
-            >
-                {children}
-            </Link>
-        :
+    const button = (btnClassName = '') => {
+        const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link ' : 'default '}`, btnClassName);
+        if (href !== undefined) {
+            if (href[0] === '#') {
+                return (
+                    <a
+                      href={href}
+                      disabled={disabled}
+                      className={classesToPass}
+                      title={title}
+                      onClick={onClickHandler}
+                    >
+                        { children }
+                    </a>
+                );
+            }
+            return (
+                <Link
+                  disabled={disabled}
+                  className={classesToPass}
+                  title={title}
+                  to={href}
+                  onClick={onClickHandler}
+                >
+                    { children }
+                </Link>
+            );
+        }
+        return (
             <button
               disabled={disabled}
               className={classesToPass}
@@ -38,7 +53,17 @@ function Button({
             >
                 { children }
             </button>
-    );
+        );
+    };
+
+    if (tooltip) {
+        return (
+            <Tooltip className={className} {...tooltip}>
+                { button() }
+            </Tooltip>
+        );
+    }
+    return button(className);
 }
 
 Button.propTypes = {
@@ -51,7 +76,7 @@ Button.propTypes = {
     type: PropTypes.string,
     link: PropTypes.bool,
     title: PropTypes.string,
-    close: PropTypes.bool,
+    tooltip: PropTypes.object,
 };
 
 Button.defaultProps = {
@@ -64,7 +89,7 @@ Button.defaultProps = {
     type: null,
     link: false,
     title: null,
-    close: false,
+    tooltip: null,
 };
 
 export default Button;

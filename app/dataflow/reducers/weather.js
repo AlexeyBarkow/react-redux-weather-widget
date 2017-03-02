@@ -21,17 +21,25 @@ function weatherReducer(state = {}, action) {
             };
         case types.CACHE_PUSH: {
             const { cache } = state;
-
-            if (!cache[action.key]) {
-                return {
-                    ...state,
-                    cache: {
-                        ...cache,
-                        [action.key]: action.cache,
+            return {
+                ...state,
+                cache: {
+                    ...cache,
+                    [action.key]: action.cache,
+                },
+            };
+        }
+        case types.SET_CACHE_STATUS: {
+            const { cache } = state;
+            return {
+                ...state,
+                cache: {
+                    ...cache,
+                    [action.key]: {
+                        status: action.status,
                     },
-                };
-            }
-            return state;
+                },
+            };
         }
         default:
             return state;

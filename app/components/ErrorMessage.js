@@ -11,14 +11,18 @@ function ErrorMessage({ message, status, className }) {
 }
 
 ErrorMessage.propTypes = {
-    message: PropTypes.string.isRequired,
-    status: PropTypes.number,
+    message: PropTypes.string,
+    status: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+    ]),
     className: PropTypes.string,
 };
 
 ErrorMessage.defaultProps = {
     className: '',
     status: '',
+    message: 'Something went wrong',
 };
 
 export default ErrorMessage;

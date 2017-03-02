@@ -5,6 +5,7 @@ import weatherReducer from './weather';
 import mainReducer from './main';
 import locationReducer from './location';
 import favoritesReducer from './favorites';
+import dragAndDropReducer from './dragAndDrog';
 import { load } from '../../utils/localStorage';
 import { DEFAULT_METRIC } from '../../utils/constants';
 
@@ -43,6 +44,7 @@ const initialState = {
         favoriteCities: favoriteCities || [],
     },
     form: {},
+    dragAndDrop: {},
 };
 
 const finalReducer = combineReducers({
@@ -52,6 +54,7 @@ const finalReducer = combineReducers({
     main: mainReducer,
     routing: routerReducer,
     favorites: favoritesReducer,
+    dragAndDrop: dragAndDropReducer,
 });
 
 function rootReducer(state = initialState, action) {

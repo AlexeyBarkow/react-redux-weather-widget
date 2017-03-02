@@ -145,20 +145,22 @@ function convertWeatherToAcceptableFormat(city, status, data) {
 }
 
 function weatherFetchInit(getTemplateUrl, onFetch, onError, sliceTemplateArgs) {
-    let cancelAjaxToken = null;
+    const cancelAjaxTokens = {};
+
     return (...args) => {
-        if (cancelAjaxToken) {
-            cancelAjaxToken();
+        const argsKey = JSON.stringify(args);
+        if (cancelAjaxTokens[argsKey]) {
+            cancelAjaxTokens[argsKey]();
         }
 
         return axios
         .get(getTemplateUrl(...args.slice(0, sliceTemplateArgs || args.length)), {
             cancelToken: new CancelToken((cancel) => {
-                cancelAjaxToken = cancel;
+                cancelAjaxTokens[argsKey] = cancel;
             }),
         })
         .then((res) => {
-            cancelAjaxToken = null;
+            cancelAjaxTokens[argsKey] = null;
             return onFetch(res, ...args);
         })
         .catch((error) => {

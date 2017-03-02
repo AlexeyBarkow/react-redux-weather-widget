@@ -19,6 +19,14 @@ export function removeFromFavorites(index) {
     };
 }
 
+export function changeFavoriteIndex(index, newIndex) {
+    return {
+        type: types.MOVE_FAVORITE,
+        index,
+        newIndex,
+    };
+}
+
 const getWeatherAndCache = getWeatherCacheWrapper(
     (city, code) => `weather/${city}/${code}`,
     getWeatherAjax.fetchCurrentWeather,
