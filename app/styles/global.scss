@@ -55,6 +55,10 @@ html, body, .my-app-root-class, #root {
     position: relative;
 }
 
+.pseudo-paragraph {
+    @include clearfix;
+}
+
 .pseudo-paragraph:not(:last-child) {
     margin-bottom: 1em;
 }

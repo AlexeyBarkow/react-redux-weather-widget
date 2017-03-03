@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames/dedupe';
-import Tooltip from '../containers/Tooltip';
+import Tooltip from '../containers/connectors/TooltipConnector';
 import Temperature from './Temperature';
 import CalendarPage from './CalendarPage';
 import { IMAGES_BASE_PATH } from '../utils/constants';

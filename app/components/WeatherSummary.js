@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { formatDate } from '../utils/unifiedDateFormat';
 import WeatherTemperature from './WeatherTemperature';
 import ErrorMessage from './ErrorMessage';
 import Button from './Button';
@@ -36,10 +35,9 @@ class WeatherSummary extends Component {
     }
 
     render() {
-        const { className, weather, metric, shortView } = this.props;
+        const { className, weather, metric, shortView, formatDate } = this.props;
         const { showTable } = this.state;
         const date = new Date(weather.calculationTime);
-        const formattedDate = formatDate(date);
         return (
             <section className={classnames('summary', className)}>
                 {(() => {
@@ -52,13 +50,13 @@ class WeatherSummary extends Component {
                                     : <h1>{ weather.city }</h1>
                                 }
 
-                                <div className="row col-xs-12">
+                                <div className="data-block">
                                     {
-                                        shortView
-                                        ? undefined
-                                        : <h3>Today (gathered in {formattedDate})</h3>
+                                        formatDate && date
+                                        ? <span>{formatDate(date)}</span>
+                                        : undefined
                                     }
-                                    <div className="row col-xs-12">
+                                    <div className="pseudo-paragraph">
                                         <WeatherTemperature
                                           className="pull-left"
                                           metric={metric}
@@ -70,7 +68,7 @@ class WeatherSummary extends Component {
                                         {
                                             shortView
                                             ?
-                                                <Button onClickHandler={this.chevronToggle} className="pull-left chevron center-vertical">
+                                                <Button onClickHandler={this.chevronToggle} className="pull-right chevron">
                                                     <span className={`glyphicon glyphicon-chevron-${showTable ? 'up' : 'down'}`} aria-hidden="true" />
                                                 </Button>
                                             : undefined
@@ -78,7 +76,11 @@ class WeatherSummary extends Component {
                                     </div>
                                     {
                                         showTable
-                                        ? <DetailedInfoTable className="clear-left" weather={weather} />
+                                        ? (
+                                            <div className="pseudo-paragraph">
+                                                <DetailedInfoTable className="clear-left" weather={weather} />
+                                            </div>
+                                        )
                                         : undefined
                                     }
                                 </div>
@@ -111,6 +113,7 @@ WeatherSummary.propTypes = {
     weather: PropTypes.object,
     metric: PropTypes.string.isRequired,
     shortView: PropTypes.bool,
+    formatDate: PropTypes.func,
 // these props are for standalone weather summary blocks
     getWeatherToCache: PropTypes.func,
     city: PropTypes.string,
@@ -129,6 +132,7 @@ WeatherSummary.defaultProps = {
     city: undefined,
     countryCode: undefined,
     location: null,
+    formatDate: undefined,
 };
 
 export default WeatherSummary;

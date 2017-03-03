@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import TabController from './TabController';
+import { formatDate } from '../utils/unifiedDateFormat';
 import Tab from '../components/Tab';
 import TabHeader from '../components/TabHeader';
 import TabContainer from '../components/TabContainer';
@@ -20,11 +21,22 @@ class IndexMain extends Component {
                     <TabHeader index="2">Weather forecast</TabHeader>
                 </TabContainer>
                 <TabContainer>
-                    <Tab index="1">
-                        <WeatherSummary weather={weather} metric={metric} />
+                    <Tab noRenderWhenHidden index="1">
+                        <WeatherSummary
+                          formatDate={date => `Info gathered in ${formatDate(date)}`}
+                          showDate
+                          weather={weather}
+                          metric={metric}
+                        />
                     </Tab>
-                    <Tab index="2">
-                        <WeatherForecastSummary forecastFilter={forecastFilter} changeFilter={this.changeForecastFilter} forecast={forecast} className="summary" metric={metric} />
+                    <Tab noRenderWhenHidden index="2">
+                        <WeatherForecastSummary
+                          forecastFilter={forecastFilter}
+                          changeFilter={this.changeForecastFilter}
+                          forecast={forecast}
+                          className="summary"
+                          metric={metric}
+                        />
                     </Tab>
                 </TabContainer>
             </TabController>

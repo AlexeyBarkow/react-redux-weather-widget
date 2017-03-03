@@ -20,32 +20,37 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                             <div>
                                 <div className="row">
                                     <h1 className="col-xs-9">Weather forecast in { forecast[0].city }</h1>
-                                    <div className="panel panel-heading col-xs-3">
-                                        <span>Interval:</span>
-                                        <ButtonGroup className="btn-group-justified-sm btn-group-vertical-rsm" >
-                                            <CustomInput
-                                              type="radio"
-                                              buttonStyle
-                                              id="forecast-rad-1"
-                                              name="forecast-filter"
-                                              onChange={changeFilter}
-                                              checked={forecastFilter === '12H'} value="12H"
-                                            >
-                                                12h
-                                            </CustomInput>
-                                            <CustomInput
-                                              type="radio"
-                                              buttonStyle
-                                              id="forecast-rad-2"
-                                              name="forecast-filter"
-                                              onChange={changeFilter}
-                                              checked={forecastFilter === '3H'}
-                                              value="3H"
-                                            >
-                                                3h
-                                            </CustomInput>
-                                        </ButtonGroup>
-                                    </div>
+                                    {
+                                        changeFilter ?
+                                        (<div className="panel panel-heading col-xs-3">
+                                            <span>Interval:</span>
+                                            <ButtonGroup className="btn-group-justified-sm btn-group-vertical-rsm" >
+                                                <CustomInput
+                                                  type="radio"
+                                                  buttonStyle
+                                                  id="forecast-rad-1"
+                                                  name="forecast-filter"
+                                                  onChange={changeFilter}
+                                                  checked={forecastFilter === '12H'}
+                                                  value="12H"
+                                                >
+                                                    12h
+                                                </CustomInput>
+                                                <CustomInput
+                                                  type="radio"
+                                                  buttonStyle
+                                                  id="forecast-rad-2"
+                                                  name="forecast-filter"
+                                                  onChange={changeFilter}
+                                                  checked={forecastFilter === '3H'}
+                                                  value="3H"
+                                                >
+                                                    3h
+                                                </CustomInput>
+                                            </ButtonGroup>
+                                        </div>)
+                                        : undefined
+                                    }
                                 </div>
                                 <div className="col-md-9 col-lg-8">
                                     {
@@ -90,14 +95,16 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
 WeatherForecastSummary.propTypes = {
     className: PropTypes.string,
     forecast: PropTypes.array,
-    forecastFilter: PropTypes.string.isRequired,
-    changeFilter: PropTypes.func.isRequired,
+    forecastFilter: PropTypes.string,
+    changeFilter: PropTypes.func,
     metric: PropTypes.string.isRequired,
 };
 
 WeatherForecastSummary.defaultProps = {
     className: '',
     forecast: [],
+    forecastFilter: '12H',
+    changeFilter: null,
 };
 
 export default WeatherForecastSummary;

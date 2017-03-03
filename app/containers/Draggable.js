@@ -25,10 +25,12 @@ class Draggable extends Component {
         e.preventDefault();
     }
 
-    handleDragStart = () => {
-        const { dataOnDragStart, setDragData } = this.props;
+    handleDragStart = (e) => {
+        const { dataOnDragStart, setDragData, onDragStart } = this.props;
 
         setDragData(dataOnDragStart);
+        onDragStart(e);
+
         this.setState({
             dragging: true,
         });
@@ -73,12 +75,14 @@ Draggable.propTypes = {
     ]),
     setDragData: PropTypes.func.isRequired,
     dropData: PropTypes.func.isRequired,
+    onDragStart: PropTypes.func,
 };
 
 Draggable.defaultProps = {
     className: '',
     classNameWhenDragging: 'dragging',
     dataOnDragStart: null,
+    onDragStart: () => undefined,
 };
 
 export default Draggable;

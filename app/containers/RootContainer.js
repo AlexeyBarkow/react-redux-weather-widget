@@ -1,15 +1,21 @@
 import React, { Component, PropTypes } from 'react';
+import isEqual from 'lodash/isEqual';
 import Header from './connectors/HeaderConnector';
 import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
 import MainContainer from '../components/MainContainer';
 import AsideBar from '../components/AsideBar';
+import TooltipDomain from './connectors/TooltipDomainConnector';
 import { IMAGES_UNUSUAL_PATH } from '../utils/constants';
 
 class RootContainer extends Component {
     componentWillMount() {
         const { getLocation } = this.props;
         getLocation();
+    }
+
+    shouldComponentUpdate(newProps) {
+        return !isEqual(this.props, newProps);
     }
 
     render() {
@@ -23,6 +29,7 @@ class RootContainer extends Component {
 
         return (
             <div className="app-wrapper fixed-background" style={{ backgroundImage: `url(${IMAGES_UNUSUAL_PATH}${weatherOverall.main || 'default'}.jpg)` }}>
+                <TooltipDomain />
                 <div className="sticky-top">
                     <StaticFixator placeholderClass="header__placeholder">
                         <Header className="header" />

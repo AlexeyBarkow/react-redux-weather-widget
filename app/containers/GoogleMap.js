@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import Loading from '../components/Loading';
 import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
 import '../styles/gmap.scss';
@@ -24,7 +24,7 @@ class GoogleMap extends Component {
         const newMarkers = newProps.markers;
         const newLocation = newProps.location;
         // ToDo: find out why reselect does not return equal objects
-        if (!map || _.isEqual(newProps, this.props)) {
+        if (!map || isEqual(newProps, this.props)) {
             return;
         }
 

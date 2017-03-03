@@ -11,26 +11,27 @@ function Favorites({ className, favorites, metric, removeHandler, info, changeFa
                 ? <span>No favorites provided</span>
                 : (
                     <div className="row float-fixer">
-                        { favorites.map((curr, index, { length }) => {
-                            const weather = info[`weather/${curr.cityname}/${curr.countryCode}`];
-                            const forecast = info[`forecast/${curr.cityname}/${curr.countryCode}`];
+                        { favorites.map((curr, index) => {
+                            const weather = info[`weather/${curr.cityname}/${curr.countryCode}`] || {};
+                            const forecast = info[`forecast/${curr.cityname}/${curr.countryCode}`] || {};
                             const dropRight = (_, dropData) => {
-                                const newIndex = index + 1;
-                                console.log(newIndex, dropData)
-                                // changeFavoriteIndex(
-                                //     dropData,
-                                //     newIndex < length ? newIndex : length
-                                // );
+                                if (dropData === index) {
+                                    return;
+                                }
+                                changeFavoriteIndex(dropData, index + 1);
                             };
                             const dropLeft = (_, dropData) => {
-                                const newIndex = index;
-                                console.log(newIndex, dropData)
-                                // changeFavoriteIndex(dropData, newIndex);
+                                if (dropData === index) {
+                                    return;
+                                }
+                                changeFavoriteIndex(dropData, index);
                             };
+
                             return (
-                                <Draggable key={`fav-${index}`} className="col-sm-6 col-md-4 col-lg-3 drop-container" dataOnDragStart={index}>
+                                <Draggable key={`fav-${curr.cityname}-${curr.countryCode}`} className="col-sm-6 col-md-4 col-lg-3 drop-container" dataOnDragStart={index}>
                                     <Droppable onDrop={dropLeft} className="left dropzone" />
                                     <SingleFavorite
+                                      index={index}
                                       favorite={curr}
                                       metric={metric}
                                       weather={weather}

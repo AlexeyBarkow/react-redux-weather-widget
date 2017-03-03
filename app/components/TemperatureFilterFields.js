@@ -15,7 +15,8 @@ function TemperatureFilterFields({ className, prefix, minTemperature, maxTempera
                 <label htmlFor={minInputName}>Min temperature</label>
                 <Input type="number" {...minTemperature.input} id={minInputName} placeholder="Min temperature" />
                 { minTemperature.meta.error
-                    && <InputError popupPanel errorMessage={minTemperature.meta.error} /> }
+                    && <InputError popupPanel errorMessage={minTemperature.meta.error} />
+                }
             </FormGroup>
             <FormGroup meta={maxTemperature.meta}>
                 <label htmlFor={maxInputName}>Max temperature</label>

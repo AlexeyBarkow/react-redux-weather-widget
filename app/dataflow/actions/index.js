@@ -5,3 +5,4 @@ export { getWeather, getForecast, redirectToCity, setForecastFilter, getNearestT
 export { push } from 'react-router-redux';
 export { addToFavoritesAndFetchWeather, removeFromFavorites, getAllFavoritesWeather, changeFavoriteIndex } from './favorites';
 export { setDragData, dropData } from './dragAndDrop';
+export { createTooltip, destroyTooltip } from './tooltip';

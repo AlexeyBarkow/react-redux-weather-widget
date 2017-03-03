@@ -105,6 +105,7 @@ function convertWeatherToAcceptableFormat(city, status, data) {
     let formattedWeather;
     if ((data.cod || status) === 200) {
         formattedWeather = {
+            id: data.id || '-1',
             status: parseInt(data.cod, 10) || status,
             city: data.name || city,
             country: data.sys.country || DEFAULT_COUNTRY_CODE,

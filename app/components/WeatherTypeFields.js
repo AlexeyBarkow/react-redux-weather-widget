@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import CustomInput from './CustomInput';
-import Tooltip from '../containers/Tooltip';
+import Tooltip from '../containers/connectors/TooltipConnector';
 import { IMAGES_BASE_PATH } from '../utils/constants';
 
 function WeatherTypeFields({ className, weatherIcons, icons }) {

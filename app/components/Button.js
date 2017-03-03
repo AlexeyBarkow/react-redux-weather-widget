@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames/dedupe';
-import Tooltip from '../containers/Tooltip';
+import Tooltip from '../containers/connectors/TooltipConnector';
 
 
 function Button({

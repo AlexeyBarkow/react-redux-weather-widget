@@ -1,5 +1,5 @@
 .filters-form {
-    .filters-form__min-max-temperature {
+    .filters-form__min-max {
         label {
             @include respond(768px) {
                 @include sr-only;
@@ -31,6 +31,12 @@
             }
         }
     }
+
+    @include respond(768px) {
+        .form-control {
+            max-width: 20em;
+        }
+    }
 }
 
 
@@ -43,24 +49,60 @@
             border-radius: 50%;
         }
     }
+    .favorite__forecast {
+        margin-top: .5em;
+        margin-bottom: .5em;
+        max-height: 20em;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            width: .25em;
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-light-gray);
+        }
+        .data-block {
+            max-width: 20em;
+        }
+        .forecast-single:not(:last-child) {
+            border-bottom: 1px solid var(--color-light-gray);
+            margin-bottom: .5em;
+            padding-bottom: .5em;
+        }
+    }
 }
 
 .drop-container {
     position: relative;
     .dropzone {
         position: absolute;
-        width: 1em;
-        height: 100%;
-        top: 0;
-
+        width: 100%;
+        height: 1em;
+        left: 0;
+        &.right {
+            top: 100%;
+        }
+        &.left {
+            bottom: 100%;
+        }
         &.over {
             background: black;
         }
-        &.right {
-            right: 0;
+        @include respond(768px) {
+            width: 1em;
+            height: 100%;
+
+            &.right {
+                top: 0;
+                left: auto;
+                right: 0;
+            }
+            &.left {
+                top: 0;
+                left: 0;
+            }
+
         }
-        &.left {
-            left: 0;
-        }
+
     }
 }

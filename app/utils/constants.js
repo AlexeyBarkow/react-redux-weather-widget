@@ -21,6 +21,9 @@ export const API_URL = 'http://api.openweathermap.org/data/2.5';
 
 export const VALIDATE_ADDRESS_REGEXP = /^([a-zA-Z-\s']+),\s([a-zA-Z]{1,3})$/;
 export const VALIDATE_TEMPERATURE_REGEXP = /^([0-9]|-?[1-9][0-9]{0,2})$/;
+export const VALIDATE_PRESSURE_REGEXP = /^([0-9]|[1-9][0-9]{0,3})$/;
+export const VALIDATE_SPEED_REGEXP = /^([0-9]|[1-9][0-9]{0,2})$/;
+export const VALIDATE_HUMIDITY_REGEXP = /^([0-9]|[1-9][0-9]{0,2})$/;
 export const CITY_PATH_REGEXP = /^\/cities\/([a-zA-Z]{1,3})\/([a-zA-Z\s-'’а-яА-ЯёëЁ]*)$/;
 export const DEFAULT_PATH_REGEXP = /^\/(|home)$/;
 
@@ -45,3 +48,5 @@ export const WEATHER_ICON_TYPES_MAP = {
 };
 
 export const DEFAULT_COUNTRY_CODE = 'any';
+
+export const DEFAULT_TOOLTIP_TYPE = 'default';
