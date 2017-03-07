@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { SubmissionError } from 'redux-form';
-import isEqual from 'lodash/isEqual';
 import AddCityForm from './AddCityForm';
 import Favorites from '../components/Favorites';
 import { VALIDATE_ADDRESS_REGEXP } from '../utils/constants';
@@ -8,10 +7,6 @@ import { VALIDATE_ADDRESS_REGEXP } from '../utils/constants';
 class FiltersBottomWrapper extends Component {
     componentWillMount() {
         this.props.getAllFavoritesWeather();
-    }
-
-    shouldComponentUpdate(newProps) {
-        return !isEqual(this.props, newProps);
     }
 
     submitAddToFav = ({ tableCity }) => {

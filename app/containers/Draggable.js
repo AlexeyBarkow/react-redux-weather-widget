@@ -10,11 +10,6 @@ class Draggable extends Component {
         };
     }
 
-    shouldComponentUpdate(newProps, newState) {
-        return newState.dragging !== this.state.dragging || newProps !== this.props;
-    }
-
-
     componentWillUnmount() {
         this.setState({
             dragging: false,

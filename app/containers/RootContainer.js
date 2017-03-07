@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import isEqual from 'lodash/isEqual';
 import Header from './connectors/HeaderConnector';
 import StaticFixator from './StaticFixator';
 import Footer from '../components/Footer';
@@ -12,10 +11,6 @@ class RootContainer extends Component {
     componentWillMount() {
         const { getLocation } = this.props;
         getLocation();
-    }
-
-    shouldComponentUpdate(newProps) {
-        return !isEqual(this.props, newProps);
     }
 
     render() {

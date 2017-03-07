@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames/dedupe';
-import isEqual from 'lodash/isEqual';
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import Button from '../components/Button';
@@ -16,10 +15,6 @@ class Header extends Component {
         this.state = {
             collapsed: true,
         };
-    }
-
-    shouldComponentUpdate(newProps) {
-        return !isEqual(newProps, this.props);
     }
 
     onCollapseButtonClick = () => {

@@ -2,10 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 
 class Tooltip extends Component {
-    shouldComponentUpdate() {
-        return false;
-    }
-
     componentWillUnmount() {
         const { destroyTooltip, placement } = this.props;
         destroyTooltip(placement);

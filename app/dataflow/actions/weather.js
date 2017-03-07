@@ -17,13 +17,6 @@ function changeForecastInfo(forecast) {
     };
 }
 
-export function setForecastFilter(forecastFilter) {
-    return {
-        type: types.SET_FORECAST_FILTER,
-        forecastFilter,
-    };
-}
-
 function setWeatherStatus(error) {
     return {
         type: types.SET_WEATHER_STATUS,
@@ -218,8 +211,6 @@ export function getNearestTo(location) {
             message: 'loading...',
         }));
         getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
-            // ToDo: there is an error when the service does not respond
-            console.log(res);
             const nearestCities = res.map((curr) => {
                 const { city, country } = curr;
                 dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));

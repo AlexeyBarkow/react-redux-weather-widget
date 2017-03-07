@@ -101,14 +101,14 @@ function mapWeatherType(type) {
     }
 }
 //added for unification
-function convertWeatherToAcceptableFormat(city, status, data) {
+function convertWeatherToAcceptableFormat(city, country, status, data) {
     let formattedWeather;
     if ((data.cod || status) === 200) {
         formattedWeather = {
             id: data.id || '-1',
             status: parseInt(data.cod, 10) || status,
             city: data.name || city,
-            country: data.sys.country || DEFAULT_COUNTRY_CODE,
+            country: data.sys.country || country || DEFAULT_COUNTRY_CODE,
             humidity: data.main.humidity,
             temperature: {
                 curr: Math.trunc(data.main.temp),
@@ -179,24 +179,27 @@ function weatherFetchInit(getTemplateUrl, onFetch, onError, sliceTemplateArgs) {
 const weatherAPI = {
     fetchCurrentWeather: weatherFetchInit(
         getWeatherTemplate,
-        (res, city) => convertWeatherToAcceptableFormat(city, null, res.data),
+        res => convertWeatherToAcceptableFormat(null, null, null, res.data),
     ),
     fetchWeatherForecast: weatherFetchInit(
         getWeatherForecastTemplate,
-        (res, city) => res.data.list.map(convertWeatherToAcceptableFormat.bind(null, city, 200)),
+        res => res.data.list
+            .map(convertWeatherToAcceptableFormat
+            .bind(null, res.data.city.name, res.data.city.country, 200)),
     ),
     getClosestCitiesToLocation: weatherFetchInit(
         getClosestCitiesToLocationURL,
-        res => res.data.list.map(convertWeatherToAcceptableFormat.bind(null, null, 200)),
+        res => res.data.list.map(convertWeatherToAcceptableFormat.bind(null, null, null, 200)),
     ),
     getWeatherInfoByLocation: weatherFetchInit(
         getWeatherByLocationURL,
-        res => convertWeatherToAcceptableFormat(null, null, res.data),
+        res => convertWeatherToAcceptableFormat(null, null, null, res.data),
     ),
     getForecastInfoByLocation: weatherFetchInit(
         getForecastByLocationURL,
-        (res, __, city) =>
-            res.data.list.map(convertWeatherToAcceptableFormat.bind(null, city, 200)),
+        res =>
+            res.data.list.map(convertWeatherToAcceptableFormat
+                .bind(null, res.data.city.name, res.data.city.country, 200)),
         null,
         1,
     ),

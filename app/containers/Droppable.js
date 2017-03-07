@@ -10,10 +10,6 @@ class Droppable extends Component {
         };
     }
 
-    shouldComponentUpdate(newProps, { dragover }) {
-        return dragover !== this.state.dragover || newProps !== this.props;
-    }
-
     componentWillUnmount() {
         this.setState({
             dragover: false,

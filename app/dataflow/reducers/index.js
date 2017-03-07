@@ -43,6 +43,7 @@ const initialState = {
     },
     favorites: {
         favoriteCities: favoriteCities || [],
+        filters: {},
     },
     form: {},
     dragAndDrop: {},

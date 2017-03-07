@@ -5,7 +5,7 @@ import About from './components/About';
 import IndexMain from './containers/connectors/IndexMainConnector';
 import WrongPath from './components/WrongPath';
 import BottomWrapper from './containers/connectors/BottomWrapperConnector';
-import FiltersContainer from './containers/FiltersContainer';
+import FiltersContainer from './containers/connectors/FiltersContainerConnector';
 import FiltersBottomWrapper from './containers/connectors/FiltersBottomWrapperConnector';
 
 const routes = (

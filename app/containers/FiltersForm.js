@@ -32,6 +32,13 @@ const validate = (values) => {
         }
     }
 
+    if (values.maxTemperature !== undefined && values.minTemperature !== undefined
+        && !errors.maxTemperature && !errors.minTemperature) {
+        if (parseInt(values.maxTemperature, 10) < parseInt(values.minTemperature, 10)) {
+            errors.temperatureErrors = 'Max temperature should not be less than min';
+        }
+    }
+
     if (values.minPressure) {
         if (!VALIDATE_PRESSURE_REGEXP.test(values.minPressure)) {
             errors.minPressure = 'Wrong pressure format';
@@ -73,7 +80,7 @@ const validate = (values) => {
 
 class FiltersForm extends Component {
     render() {
-        const { className, handleSubmit } = this.props;
+        const { className, handleSubmit, metric } = this.props;
 
         return (
             <Form className={classnames(className, 'filters-form')} onSubmit={handleSubmit} autocompleteOff>
@@ -82,7 +89,8 @@ class FiltersForm extends Component {
                       className="row pseudo-paragraph filters-form__min-max"
                       component={TemperatureFilterFields}
                       prefix="filter"
-                      names={['minTemperature', 'maxTemperature']}
+                      metric={metric}
+                      names={['minTemperature', 'maxTemperature', 'temperatureErrors']}
                     />
                     <Fields
                       className="row pseudo-paragraph"
@@ -108,6 +116,7 @@ class FiltersForm extends Component {
 FiltersForm.propTypes = {
     className: PropTypes.string,
     handleSubmit: PropTypes.func.isRequired,
+    metric: PropTypes.string.isRequired,
 };
 
 FiltersForm.defaultProps = {

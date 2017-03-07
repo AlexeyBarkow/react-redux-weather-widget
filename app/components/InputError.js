@@ -3,10 +3,8 @@ import classnames from 'classnames/dedupe';
 
 function InputError({ className, errorMessage, popupPanel }) {
     return (
-        <div>
-            <span className={classnames(className, 'help-block', popupPanel && 'panel panel-danger')}>
-                { errorMessage }
-            </span>
+        <div className={classnames(className, popupPanel ? 'help-popup-block' : 'help-block', 'panel panel-danger')}>
+            { errorMessage }
         </div>
     );
 }

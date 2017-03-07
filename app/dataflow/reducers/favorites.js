@@ -11,6 +11,18 @@ function favoritesReducer(state = {}, action) {
                 favoriteCities: [...favoriteCities, ...[city]],
             };
         }
+        case types.SET_TOTAL_FILTER: {
+            const { filter, key } = action;
+            const { filters } = state;
+
+            return {
+                ...state,
+                filters: {
+                    ...filters,
+                    [key]: filter,
+                },
+            };
+        }
         case types.MOVE_FAVORITE: {
             const { favoriteCities } = state;
             const { length } = favoriteCities;
