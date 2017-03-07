@@ -19,9 +19,15 @@ class TooltipDomain extends Component {
     render() {
         const { children, className, tooltip } = this.props;
         const tooltips = Object.entries(tooltip)
-            .map(([type, data], index) => data && this.renderTooltip(data, type, index));
+            .reduce((res, [type, data], index) => {
+                if (data) {
+                    return [...res, this.renderTooltip(data, type, index)];
+                }
+                return res;
+            }, []);
 
         return (
+            tooltips.length > 0 &&
             <div className={classnames(className, 'tooltip-container')}>
                 { children }
                 { tooltips }

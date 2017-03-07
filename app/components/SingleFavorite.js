@@ -22,36 +22,34 @@ function SingleFavorite({
     };
 
     return (
-        <article className={classnames(className, 'favorite')}>
-            <div className="modal-content">
-                <div className="modal-header">
-                    <Button className="remove-cross close" noDefaultStyles onClickHandler={remove} tooltip={{ placement: 'bottom', tooltipText: 'Remove from favorites' }}>
-                        <span aria-hidden="true">×</span>
-                    </Button>
-                    <h4 className="modal-title">
-                        {
-                            weather.city || favorite.cityname
-                        }, {
-                            weather.country || favorite.countryCode
-                        }
-                    </h4>
-                </div>
-                <div className="modal-body">
-                    <TabController className="row" defaultSelectedTabIndex="1">
-                        <TabContainer headerContainer>
-                            <TabHeader index="1">Weather now</TabHeader>
-                            <TabHeader index="2">Forecast</TabHeader>
-                        </TabContainer>
-                        <TabContainer>
-                            <Tab noRenderWhenHidden index="1">
-                                <WeatherSummary className="favorite__forecast" weather={weather} shortView metric={metric} />
-                            </Tab>
-                            <Tab noRenderWhenHidden index="2">
-                                <WeatherForecastShort className="favorite__forecast" forecast={forecast} metric={metric} />
-                            </Tab>
-                        </TabContainer>
-                    </TabController>
-                </div>
+        <article className={classnames(className, 'favorite modal-content')}>
+            <div className="modal-header">
+                <Button className="remove-cross close" noDefaultStyles onClickHandler={remove} tooltip={{ placement: 'bottom', tooltipText: 'Remove from favorites' }}>
+                    <span aria-hidden="true">×</span>
+                </Button>
+                <h4 className="modal-title">
+                    {
+                        weather.city || favorite.cityname
+                    }, {
+                        weather.country || favorite.countryCode
+                    }
+                </h4>
+            </div>
+            <div className="modal-body">
+                <TabController className="row" defaultSelectedTabIndex="1">
+                    <TabContainer headerContainer>
+                        <TabHeader index="1">Weather now</TabHeader>
+                        <TabHeader index="2">Forecast</TabHeader>
+                    </TabContainer>
+                    <TabContainer>
+                        <Tab noRenderWhenHidden index="1">
+                            <WeatherSummary className="favorite__forecast" weather={weather} shortView metric={metric} />
+                        </Tab>
+                        <Tab noRenderWhenHidden index="2">
+                            <WeatherForecastShort className="favorite__forecast" forecast={forecast} metric={metric} />
+                        </Tab>
+                    </TabContainer>
+                </TabController>
             </div>
         </article>
     );
