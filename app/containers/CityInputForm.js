@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Field, reduxForm } from 'redux-form';
 import Select from '../components/Select';
 import DatalistOption from '../components/DatalistOption';
-import DropDown from '../components/DropDown';
+import AutocompleteField from '../components/AutocompleteField';
 import Form from '../containers/Form';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
@@ -29,7 +29,7 @@ class CityInputForm extends Component {
             <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>
                     <Field
-                      component={DropDown}
+                      component={AutocompleteField}
                       className="header__city-search__name"
                       name="city"
                       placeholder="Type city here"
@@ -39,16 +39,9 @@ class CityInputForm extends Component {
                       labelText="City"
                       onChange={this.autocompleteCity}
                       validate={this.validateDropDown}
-                    >
-                        {
-                            autocomplete.input === autocompleteName
-                            ?
-                            autocomplete.map((curr, index) => (
-                                <DatalistOption hiddenValue={index} value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
-                            ))
-                            : undefined
-                        }
-                    </Field>
+                      autocomplete={autocomplete}
+                      autocompleteName={autocompleteName}
+                    />
                     <Field
                       component={Select}
                       name="metric"

@@ -41,7 +41,7 @@ CustomInput.propTypes = {
         PropTypes.bool,
     ]),
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     onChange: PropTypes.func,
     buttonStyle: PropTypes.bool,
     checked: PropTypes.bool,
@@ -53,6 +53,7 @@ CustomInput.propTypes = {
 
 CustomInput.defaultProps = {
     className: '',
+    name: undefined,
     value: undefined,
     children: null,
     onChange: undefined,

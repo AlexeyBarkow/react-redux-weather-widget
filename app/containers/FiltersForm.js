@@ -1,10 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 import { reduxForm, Fields } from 'redux-form';
+import throttle from 'lodash/throttle';
 import Form from './Form';
 import TemperatureFilterFields from '../components/TemperatureFilterFields';
 import WeatherDetailsFields from '../components/WeatherDetailsFields';
 import WeatherTypeFields from '../components/WeatherTypeFields';
+import FiltersCitiesFields from '../components/FiltersCitiesFields';
 import Button from '../components/Button';
 import {
     VALIDATE_TEMPERATURE_REGEXP,
@@ -12,6 +14,7 @@ import {
     VALIDATE_PRESSURE_REGEXP,
     VALIDATE_HUMIDITY_REGEXP,
     VALIDATE_SPEED_REGEXP,
+    MIN_AJAX_INTERVAL,
 } from '../utils/constants';
 import '../styles/filters.scss';
 
@@ -78,13 +81,33 @@ const validate = (values) => {
     return errors;
 };
 
+const autocompleteName = 'filters-form';
+
 class FiltersForm extends Component {
+    autocompleteCity = throttle(({ target }) => {
+        this.props.autocompleteCity(target.value, autocompleteName);
+    }, MIN_AJAX_INTERVAL);
+
     render() {
-        const { className, handleSubmit, metric } = this.props;
+        const {
+            className,
+            handleSubmit,
+            metric,
+            formValues: { filterCityRadio },
+            autocomplete,
+        } = this.props;
 
         return (
             <Form className={classnames(className, 'filters-form')} onSubmit={handleSubmit} autocompleteOff>
                 <div className="container-fluid">
+                    <FiltersCitiesFields
+                      filterCityRadioValue={filterCityRadio}
+                      className="row pseudo-paragraph"
+                      prefix="filter"
+                      autocomplete={autocomplete}
+                      autocompleteName={autocompleteName}
+                      autocompleteCity={this.autocompleteCity}
+                    />
                     <Fields
                       className="row pseudo-paragraph filters-form__min-max"
                       component={TemperatureFilterFields}
@@ -117,10 +140,15 @@ FiltersForm.propTypes = {
     className: PropTypes.string,
     handleSubmit: PropTypes.func.isRequired,
     metric: PropTypes.string.isRequired,
+    formValues: PropTypes.object,
+    autocomplete: PropTypes.array,
+    autocompleteCity: PropTypes.func.isRequired,
 };
 
 FiltersForm.defaultProps = {
     className: '',
+    formValues: {},
+    autocomplete: [],
 };
 
 export default reduxForm({
@@ -131,5 +159,6 @@ export default reduxForm({
             ...prev,
             [icon]: true,
         }), {}),
+        filterCityRadio: 'favorites',
     },
 })(FiltersForm);

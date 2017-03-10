@@ -20,8 +20,10 @@ function DropDown({
     onFocus,
     input,
     meta,
+    onKeyPress,
 }) {
     const { error } = meta;
+
     return (
         <FormGroup meta={meta} className={className}>
             {
@@ -39,6 +41,7 @@ function DropDown({
               onChange={onChange}
               onBlur={onBlur}
               onFocus={onFocus}
+              onKeyPress={onKeyPress}
               {...input}
             />
             <datalist id={listId}>
@@ -65,6 +68,7 @@ DropDown.propTypes = {
     id: PropTypes.string,
     labelText: PropTypes.string,
     assistiveLabel: PropTypes.bool,
+    onKeyPress: PropTypes.func,
 };
 
 DropDown.defaultProps = {
@@ -82,6 +86,7 @@ DropDown.defaultProps = {
     meta: {},
     labelText: '',
     assistiveLabel: false,
+    onKeyPress: undefined,
 };
 
 export default DropDown;

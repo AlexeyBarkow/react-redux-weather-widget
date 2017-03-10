@@ -1,18 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import _ from 'lodash';
+import throttle from 'lodash/throttle';
 import Form from './Form';
-import DropDown from '../components/DropDown';
+import AutocompleteField from '../components/AutocompleteField';
 import ButtonGroup from '../components/ButtonGroup';
 import Button from '../components/Button';
-import DatalistOption from '../components/DatalistOption';
 import { validateAddress } from '../utils/validateFunctions';
 import { MIN_AJAX_INTERVAL } from '../utils/constants';
 
 const autocompleteName = 'add-city';
 
 class AddCityForm extends Component {
-    autocompleteCity = _.throttle(({ target }) => {
+    autocompleteCity = throttle(({ target }) => {
         this.props.autocompleteCity(target.value, autocompleteName);
     }, MIN_AJAX_INTERVAL);
 
@@ -26,7 +25,7 @@ class AddCityForm extends Component {
             <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>
                     <Field
-                      component={DropDown}
+                      component={AutocompleteField}
                       name="tableCity"
                       id="city-table-input"
                       listId="city-table-list"
@@ -35,16 +34,9 @@ class AddCityForm extends Component {
                       placeholder="Type city here"
                       onChange={this.autocompleteCity}
                       validate={this.validateDropDown}
-                    >
-                        {
-                            autocompleteName === autocomplete.input
-                            ?
-                            autocomplete.map((curr, index) => (
-                                <DatalistOption value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
-                            ))
-                            : undefined
-                        }
-                    </Field>
+                      autocompleteName={autocompleteName}
+                      autocomplete={autocomplete}
+                    />
                     <Button type="submit">Add city</Button>
                 </ButtonGroup>
             </Form>

@@ -9,6 +9,7 @@ function Input({
     value,
     placeholder,
     onChange,
+    onKeyPress,
     onBlur,
     onFocus,
     input,
@@ -26,6 +27,7 @@ function Input({
           onChange={onChange}
           onBlur={onBlur}
           onFocus={onFocus}
+          onKeyPress={onKeyPress}
           {...input}
         />
     );
@@ -43,6 +45,7 @@ Input.propTypes = {
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     input: PropTypes.object,
+    onKeyPress: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -57,6 +60,7 @@ Input.defaultProps = {
     onBlur: undefined,
     onFocus: undefined,
     input: {},
+    onKeyPress: undefined,
 };
 
 export default Input;

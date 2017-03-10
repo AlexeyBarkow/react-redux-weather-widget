@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import forOwn from 'lodash/forOwn';
 import CustomInput from './CustomInput';
 import Tooltip from '../containers/connectors/TooltipConnector';
 import { IMAGES_BASE_PATH } from '../utils/constants';
@@ -11,7 +11,7 @@ function WeatherTypeFields({ className, weatherIcons, icons }) {
             <ul className="filters-form__icons-list">
                 {(() => {
                     const inputs = [];
-                    _.forOwn(weatherIcons, ({ input }, key) => {
+                    forOwn(weatherIcons, ({ input }, key) => {
                         inputs.push(
                             <li key={`weather-checkbox-${key}`}>
                                 <CustomInput noControl className="filters-form__icons-list__icon" id={key} type="checkbox" {...input}>

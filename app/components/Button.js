@@ -15,9 +15,10 @@ function Button({
     type,
     title,
     tooltip,
+    primary,
 }) {
     const button = (btnClassName = '') => {
-        const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link ' : 'default '}`, btnClassName);
+        const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link' : primary ? 'primary' : 'default'}`, btnClassName);
         if (href !== undefined) {
             if (href[0] === '#') {
                 return (
@@ -77,6 +78,7 @@ Button.propTypes = {
     link: PropTypes.bool,
     title: PropTypes.string,
     tooltip: PropTypes.object,
+    primary: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -89,6 +91,7 @@ Button.defaultProps = {
     type: null,
     link: false,
     title: null,
+    primary: false,
     tooltip: null,
 };
 

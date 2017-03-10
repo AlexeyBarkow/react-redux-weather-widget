@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import FiltersForm from './FiltersForm';
+import FiltersForm from './connectors/FiltersFormConnector';
 import FilteredItemsContainer from '../components/FilteredItemsContainer';
 
 class FiltersContainer extends Component {
