@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Field } from 'redux-form';
 import entries from 'lodash/entries';
 import every from 'lodash/every';
-import DeleteIputBox from './DeleteInputBox';
+import DeleteInputBox from './DeleteInputBox';
 
 class MultipleInputFields extends Component {
     shouldComponentUpdate(newProps) {
@@ -31,16 +31,17 @@ class MultipleInputFields extends Component {
         if (event.key === 'Enter') {
             event.preventDefault();
 
-            const { validateField, fields } = this.props;
+            const { validateField, fields, clearField, inputFieldProps } = this.props;
             const inputValue = event.target.value;
 
-            if (!validateField(inputValue)) {
+            if (validateField(inputValue)) {
                 // it seems like there is an error in redux-form library:
                 // first argument just returns something strange. lol
                 if (!fields.reduce((flag, _, index, arr) =>
                     flag || arr.get(index) === inputValue, false)) {
                     fields.push(inputValue);
                 }
+                clearField(inputFieldProps.name);
             }
         }
     }
@@ -54,10 +55,10 @@ class MultipleInputFields extends Component {
                     <div className="clearfix">
                         {
                             fields.map((_, index, arr) => (
-                                <DeleteIputBox
+                                <DeleteInputBox
                                   deleteHandler={() => { fields.remove(index); }}
                                   key={index}
-                                >{ arr.get(index) }</DeleteIputBox>
+                                >{ arr.get(index) }</DeleteInputBox>
                             ))
                         }
                     </div>
@@ -77,12 +78,13 @@ MultipleInputFields.propTypes = {
     inputFieldProps: PropTypes.object.isRequired,
     fields: PropTypes.object,
     validateField: PropTypes.func,
+    clearField: PropTypes.func.isRequired,
 };
 
 MultipleInputFields.defaultProps = {
     className: '',
     fields: [],
-    validateField: () => undefined,
+    validateField: () => true,
 };
 
 export default MultipleInputFields;

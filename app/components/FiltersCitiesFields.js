@@ -15,6 +15,8 @@ class FiltersCitiesFields extends Component {
             autocomplete,
             autocompleteCity,
             validateDropDown,
+            cityMeta,
+            clearField,
         } = this.props;
         const radioName = `${prefix}CityRadio`;
         const selectedFieldsName = `${prefix}SelectedCities`;
@@ -40,11 +42,12 @@ class FiltersCitiesFields extends Component {
                 >Use selected cities</Field>
                 {
                     filterCityRadioValue === 'custom' &&
-                    <FormGroup>
+                    <FormGroup meta={cityMeta}>
                         <FieldArray
                           component={MultipleInputFields}
                           name={selectedFieldsName}
                           validateField={validateDropDown}
+                          clearField={clearField}
                           inputFieldProps={{
                               component: AutocompleteField,
                               name: 'city',
@@ -71,6 +74,8 @@ FiltersCitiesFields.propTypes = {
     autocompleteName: PropTypes.string.isRequired,
     autocompleteCity: PropTypes.func.isRequired,
     validateDropDown: PropTypes.func,
+    cityMeta: PropTypes.object,
+    clearField: PropTypes.func.isRequired,
 };
 
 FiltersCitiesFields.defaultProps = {
@@ -78,6 +83,7 @@ FiltersCitiesFields.defaultProps = {
     className: '',
     filterCityRadioValue: 'favorites',
     validateDropDown: undefined,
+    cityMeta: {},
 };
 
 export default FiltersCitiesFields;

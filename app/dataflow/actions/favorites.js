@@ -27,6 +27,13 @@ export function changeFavoriteIndex(index, newIndex) {
     };
 }
 
+export function setCitiesToFilter(citiesToFilterArray) {
+    return {
+        type: types.SET_CITIES_TO_FILTER,
+        citiesToFilterArray,
+    }
+}
+
 const getWeatherAndCache = getWeatherCacheWrapper(
     (city, code) => `weather/${city}/${code}`,
     getWeatherAjax.fetchCurrentWeather,
@@ -53,4 +60,11 @@ export function getAllFavoritesWeather() {
             dispatch(getForecastAndCache(cityname, countryCode));
         });
     };
+}
+
+export function fetchWeatherAndForecast(city, code) {
+    return dispatch => Promise.all([
+        dispatch(getWeatherAndCache(city, code)),
+        dispatch(getForecastAndCache(city, code)),
+    ]);
 }

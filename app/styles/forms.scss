@@ -154,6 +154,9 @@
         height: auto;
     }
     .delete-box {
+        &:not(:last-child) {
+            margin-right: .5em;
+        }
         .close {
             font-size: 1.5em;
             font-weight: bold;

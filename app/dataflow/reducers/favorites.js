@@ -8,7 +8,7 @@ function favoritesReducer(state = {}, action) {
 
             return {
                 ...state,
-                favoriteCities: [...favoriteCities, ...[city]],
+                favoriteCities: [...favoriteCities, city],
             };
         }
         case types.SET_TOTAL_FILTER: {
@@ -68,6 +68,13 @@ function favoritesReducer(state = {}, action) {
                     ...favoriteCities.slice(0, index),
                     ...favoriteCities.slice(index + 1),
                 ],
+            };
+        }
+        case types.SET_CITIES_TO_FILTER: {
+            const { citiesToFilterArray } = action;
+            return {
+                ...state,
+                citiesToFilterArray: citiesToFilterArray ? [...citiesToFilterArray] : undefined,
             };
         }
         default:

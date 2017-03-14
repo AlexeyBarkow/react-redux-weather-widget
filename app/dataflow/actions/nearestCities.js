@@ -10,6 +10,12 @@ function setCityAutocompleteArray(autocompleteRaw, input) {
     };
 }
 
+export function clearAutocomplete() {
+    return {
+        type: types.CLEAR_AUTOCOMPLETE,
+    };
+}
+
 function setAutocompleteError(error) {
     const autocomplete = [];
     autocomplete.error = error;

@@ -6,7 +6,7 @@ import Form from './Form';
 import TemperatureFilterFields from '../components/TemperatureFilterFields';
 import WeatherDetailsFields from '../components/WeatherDetailsFields';
 import WeatherTypeFields from '../components/WeatherTypeFields';
-import FiltersCitiesFields from '../components/FiltersCitiesFields';
+import FilterCitiesFields from '../components/FiltersCitiesFields';
 import Button from '../components/Button';
 import {
     VALIDATE_TEMPERATURE_REGEXP,
@@ -14,11 +14,13 @@ import {
     VALIDATE_PRESSURE_REGEXP,
     VALIDATE_HUMIDITY_REGEXP,
     VALIDATE_SPEED_REGEXP,
+    VALIDATE_ADDRESS_REGEXP,
     MIN_AJAX_INTERVAL,
 } from '../utils/constants';
 import '../styles/filters.scss';
 
-const weatherIconNames = Object.keys(WEATHER_ICON_TYPES_MAP);
+const FORM_NAME = 'filtersForm';
+const WEATHER_ICONS_NAMES = Object.keys(WEATHER_ICON_TYPES_MAP);
 
 const validate = (values) => {
     const errors = {};
@@ -78,15 +80,27 @@ const validate = (values) => {
         }
     }
 
+    if (values.filterCityRadio === 'custom' && !VALIDATE_ADDRESS_REGEXP.test(values.city) && !values.filterSelectedCities) {
+        errors.city = 'Wrong city name format: should be \'Cityname, CountryCode\'';
+    }
+
     return errors;
 };
 
-const autocompleteName = 'filters-form';
-
 class FiltersForm extends Component {
     autocompleteCity = throttle(({ target }) => {
-        this.props.autocompleteCity(target.value, autocompleteName);
+        this.props.autocompleteCity(target.value, FORM_NAME);
     }, MIN_AJAX_INTERVAL);
+
+    validateDropDown = value =>
+        VALIDATE_ADDRESS_REGEXP.test(value);
+
+    clearField = (name) => {
+        const { changeFormField, clearAutocomplete } = this.props;
+
+        changeFormField(FORM_NAME, name, '');
+        clearAutocomplete();
+    }
 
     render() {
         const {
@@ -94,19 +108,23 @@ class FiltersForm extends Component {
             handleSubmit,
             metric,
             formValues: { filterCityRadio },
+            formMeta: { city: cityMeta },
             autocomplete,
         } = this.props;
 
         return (
             <Form className={classnames(className, 'filters-form')} onSubmit={handleSubmit} autocompleteOff>
                 <div className="container-fluid">
-                    <FiltersCitiesFields
+                    <FilterCitiesFields
                       filterCityRadioValue={filterCityRadio}
                       className="row pseudo-paragraph"
                       prefix="filter"
+                      cityMeta={cityMeta}
                       autocomplete={autocomplete}
-                      autocompleteName={autocompleteName}
+                      validateDropDown={this.validateDropDown}
+                      autocompleteName={FORM_NAME}
                       autocompleteCity={this.autocompleteCity}
+                      clearField={this.clearField}
                     />
                     <Fields
                       className="row pseudo-paragraph filters-form__min-max"
@@ -117,7 +135,7 @@ class FiltersForm extends Component {
                     />
                     <Fields
                       className="row pseudo-paragraph"
-                      names={weatherIconNames.map(curr => `weatherIcons.${curr}`)}
+                      names={WEATHER_ICONS_NAMES.map(curr => `weatherIcons.${curr}`)}
                       icons={WEATHER_ICON_TYPES_MAP}
                       component={WeatherTypeFields}
                     />
@@ -141,21 +159,25 @@ FiltersForm.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     metric: PropTypes.string.isRequired,
     formValues: PropTypes.object,
+    formMeta: PropTypes.object,
     autocomplete: PropTypes.array,
     autocompleteCity: PropTypes.func.isRequired,
+    changeFormField: PropTypes.func.isRequired,
+    clearAutocomplete: PropTypes.func.isRequired,
 };
 
 FiltersForm.defaultProps = {
     className: '',
     formValues: {},
+    formMeta: {},
     autocomplete: [],
 };
 
 export default reduxForm({
-    form: 'filtersForm',
+    form: FORM_NAME,
     validate,
     initialValues: {
-        weatherIcons: weatherIconNames.reduce((prev, icon) => ({
+        weatherIcons: WEATHER_ICONS_NAMES.reduce((prev, icon) => ({
             ...prev,
             [icon]: true,
         }), {}),

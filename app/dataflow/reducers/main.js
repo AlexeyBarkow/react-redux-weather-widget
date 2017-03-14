@@ -21,9 +21,10 @@ function mainReducer(state = {}, action) {
         }
         case types.SET_AUTOCOMPLETE_ARRAY:
         case types.SET_AUTOCOMPLETE_ERROR:
+        case types.CLEAR_AUTOCOMPLETE:
             return {
                 ...state,
-                autocomplete: action.autocomplete,
+                autocomplete: action.autocomplete || [],
             };
         default:
             return state;

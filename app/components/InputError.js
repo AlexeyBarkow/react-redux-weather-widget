@@ -11,7 +11,10 @@ function InputError({ className, errorMessage, popupPanel }) {
 
 InputError.propTypes = {
     className: PropTypes.string,
-    errorMessage: PropTypes.string.isRequired,
+    errorMessage: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+    ]).isRequired,
     popupPanel: PropTypes.bool,
 };
 

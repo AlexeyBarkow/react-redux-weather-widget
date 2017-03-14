@@ -85,8 +85,7 @@ export function getWeatherCacheWrapper(
             const cached = cache[cacheKey];
 
             if (cached && cached.status !== 1) {
-                successCallback(dispatch, cached, ...args);
-                return;
+                return successCallback(dispatch, cached, ...args);
             }
 
             if (cacheStatusActionCreator) {
@@ -94,7 +93,7 @@ export function getWeatherCacheWrapper(
             }
             doInAdvanceCallback(dispatch, ...args);
 
-            fetchPromiseCreator(...args)
+            return fetchPromiseCreator(...args)
                 .then((data) => {
                     if (data.cod === -1) {
                         return;
@@ -211,6 +210,15 @@ export function getNearestTo(location) {
             message: 'loading...',
         }));
         getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
+            //catch this error!
+            console.log(JSON.parse(JSON.stringify(res)));
+            if (!res) {
+                setNearestCitiesError({
+                    cod: '400',
+                    message: JSON.stringify(res),
+                });
+                return;
+            }
             const nearestCities = res.map((curr) => {
                 const { city, country } = curr;
                 dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));

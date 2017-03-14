@@ -1,18 +1,13 @@
 import { createSelector } from 'reselect';
 import flow from 'lodash/flow';
 
-const getMainInfo = ({
-    weather: {
-        weather: { weatherTypes, location },
-    },
-    main: {
-        city,
-    },
-}) => ({ city, weatherTypes, location });
-
 export const weatherOverallSelector = createSelector(
-    getMainInfo,
-    ({ city, location, weatherTypes }) => ({
+    [
+        ({ main: { city } }) => city,
+        ({ weather: { weather: { location } } }) => location,
+        ({ weather: { weather: { weatherTypes } } }) => weatherTypes,
+    ],
+    (city, location, weatherTypes) => ({
         city,
         location,
         main: weatherTypes ? weatherTypes[0].main : 'default',
@@ -33,27 +28,33 @@ export const selectForecastFilter = createSelector(
 );
 
 const getCache = ({ weather: { cache } }) => cache;
-const getFavoritesWeather = ({ favorites: { favoriteCities } }) =>
-    favoriteCities;
+const getCitiesToFilterArray = ({ favorites: { favoriteCities, citiesToFilterArray } }) =>
+    citiesToFilterArray || favoriteCities;
+const applyArrayFilterToCache = (cache, weather) => weather.reduce((res, city) => {
+    const cityWeatherKey = `weather/${city.cityname}/${city.countryCode}`;
+    const cityForecastKey = `forecast/${city.cityname}/${city.countryCode}`;
+    return {
+        ...res,
+        [cityWeatherKey]: cache[cityWeatherKey],
+        [cityForecastKey]: cache[cityForecastKey],
+    };
+}, {});
+
+export const selectCachedCitiesToFilterWeather = createSelector(
+    [getCache, getCitiesToFilterArray],
+    applyArrayFilterToCache,
+);
 
 export const selectFavoriteCache = createSelector(
-    [getCache, getFavoritesWeather],
-    (cache, weather) => (weather.reduce((res, city) => {
-        const cityWeatherKey = `weather/${city.cityname}/${city.countryCode}`;
-        const cityForecastKey = `forecast/${city.cityname}/${city.countryCode}`;
-        return {
-            ...res,
-            [cityWeatherKey]: cache[cityWeatherKey],
-            [cityForecastKey]: cache[cityForecastKey],
-        };
-    }, {})),
+    [getCache, ({ favorites: { favoriteCities } }) => favoriteCities],
+    applyArrayFilterToCache,
 );
 
 const getAppliedFilterInfo = ({ favorites: { filters } }) =>
     filters || {};
 
 const convertCacheToArray = createSelector(
-    selectFavoriteCache,
+    selectCachedCitiesToFilterWeather,
     cache => Object.values(cache)
         .reduce((res, curr) =>
             (Array.isArray(curr) ? [...res, ...curr] : [...res, curr]),

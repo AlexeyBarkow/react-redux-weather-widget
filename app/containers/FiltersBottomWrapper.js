@@ -32,7 +32,7 @@ class FiltersBottomWrapper extends Component {
 
         return (
             <section className="panel col-xs-12">
-                <h3>Cities to filter</h3>
+                <h3>Favorite cities</h3>
                 <AddCityForm
                   autocompleteCity={autocompleteCity}
                   autocomplete={autocomplete}
