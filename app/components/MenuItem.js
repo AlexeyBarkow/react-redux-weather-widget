@@ -47,7 +47,7 @@ function MenuItem({
 }
 
 MenuItem.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.node,
     className: PropTypes.string,
     header: PropTypes.boolean,
     divider: PropTypes.boolean,

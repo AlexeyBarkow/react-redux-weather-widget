@@ -72,6 +72,7 @@ function favoritesReducer(state = {}, action) {
         }
         case types.SET_CITIES_TO_FILTER: {
             const { citiesToFilterArray } = action;
+
             return {
                 ...state,
                 citiesToFilterArray: citiesToFilterArray ? [...citiesToFilterArray] : undefined,

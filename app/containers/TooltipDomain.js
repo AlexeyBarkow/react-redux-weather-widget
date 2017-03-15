@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 
+// ToDo: Add memoization
 class TooltipDomain extends Component {
     renderTooltip = ({ top, left, right, bottom, tooltipText }, type, index) => {
         if (type === 'bottom') {
@@ -27,7 +28,6 @@ class TooltipDomain extends Component {
             }, []);
 
         return (
-            tooltips.length > 0 &&
             <div className={classnames(className, 'tooltip-container')}>
                 { children }
                 { tooltips }

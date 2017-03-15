@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
 function ValueBlock({ className, value, tooltip, valueClass }) {
-    return (
+    return value
+    ? (
         <tr className={className}>
             <td>
                 { tooltip }
@@ -11,7 +12,8 @@ function ValueBlock({ className, value, tooltip, valueClass }) {
                 <span className={valueClass} />
             </td>
         </tr>
-    );
+    )
+    : null;
 }
 
 ValueBlock.propTypes = {
@@ -19,6 +21,7 @@ ValueBlock.propTypes = {
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
+        PropTypes.undefined,
     ]).isRequired,
     tooltip: PropTypes.string.isRequired,
     valueClass: PropTypes.string,

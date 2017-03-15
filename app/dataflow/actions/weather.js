@@ -96,20 +96,19 @@ export function getWeatherCacheWrapper(
             return fetchPromiseCreator(...args)
                 .then((data) => {
                     if (data.cod === -1) {
-                        return;
+                        return Promise.resolve();
                     }
 
                     if (!data.response) {
                         if (cacheActionCreator) {
                             dispatch(cacheActionCreator(data, cacheKey));
                         }
-                        successCallback(dispatch, data, ...args);
-                        return;
+                        return successCallback(dispatch, data, ...args);
                     }
                     if (cacheStatusActionCreator) {
                         dispatch(cacheStatusActionCreator(data.cod, cacheKey));
                     }
-                    failCallback(dispatch, data, ...args);
+                    return failCallback(dispatch, data, ...args);
                 });
         };
 }

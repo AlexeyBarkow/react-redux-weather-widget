@@ -5,11 +5,11 @@ import { applyAllFilters } from '../../selectors/selectors';
 import { setTotalsFilter, fetchWeatherAndForecast, setCitiesToFilter } from '../../dataflow/actions/index';
 
 function mapStateToProps(state) {
-    const { favorites: { favoriteCities, citiesToFilterArray } } = state;
+    const { favorites: { favoriteCities } } = state;
     return {
         metric: state.main.metric,
         filteredCache: applyAllFilters(state),
-        citiesToFilter: citiesToFilterArray || favoriteCities,
+        favoriteCities,
     };
 }
 

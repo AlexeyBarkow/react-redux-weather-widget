@@ -4,7 +4,7 @@ import classnames from 'classnames/dedupe';
 function ErrorMessage({ message, status, className }) {
     return (
         <div className={classnames(className, 'error-wrapper')}>
-            <h1>Error: { status }</h1>
+            { status && <h1>Error: { status }</h1> }
             <p>{ message }</p>
         </div>
     );
@@ -21,7 +21,7 @@ ErrorMessage.propTypes = {
 
 ErrorMessage.defaultProps = {
     className: '',
-    status: '',
+    status: undefined,
     message: 'Something went wrong',
 };
 

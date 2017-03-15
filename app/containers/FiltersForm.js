@@ -3,6 +3,7 @@ import classnames from 'classnames/dedupe';
 import { reduxForm, Fields } from 'redux-form';
 import throttle from 'lodash/throttle';
 import Form from './Form';
+import ButtonToolbar from '../components/ButtonToolbar';
 import TemperatureFilterFields from '../components/TemperatureFilterFields';
 import WeatherDetailsFields from '../components/WeatherDetailsFields';
 import WeatherTypeFields from '../components/WeatherTypeFields';
@@ -110,6 +111,7 @@ class FiltersForm extends Component {
             formValues: { filterCityRadio },
             formMeta: { city: cityMeta },
             autocomplete,
+            reset,
         } = this.props;
 
         return (
@@ -145,9 +147,10 @@ class FiltersForm extends Component {
                       prefix="filter"
                       names={['minPressure', 'maxPressure', 'minHumidity', 'maxHumidity', 'minWindSpeed', 'maxWindSpeed']}
                     />
-                    <div className="row pseudo-paragraph">
+                    <ButtonToolbar className="row pseudo-paragraph">
                         <Button type="submit">Apply filters</Button>
-                    </div>
+                        <Button type="button" onClickHandler={reset}>Clear filters</Button>
+                    </ButtonToolbar>
                 </div>
             </Form>
         );
@@ -164,6 +167,7 @@ FiltersForm.propTypes = {
     autocompleteCity: PropTypes.func.isRequired,
     changeFormField: PropTypes.func.isRequired,
     clearAutocomplete: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
 };
 
 FiltersForm.defaultProps = {

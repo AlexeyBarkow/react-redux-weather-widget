@@ -233,3 +233,14 @@ html, body, .my-app-root-class, #root {
         }
     }
 }
+
+.btn-toolbar.row {
+    @include make-row(30px);
+}
+
+.pagination-wrapper {
+    text-align: center;
+    .pagination {
+        display: inline-block;
+    }
+}

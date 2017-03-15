@@ -31,7 +31,7 @@ export function setCitiesToFilter(citiesToFilterArray) {
     return {
         type: types.SET_CITIES_TO_FILTER,
         citiesToFilterArray,
-    }
+    };
 }
 
 const getWeatherAndCache = getWeatherCacheWrapper(

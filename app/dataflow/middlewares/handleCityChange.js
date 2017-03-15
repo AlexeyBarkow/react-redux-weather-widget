@@ -3,8 +3,7 @@ import { DEFAULT_PATH_REGEXP } from '../../utils/constants';
 
 export const handleCityChange = (prevState, newState, action, dispatch) => {
     const { main: { city, countryCode }, weather: { weather: { status, location } } } = newState;
-    const oldCity = prevState.main.city;
-    const oldCountryCode = prevState.main.countryCode;
+    const { main: { city: oldCity, countryCode: oldCountryCode } } = prevState;
 
     const isCitySet = city && countryCode;
     const isNotSameAsPrev = (city !== oldCity || countryCode !== oldCountryCode
