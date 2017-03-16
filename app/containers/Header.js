@@ -25,8 +25,10 @@ class Header extends Component {
 
     cityInputFormSubmit = ({ city, metric }) => {
         const { redirectToCity } = this.props;
-        const [cityName, countryCode] = city.match(VALIDATE_ADDRESS_REGEXP).slice(1);
-        redirectToCity(cityName, countryCode, metric);
+        if (city) {
+            const [cityName, countryCode] = city.match(VALIDATE_ADDRESS_REGEXP).slice(1);
+            redirectToCity(cityName, countryCode, metric);
+        }
     }
 
     render() {

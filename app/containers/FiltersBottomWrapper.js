@@ -11,12 +11,14 @@ class FiltersBottomWrapper extends Component {
 
     submitAddToFav = ({ tableCity }) => {
         const { addToFavoritesAndFetchWeather, favorites } = this.props;
-        const [cityname, countryCode] = tableCity.match(VALIDATE_ADDRESS_REGEXP).slice(1);
-        if (favorites.find(city =>
-            cityname === city.cityname && countryCode === city.countryCode)) {
-            throw new SubmissionError({ tableCity: 'Already added' });
+        if (tableCity) {
+            const [cityname, countryCode] = tableCity.match(VALIDATE_ADDRESS_REGEXP).slice(1);
+            if (favorites.find(city =>
+                cityname === city.cityname && countryCode === city.countryCode)) {
+                throw new SubmissionError({ tableCity: 'Already added' });
+            }
+            addToFavoritesAndFetchWeather(cityname, countryCode);
         }
-        addToFavoritesAndFetchWeather(cityname, countryCode);
     };
 
     render() {
