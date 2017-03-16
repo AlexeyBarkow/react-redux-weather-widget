@@ -85,7 +85,7 @@ const applyTemperatureFilters = ({ minTemperature, maxTemperature }, cacheArray)
 const applyWeatherTypesFilter = ({ weatherIcons }, cacheArray) =>
     (weatherIcons
         ? cacheArray.filter(curr =>
-            weatherIcons[`i${curr.weatherTypes[0].icon.slice(0, -1)}`])
+            weatherIcons[`i${curr.weatherTypes ? curr.weatherTypes[0].icon.slice(0, -1) : 'empty'}`])
         : cacheArray);
 
 const applyPressureFilter = ({ minPressure, maxPressure }, cacheArray) =>

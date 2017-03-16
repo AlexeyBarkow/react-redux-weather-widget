@@ -84,7 +84,7 @@ export function getWeatherCacheWrapper(
             const cacheKey = cacheKeyTemplate(...args);
             const cached = cache[cacheKey];
 
-            if (cached && cached.status !== 1) {
+            if (cached && cached.status === 200) {
                 return successCallback(dispatch, cached, ...args);
             }
 
