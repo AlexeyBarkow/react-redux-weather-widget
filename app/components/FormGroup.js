@@ -4,11 +4,12 @@ import classnames from 'classnames/dedupe';
 function FormGroup({
     className,
     children,
-    meta: { touched, error },
+    meta: { touched, error, active },
     alwaysTouched,
     showWhenFocusout,
 }) {
     let validationStatus = '';
+
     if (touched || alwaysTouched) {
         if (error) {
             validationStatus = 'has-error';
@@ -16,8 +17,9 @@ function FormGroup({
             validationStatus = 'has-success';
         }
     }
+
     return (
-        <div className={classnames(className, 'form-group', showWhenFocusout && 'show-always', validationStatus)}>
+        <div className={classnames(className, 'form-group', showWhenFocusout && 'show-always', validationStatus, active && 'form-group-active')}>
             { children }
         </div>
     );

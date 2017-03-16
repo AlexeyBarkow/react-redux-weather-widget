@@ -21,18 +21,16 @@ class GoogleMap extends Component {
     componentWillReceiveProps = (newProps) => {
         const { map } = this.state;
         const { markers, location } = this.props;
-        const newMarkers = newProps.markers;
-        const newLocation = newProps.location;
-        // ToDo: find out why reselect does not return equal objects
-        if (!map || isEqual(newProps, this.props)) {
+        const { location: newLocation, markers: newMarkers } = newProps;
+
+        if (!map) {
             return;
         }
 
-        if (markers !== newMarkers) {
+        if (!isEqual(markers, newMarkers)) {
             const stateMarkers = this.getStateMarkers(map, newMarkers);
             this.setState({ stateMarkers });
         }
-
 
         if (newLocation !== location) {
             setCenter(map, newLocation);

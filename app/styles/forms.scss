@@ -10,6 +10,9 @@
         display: block;
         padding: 1em;
     }
+    &.form-group-active .help-popup-block.panel-danger {
+        display: none;
+    }
     .help-popup-block.panel-danger {
         position: absolute;
         display: block;

@@ -3,7 +3,6 @@ import classnames from 'classnames/dedupe';
 import WeatherSummary from './WeatherSummary';
 import { formatDate } from '../utils/unifiedDateFormat';
 
-// ToDo: add highlighting
 function FilteredItem({ className, weather, metric }) {
     return (
         <section className={classnames(className, 'modal-content')}>

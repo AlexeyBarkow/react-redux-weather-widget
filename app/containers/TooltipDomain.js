@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 
-// ToDo: Add memoization
 class TooltipDomain extends Component {
     renderTooltip = ({ top, left, right, bottom, tooltipText }, type, index) => {
         if (type === 'bottom') {

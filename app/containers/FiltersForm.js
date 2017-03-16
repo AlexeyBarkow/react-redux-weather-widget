@@ -10,14 +10,17 @@ import WeatherTypeFields from '../components/WeatherTypeFields';
 import FilterCitiesFields from '../components/FiltersCitiesFields';
 import Button from '../components/Button';
 import {
-    VALIDATE_TEMPERATURE_REGEXP,
     WEATHER_ICON_TYPES_MAP,
-    VALIDATE_PRESSURE_REGEXP,
-    VALIDATE_HUMIDITY_REGEXP,
-    VALIDATE_SPEED_REGEXP,
     VALIDATE_ADDRESS_REGEXP,
     MIN_AJAX_INTERVAL,
 } from '../utils/constants';
+import {
+    validateAddress,
+    validateTemperatureInput,
+    validatePressureInput,
+    validateHumidityInput,
+    validateSpeedInput,
+} from '../utils/validateFunctions';
 import '../styles/filters.scss';
 
 const FORM_NAME = 'filtersForm';
@@ -27,13 +30,13 @@ const validate = (values) => {
     const errors = {};
 
     if (values.minTemperature) {
-        if (!VALIDATE_TEMPERATURE_REGEXP.test(values.minTemperature)) {
+        if (!validateTemperatureInput(values.minTemperature)) {
             errors.minTemperature = 'Wrong temperature format';
         }
     }
 
     if (values.maxTemperature) {
-        if (!VALIDATE_TEMPERATURE_REGEXP.test(values.maxTemperature)) {
+        if (!validateTemperatureInput(values.maxTemperature)) {
             errors.maxTemperature = 'Wrong temperature format';
         }
     }
@@ -46,43 +49,54 @@ const validate = (values) => {
     }
 
     if (values.minPressure) {
-        if (!VALIDATE_PRESSURE_REGEXP.test(values.minPressure)) {
+        if (!validatePressureInput(values.minPressure)) {
             errors.minPressure = 'Wrong pressure format';
         }
     }
 
     if (values.maxPressure) {
-        if (!VALIDATE_PRESSURE_REGEXP.test(values.maxPressure)) {
+        if (!validatePressureInput(values.maxPressure)) {
             errors.maxPressure = 'Wrong pressure format';
         }
     }
 
     if (values.minHumidity) {
-        if (!VALIDATE_HUMIDITY_REGEXP.test(values.minHumidity)) {
+        if (!validateHumidityInput(values.minHumidity)) {
             errors.minHumidity = 'Wrong humidity format';
         }
     }
 
     if (values.maxHumidity) {
-        if (!VALIDATE_HUMIDITY_REGEXP.test(values.maxHumidity)) {
+        if (!validateHumidityInput(values.maxHumidity)) {
             errors.maxHumidity = 'Wrong humidity format';
         }
     }
 
     if (values.minWindSpeed) {
-        if (!VALIDATE_SPEED_REGEXP.test(values.minWindSpeed)) {
+        if (!validateSpeedInput(values.minWindSpeed)) {
             errors.minWindSpeed = 'Wrong speed format';
         }
     }
 
     if (values.maxWindSpeed) {
-        if (!VALIDATE_SPEED_REGEXP.test(values.maxWindSpeed)) {
+        if (!validateSpeedInput(values.maxWindSpeed)) {
             errors.maxWindSpeed = 'Wrong speed format';
         }
     }
 
-    if (values.filterCityRadio === 'custom' && !VALIDATE_ADDRESS_REGEXP.test(values.city) && !values.filterSelectedCities) {
-        errors.city = 'Wrong city name format: should be \'Cityname, CountryCode\'';
+    if (values.filterCityRadio === 'custom') {
+        if (!values.filterSelectedCities) {
+            errors.filterSelectedCities = 'Should be added at least one city';
+        }
+
+        if (!values.filterSelectedCities && !validateAddress(values.city)) {
+            errors.city = 'Wrong city name format: should be \'Cityname, CountryCode\'';
+        }
+
+        if (values.filterSelectedCities &&
+            values.filterSelectedCities.indexOf(values.city) !== -1) {
+            errors.city = 'Already added';
+        }
     }
 
     return errors;

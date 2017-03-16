@@ -209,12 +209,10 @@ export function getNearestTo(location) {
             message: 'loading...',
         }));
         getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
-            //catch this error!
-            console.log(JSON.parse(JSON.stringify(res)));
-            if (!res) {
+            if (res.response) {
                 setNearestCitiesError({
-                    cod: '400',
-                    message: JSON.stringify(res),
+                    code: res.response.status,
+                    message: res.response.statusText,
                 });
                 return;
             }

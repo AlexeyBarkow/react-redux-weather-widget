@@ -36,7 +36,7 @@ class MultipleInputFields extends Component {
 
             if (validateField(inputValue)) {
                 // it seems like there is an error in redux-form library:
-                // first argument just returns something strange. lol
+                // first argument just returns stringified array variable name, lol
                 if (!fields.reduce((flag, _, index, arr) =>
                     flag || arr.get(index) === inputValue, false)) {
                     fields.push(inputValue);
@@ -47,7 +47,7 @@ class MultipleInputFields extends Component {
     }
 
     render() {
-        const { className, inputFieldProps, fields, validateField } = this.props;
+        const { className, inputFieldProps, fields } = this.props;
 
         return (
             <div className={className}>
@@ -64,7 +64,6 @@ class MultipleInputFields extends Component {
                     </div>
                     <Field
                       {...inputFieldProps}
-                      validate={validateField}
                       onKeyPress={this.handleEnterClick}
                     />
                 </div>
