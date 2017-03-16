@@ -79,7 +79,7 @@ class FiltersContainer extends Component {
             }).catch((...args) => {
                 // ToDo: add more complex error handling
                 /*eslint-disable no-console*/
-                console.err('error', args);
+                console.error('error', args);
                 /*eslint-enable no-console*/
                 this.setState({
                     filterStatus: 'error',
