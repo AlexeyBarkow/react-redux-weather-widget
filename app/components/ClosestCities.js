@@ -15,7 +15,7 @@ function ClosestCities({ list, className, title, keySeed }) {
                         ? `, ${city.countryCode}`
                         : ''}`;
                     return (
-                        <Button title={text} key={`${keySeed}-${index}`} className="" href={`/cities/${city.countryCode}/${city.name}`}>{ text }</Button>
+                        <Button title={text} key={`${keySeed}-${index}`} href={`/cities/${city.countryCode}/${city.name}`}>{ text }</Button>
                     );
                 }) }
             </ButtonGroup>

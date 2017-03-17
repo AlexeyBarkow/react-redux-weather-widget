@@ -8,6 +8,7 @@ import TemperatureFilterFields from '../components/TemperatureFilterFields';
 import WeatherDetailsFields from '../components/WeatherDetailsFields';
 import WeatherTypeFields from '../components/WeatherTypeFields';
 import FilterCitiesFields from '../components/FiltersCitiesFields';
+import WeatherDayPicker from '../components/WeatherDayPicker';
 import Button from '../components/Button';
 import {
     WEATHER_ICON_TYPES_MAP,
@@ -110,19 +111,25 @@ class FiltersForm extends Component {
     validateDropDown = value =>
         VALIDATE_ADDRESS_REGEXP.test(value);
 
+    changeField = (name, newValue) => {
+        const { changeFormField } = this.props;
+
+        changeFormField(FORM_NAME, name, newValue);
+    };
+
     clearField = (name) => {
         const { changeFormField, clearAutocomplete } = this.props;
 
         changeFormField(FORM_NAME, name, '');
         clearAutocomplete();
-    }
+    };
 
     render() {
         const {
             className,
             handleSubmit,
             metric,
-            formValues: { filterCityRadio },
+            formValues: { filterCityRadio, filterDateCheckbox, filterDatepickerArray },
             formMeta: { city: cityMeta },
             autocomplete,
             reset,
@@ -160,6 +167,13 @@ class FiltersForm extends Component {
                       component={WeatherDetailsFields}
                       prefix="filter"
                       names={['minPressure', 'maxPressure', 'minHumidity', 'maxHumidity', 'minWindSpeed', 'maxWindSpeed']}
+                    />
+                    <WeatherDayPicker
+                      className="row pseudo-paragraph"
+                      filterDateCheckboxValue={filterDateCheckbox}
+                      prefix="filter"
+                      changeField={this.changeField}
+                      filterDatepickerArray={filterDatepickerArray}
                     />
                     <ButtonToolbar className="row pseudo-paragraph">
                         <Button type="submit">Apply filters</Button>
@@ -200,5 +214,6 @@ export default reduxForm({
             [icon]: true,
         }), {}),
         filterCityRadio: 'favorites',
+        filterDateCheckbox: false,
     },
 })(FiltersForm);

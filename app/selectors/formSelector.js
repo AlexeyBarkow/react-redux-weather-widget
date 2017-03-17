@@ -5,6 +5,8 @@ import mapValues from 'lodash/mapValues';
 const filterSelector = formValueSelector('filtersForm');
 export const selectFilterFormValues = state => ({
     filterCityRadio: filterSelector(state, 'filterCityRadio'),
+    filterDateCheckbox: filterSelector(state, 'filterDateCheckbox'),
+    filterDatepickerArray: filterSelector(state, 'filterDatepickerArray'),
 });
 
 const validitySelect = (formName, fieldName) => ({ form }) =>

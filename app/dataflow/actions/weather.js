@@ -210,10 +210,10 @@ export function getNearestTo(location) {
         }));
         getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
             if (res.response) {
-                setNearestCitiesError({
+                dispatch(setNearestCitiesError({
                     code: res.response.status,
                     message: res.response.statusText,
-                });
+                }));
                 return;
             }
             const nearestCities = res.map((curr) => {

@@ -1,36 +1,40 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 
-function Input({
-    className,
-    type,
-    list,
-    name,
-    value,
-    placeholder,
-    onChange,
-    onKeyPress,
-    onBlur,
-    onFocus,
-    input,
-    id,
-}) {
-    return (
-        <input
-          className={classnames('form-control', className)}
-          type={type}
-          name={name}
-          value={value}
-          id={id}
-          placeholder={placeholder}
-          list={list}
-          onChange={onChange}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          onKeyPress={onKeyPress}
-          {...input}
-        />
-    );
+class Input extends Component {
+    render() {
+        const {
+            className,
+            type,
+            list,
+            name,
+            value,
+            placeholder,
+            onChange,
+            onKeyPress,
+            onBlur,
+            onFocus,
+            input,
+            id,
+        } = this.props;
+
+        return (
+            <input
+              className={classnames('form-control', className)}
+              type={type}
+              name={name}
+              value={value}
+              id={id}
+              placeholder={placeholder}
+              list={list}
+              onChange={onChange}
+              onBlur={onBlur}
+              onFocus={onFocus}
+              onKeyPress={onKeyPress}
+              {...input}
+            />
+        );
+    }
 }
 
 Input.propTypes = {

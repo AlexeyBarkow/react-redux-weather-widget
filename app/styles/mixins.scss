@@ -70,6 +70,9 @@
     display: block;
     width: 100%;
 }
+@mixin stretch-height() {
+    height: 100%;
+}
 
 @mixin respond($min, $max: 0) {
     @if ($min != 0 and $max != 0) {

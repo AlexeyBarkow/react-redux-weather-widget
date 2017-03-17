@@ -16,9 +16,10 @@ function Button({
     title,
     tooltip,
     primary,
+    stretch,
 }) {
     const button = (btnClassName = '') => {
-        const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link' : primary ? 'primary' : 'default'}`, btnClassName);
+        const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link' : primary ? 'primary' : 'default'}`, stretch && 'stretch', btnClassName);
         if (href !== undefined) {
             if (href[0] === '#') {
                 return (
@@ -79,6 +80,7 @@ Button.propTypes = {
     title: PropTypes.string,
     tooltip: PropTypes.object,
     primary: PropTypes.bool,
+    stretch: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -93,6 +95,7 @@ Button.defaultProps = {
     title: null,
     primary: false,
     tooltip: null,
+    stretch: false,
 };
 
 export default Button;
