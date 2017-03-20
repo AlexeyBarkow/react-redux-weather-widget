@@ -121,7 +121,7 @@
     }
 
     &.custom-radio {
-        input[type="radio"] {
+        input[type="radio"], input[type="checkbox"] {
             & + label {
                 font-weight: normal;
             }
@@ -156,17 +156,65 @@
         min-height: 36px;
         height: auto;
     }
-    .delete-box {
-        &:not(:last-child) {
-            margin-right: .5em;
+    .delete-box-container {
+        &:not(:empty) {
+            margin-bottom: -.5em;
+            overflow: hidden;
         }
-        .close {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--color-white);
-            opacity: .75;
-            margin-left: .5em;
-            text-shadow: none;
+        & + .datepicker-wrapper {
+            margin-top: .5em;
+        }
+        .delete-box {
+            &:not(:last-child) {
+                margin-right: .5em;
+            }
+            margin-bottom: .5em;
+            .close {
+                font-size: 1.5em;
+                font-weight: bold;
+                color: var(--color-white);
+                opacity: .75;
+                margin-left: .5em;
+                text-shadow: none;
+            }
+        }
+    }
+}
+
+
+.datepicker-wrapper {
+    @include clearfix;
+    .datepicker {
+        &.datepicker-dropdown {
+            top: 100%;
+        }
+        display: block;
+        .datepicker-days {
+            display: block;
+        }
+        .prev, .day {
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            &.disabled {
+                a {
+                    cursor: not-allowed;
+                }
+                color: #999;
+                &.old, &.new {
+                    color: #ccc;
+                }
+
+            }
+
+            .stretch {
+                margin: -5px;
+                height: calc(100% + 10px);
+                width: calc(100% + 10px);
+                line-height: calc(100% + 10px);
+            }
         }
     }
 }

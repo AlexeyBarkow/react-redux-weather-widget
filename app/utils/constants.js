@@ -26,6 +26,7 @@ export const VALIDATE_SPEED_REGEXP = /^([0-9]|[1-9][0-9]{0,2})$/;
 export const VALIDATE_HUMIDITY_REGEXP = /^([0-9]|[1-9][0-9]{0,2})$/;
 export const CITY_PATH_REGEXP = /^\/cities\/([a-zA-Z]{1,3})\/([a-zA-Z\s-'’а-яА-ЯёëЁ]*)$/;
 export const DEFAULT_PATH_REGEXP = /^\/(|home)$/;
+export const MATCH_DATES_REGEXP = /^([\d]{2}).([\d]{2}).([\d]{4})$/;
 
 export const ACCEPTABLE_METRICS_REGEXP = /^[cCfFkK]$/;
 
@@ -50,3 +51,9 @@ export const WEATHER_ICON_TYPES_MAP = {
 export const DEFAULT_COUNTRY_CODE = 'any';
 
 export const DEFAULT_TOOLTIP_TYPE = 'default';
+export const WEEK_DAY_NAMES = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+];
+export const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
+];

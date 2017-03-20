@@ -50,6 +50,15 @@ html, body, .my-app-root-class, #root {
     @include stretch-width();
 }
 
+.stretch-height {
+    @include stretch-height();
+}
+
+.stretch {
+    @extend .stretch-width;
+    @extend .stretch-height;
+}
+
 .app-wrapper {
     min-height: 100%;
     position: relative;
@@ -243,4 +252,8 @@ html, body, .my-app-root-class, #root {
     .pagination {
         display: inline-block;
     }
+}
+
+.relative {
+    @include relative();
 }

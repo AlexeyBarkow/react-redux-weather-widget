@@ -32,6 +32,8 @@ class FiltersContainer extends Component {
         weatherIcons,
         filterCityRadio,
         filterSelectedCities,
+        filterDateCheckbox,
+        filterDatepickerArray,
     }) => {
         const {
             setTotalsFilter,
@@ -50,8 +52,13 @@ class FiltersContainer extends Component {
             minWindSpeed,
             maxWindSpeed,
             weatherIcons,
+            filterDatepickerArray,
         };
         let citiesToFilterArray;
+
+        if (!filterDateCheckbox && !filterDatepickerArray) {
+            values.filterDatepickerArray = [];
+        }
 
         if (filterCityRadio === 'custom') {
             citiesToFilterArray = filterSelectedCities

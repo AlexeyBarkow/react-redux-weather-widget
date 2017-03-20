@@ -11,7 +11,6 @@ import { ROOT_NODE } from './utils/constants';
 
 import './styles/global.scss';
 
-
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store, {
     selectLocationState: state => state.routing,

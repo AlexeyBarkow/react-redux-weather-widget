@@ -23,3 +23,46 @@ export function getMinutes(date) {
 export function getHours(date) {
     return checkValidity(date, () => dateFormat(date, 'HH '));
 }
+
+export function getFirstDayOfMonth(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    return new Date(year, month, 0);
+}
+
+export function getMonthLength(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+
+    return new Date(year, month, 0).getDate();
+}
+
+export function addDays(date, days) {
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+export function addMonths(date, months) {
+    date.setMonth(date.getMonth() + months);
+    return date;
+}
+
+export function compareDatesDay(date1, date2) {
+    return date1.getDate() === date2.getDate()
+        && date1.getMonth() === date2.getMonth()
+        && date1.getFullYear() === date2.getFullYear();
+}
+
+export function convertToDateString(day, month, year) {
+    return `${day < 10 ? `0${day}` : day}.${month < 9 ? `0${month + 1}` : month + 1}.${year}`;
+}
+
+export function compareDatesDayDiff(date1, date2) {
+    const date1Start = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const date2Start = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    const diff = date1Start.getTime() - date2Start.getTime();
+    const oneDay = 1000 * 3600 * 24;
+
+    return Math.round(Math.abs(diff) / oneDay) * (diff > 0 ? 1 : -1);
+}

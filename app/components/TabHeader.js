@@ -10,8 +10,7 @@ function TabHeader({
     selectedTabIndex,
     setSelectedTabIndex,
 }) {
-    const handler = (e) => {
-        e.preventDefault();
+    const handler = () => {
         setSelectedTabIndex(index);
     };
     return (

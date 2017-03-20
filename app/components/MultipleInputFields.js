@@ -27,44 +27,60 @@ class MultipleInputFields extends Component {
         );
     };
 
+    addNewField = (event) => {
+        const { validateField, fields, clearField, inputFieldProps } = this.props;
+        const inputValue = event.target.value;
+        const isRemove = event.target.remove;
+
+        if (validateField(inputValue)) {
+            // it seems like there is an error in redux-form library:
+            // first argument just returns stringified array variable name, lol
+            const indexInArray = fields.reduce((flag, _, index, arr) =>
+                ((flag !== -1 || arr.get(index) !== inputValue) ? flag : index), -1);
+
+            if (indexInArray !== -1 && isRemove) {
+                fields.remove(indexInArray);
+            } else if (indexInArray === -1) {
+                fields.push(inputValue);
+            }
+            clearField(inputFieldProps.name);
+        }
+    };
+
     handleEnterClick = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-
-            const { validateField, fields, clearField, inputFieldProps } = this.props;
-            const inputValue = event.target.value;
-
-            if (validateField(inputValue)) {
-                // it seems like there is an error in redux-form library:
-                // first argument just returns stringified array variable name, lol
-                if (!fields.reduce((flag, _, index, arr) =>
-                    flag || arr.get(index) === inputValue, false)) {
-                    fields.push(inputValue);
-                }
-                clearField(inputFieldProps.name);
-            }
+            this.addNewField(event);
         }
-    }
+    };
 
     render() {
-        const { className, inputFieldProps, fields } = this.props;
+        const { className, inputFieldProps, fields, addNewFieldOn } = this.props;
 
         return (
             <div className={className}>
-                <div className="form-control auto-form-height">
-                    <div className="clearfix">
-                        {
-                            fields.map((_, index, arr) => (
-                                <DeleteInputBox
-                                  deleteHandler={() => { fields.remove(index); }}
-                                  key={index}
-                                >{ arr.get(index) }</DeleteInputBox>
-                            ))
-                        }
-                    </div>
+                <div className="form-control auto-form-height clearfix">
+                    {
+                        fields.length > 0 &&
+                        <div className="clearfix delete-box-container">
+                            {
+                                fields.map((_, index, arr) => (
+                                    <DeleteInputBox
+                                      deleteHandler={() => { fields.remove(index); }}
+                                      key={index}
+                                    >{ arr.get(index) }</DeleteInputBox>
+                                ))
+                            }
+                        </div>
+                    }
                     <Field
+                      onChangeHandler={addNewFieldOn === 'change'
+                          ? this.addNewField
+                          : undefined}
+                      onKeyPress={addNewFieldOn === 'enter'
+                          ? this.handleEnterClick
+                          : undefined}
                       {...inputFieldProps}
-                      onKeyPress={this.handleEnterClick}
                     />
                 </div>
             </div>
@@ -78,12 +94,14 @@ MultipleInputFields.propTypes = {
     fields: PropTypes.object,
     validateField: PropTypes.func,
     clearField: PropTypes.func.isRequired,
+    addNewFieldOn: PropTypes.oneOf(['change', 'enter']),
 };
 
 MultipleInputFields.defaultProps = {
     className: '',
     fields: [],
     validateField: () => true,
+    addNewFieldOn: 'enter',
 };
 
 export default MultipleInputFields;

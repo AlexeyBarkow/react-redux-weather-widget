@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 import flow from 'lodash/flow';
+import { compareDatesDay } from '../utils/unifiedDateFormat';
+import { MATCH_DATES_REGEXP } from '../utils/constants';
 
 export const weatherOverallSelector = createSelector(
     [
@@ -115,11 +117,58 @@ const applyWindSpeedFilter = ({ minWindSpeed, maxWindSpeed }, cacheArray) =>
         curr => curr.wind.speed <= maxWindSpeed,
     ));
 
+const applySort = cacheArray =>
+    cacheArray.sort(({
+        calculationTime: time1,
+        city: city1,
+        country: country1,
+    }, {
+        calculationTime: time2,
+        city: city2,
+        country: country2,
+    }) => {
+        if (city1 !== city2) {
+            return city1.localeCompare(city2);
+        } else if (country1 !== country2) {
+            return country1.localeCompare(country2);
+        }
+        return time1 - time2;
+    });
+
+const applyDateFilter = ({ filterDatepickerArray }, cacheArray) => {
+    if (filterDatepickerArray === undefined) {
+        const resSet = new Set();
+        return cacheArray.filter((item) => {
+            const key = `${item.city}/${item.country}`;
+            if (resSet.has(key)) {
+                return false;
+            }
+            resSet.add(key);
+            return true;
+        });
+    }
+
+    const parsedDatepickerArray = filterDatepickerArray.map((val) => {
+        const [day, month, year] = val.match(MATCH_DATES_REGEXP).slice(1);
+        return { day, month, year };
+    });
+    return cacheArray.filter(({ calculationTime }) =>
+        parsedDatepickerArray.some(({ day, month, year }) =>
+            compareDatesDay(
+                new Date(calculationTime),
+                new Date(year, month - 1, day),
+            ),
+        ),
+    );
+};
+
 export const applyAllFilters = createSelector(
     [convertCacheToArray, getAppliedFilterInfo],
     (cache, info) => (
         Object.keys(info).length > 0
         ? flow(
+            applySort,
+            applyDateFilter.bind(null, info),
             applyTemperatureFilters.bind(null, info),
             applyWeatherTypesFilter.bind(null, info),
             applyPressureFilter.bind(null, info),
