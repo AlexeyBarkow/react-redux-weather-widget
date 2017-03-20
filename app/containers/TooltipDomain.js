@@ -1,20 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
+import RenderedTooltip from '../components/RenderedTooltip';
 
 class TooltipDomain extends Component {
-    renderTooltip = ({ top, left, right, bottom, tooltipText }, type, index) => {
-        if (type === 'bottom') {
-            return (
-                <div key={`${type}-${index}`} style={{ left: (left + right) / 2, top: bottom }} className={classnames('tooltip in', type)}>
-                    <div className="tooltip-inner">
-                        {tooltipText}
-                    </div>
-                    <div className="tooltip-arrow" />
-                </div>
-            );
-        }
-        return undefined;
-    };
+    renderTooltip = (data, type, index) =>
+        (<RenderedTooltip type={type} {...data} key={`${type}-${index}`} />);
 
     render() {
         const { children, className, tooltip } = this.props;

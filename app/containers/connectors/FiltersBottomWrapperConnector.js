@@ -7,8 +7,8 @@ import {
     removeFromFavorites,
     getAllFavoritesWeather,
     changeFavoriteIndex,
-} from '../../dataflow/actions/index';
-import { selectFavoriteCache } from '../../selectors/selectors';
+} from '../../dataflow/actions';
+import { selectFavoriteCache } from '../../selectors';
 
 function mapStateToProps(state) {
     const {

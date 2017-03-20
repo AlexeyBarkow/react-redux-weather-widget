@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setForecastFilter } from '../../dataflow/actions/index';
+import { setForecastFilter } from '../../dataflow/actions';
 import IndexMain from '../IndexMain';
-import { selectForecastFilter } from '../../selectors/selectors';
+import { selectForecastFilter } from '../../selectors';
 
 function mapStateToProps(state) {
     const {

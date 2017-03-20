@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Tooltip from '../Tooltip';
-import { createTooltip, destroyTooltip } from '../../dataflow/actions/index';
+import { createTooltip, destroyTooltip } from '../../dataflow/actions';
 
 function mapStateToProps({ tooltip }) {
     return { tooltip };

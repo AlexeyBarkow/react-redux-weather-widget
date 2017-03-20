@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import BottomMapWrapper from '../BottomMapWrapper';
-import { weatherOverallSelector } from '../../selectors/selectors';
-import { getLocation } from '../../dataflow/actions/index';
+import { weatherOverallSelector } from '../../selectors';
+import { getLocation } from '../../dataflow/actions';
 
 function mapStateToProps(state) {
     return {

@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
-import rootReducer from '../reducers/index';
+import rootReducer from '../reducers';
 import { save } from '../../utils/localStorage';
-import enhancer from '../middlewares/index';
+import enhancer from '../middlewares';
 
 export default function configureStore(initialState) {
     const store = createStore(

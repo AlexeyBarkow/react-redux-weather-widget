@@ -1,4 +1,4 @@
-import { getWeather, getForecast, redirectToCity, getWeatherByLocation, getForecastByLocation } from '../actions/index';
+import { getWeather, getForecast, redirectToCity, getWeatherByLocation, getForecastByLocation } from '../actions';
 import { DEFAULT_PATH_REGEXP } from '../../utils/constants';
 
 export const handleCityChange = (prevState, newState, action, dispatch) => {

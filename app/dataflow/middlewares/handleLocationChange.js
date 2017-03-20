@@ -1,4 +1,4 @@
-import { changeCity, setMetric, redirectToCity, getNearestTo } from '../actions/index';
+import { changeCity, setMetric, redirectToCity, getNearestTo } from '../actions';
 import { CITY_PATH_REGEXP, DEFAULT_PATH_REGEXP } from '../../utils/constants';
 
 export const handleLocationChange = (prevState, newState, action, dispatch) => {

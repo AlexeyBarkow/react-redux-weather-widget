@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change } from 'redux-form';
 import FiltersForm from '../FiltersForm';
-import { selectFilterFormValues, selectFilterFormMeta } from '../../selectors/formSelector';
-import { autocompleteCity, clearAutocomplete } from '../../dataflow/actions/index';
+import { selectFilterFormValues, selectFilterFormMeta } from '../../selectors';
+import { autocompleteCity, clearAutocomplete } from '../../dataflow/actions';
 
 function mapStateToProps(state) {
     const { main: { autocomplete } } = state;
