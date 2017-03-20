@@ -1,7 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
-import { getFirstDayOfMonth, getMonthLength, addDays, addMonths, compareDatesDay, convertToDateString } from '../utils/unifiedDateFormat';
+import {
+    getFirstDayOfMonth,
+    getMonthLength,
+    addDays,
+    addMonths,
+    compareDatesDay,
+    convertToDateString,
+    compareDatesDayDiff,
+} from '../utils/unifiedDateFormat';
 import { WEEK_DAY_NAMES, MONTH_NAMES } from '../utils/constants';
 import Button from './Button';
 import Input from './Input';
@@ -42,8 +50,7 @@ class DatePicker extends Component {
         this.calendar = elem;
     };
 
-    toggleCalendar = (e) => {
-        e.preventDefault();
+    toggleCalendar = () => {
         this.setState(({ hideInput }) => ({ hideInput: !hideInput }));
     };
 
@@ -53,15 +60,13 @@ class DatePicker extends Component {
         }
     };
 
-    addMonth = (e) => {
-        e.preventDefault();
+    addMonth = () => {
         this.setState(({ currDate }) => ({
             currDate: addMonths(currDate, 1),
         }));
     };
 
-    reduceMonth = (e) => {
-        e.preventDefault();
+    reduceMonth = () => {
         this.setState(({ currDate }) => ({
             currDate: addMonths(currDate, -1),
         }));
@@ -69,16 +74,23 @@ class DatePicker extends Component {
 
     renderMonth = () => {
         const { currDate: date } = this.state;
-        const { change, input: { name }, onChangeHandler, datepickerArray } = this.props;
+        const {
+            change,
+            input: { name },
+            onChangeHandler,
+            datepickerArray,
+            maxForwardInterval,
+            maxBackwardInterval,
+        } = this.props;
         const firstDay = getFirstDayOfMonth(date);
         const daysInMonth = getMonthLength(date);
         const firstWeekday = firstDay.getDay();
         const today = new Date();
         const rows = [];
         const firstDateCopy = new Date(firstDay.valueOf());
-        const setValue = (day, month, year, isActive) => (e) => {
-            e.preventDefault();
+        const setValue = (day, month, year, isActive) => () => {
             const value = convertToDateString(day, month, year);
+
             change(name, value);
             onChangeHandler({
                 target: {
@@ -102,6 +114,17 @@ class DatePicker extends Component {
                         firstDateCopy.getMonth(),
                         firstDateCopy.getFullYear(),
                     )) !== -1;
+                const datesDiffInDays = compareDatesDayDiff(new Date(
+                    firstDateCopy.getFullYear(), firstDateCopy.getMonth(), firstDateCopy.getDate(),
+                ), date);
+                const isMatchesIntervals = (
+                    maxForwardInterval !== -1
+                    ? datesDiffInDays <= maxForwardInterval
+                    : true) &&
+                    (maxForwardInterval !== -1
+                    ? datesDiffInDays >= -maxBackwardInterval
+                    : true);
+
                 cols.push(
                     <td
                       key={i}
@@ -111,9 +134,23 @@ class DatePicker extends Component {
                           counter + i >= daysInMonth && 'new',
                           compareDatesDay(today, firstDateCopy) && 'today',
                           isActive && 'active',
+                          !isMatchesIntervals && 'disabled',
                       )}
                     >
-                        <Button stretch noDefaultStyles href="#" onClickHandler={setValue(firstDateCopy.getDate(), firstDateCopy.getMonth(), firstDateCopy.getFullYear(), isActive)}>
+                        <Button
+                          stretch
+                          noDefaultStyles
+                          preventDefaultAnyway
+                          href="#"
+                          onClickHandler={
+                              isMatchesIntervals
+                              ? setValue(
+                                  firstDateCopy.getDate(),
+                                  firstDateCopy.getMonth(),
+                                  firstDateCopy.getFullYear(),
+                                  isActive)
+                              : undefined}
+                        >
                             { firstDateCopy.getDate() }
                         </Button>
                     </td>);
@@ -182,12 +219,16 @@ DatePicker.propTypes = {
     onChangeHandler: PropTypes.func.isRequired,
     change: PropTypes.func.isRequired,
     datepickerArray: PropTypes.array.isRequired,
+    maxBackwardInterval: PropTypes.number,
+    maxForwardInterval: PropTypes.number,
 };
 
 DatePicker.defaultProps = {
     className: '',
     title: null,
     startDate: undefined,
+    maxBackwardInterval: -1,
+    maxForwardInterval: -1,
 };
 
 export default DatePicker;

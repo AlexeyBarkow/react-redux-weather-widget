@@ -7,6 +7,7 @@ function PaginationItem({ children, className, onClickHandler }) {
             <Button
               href="#"
               noDefaultStyles
+              preventDefaultAnyway
               onClickHandler={onClickHandler}
             >{ children }</Button>
         </li>
@@ -21,9 +22,7 @@ PaginationItem.propTypes = {
 
 PaginationItem.defaultProps = {
     className: undefined,
-    onClickHandler: (e) => {
-        e.preventDefault();
-    },
+    onClickHandler: undefined,
 };
 
 export default PaginationItem;

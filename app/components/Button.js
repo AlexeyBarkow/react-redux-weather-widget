@@ -1,71 +1,95 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames/dedupe';
 import Tooltip from '../containers/connectors/TooltipConnector';
 
 
-function Button({
-    children,
-    onClickHandler,
-    className,
-    href,
-    disabled,
-    link,
-    noDefaultStyles,
-    type,
-    title,
-    tooltip,
-    primary,
-    stretch,
-}) {
-    const button = (btnClassName = '') => {
-        const classesToPass = classnames(!noDefaultStyles && `btn btn-${link ? 'link' : primary ? 'primary' : 'default'}`, stretch && 'stretch', btnClassName);
-        if (href !== undefined) {
-            if (href[0] === '#') {
+class Button extends Component {
+    onClick = (e) => {
+        const { onClickHandler } = this.props;
+        e.preventDefault();
+
+        if (onClickHandler) {
+            onClickHandler(e);
+        }
+    };
+
+    render() {
+        const {
+            children,
+            onClickHandler,
+            className,
+            href,
+            disabled,
+            link,
+            noDefaultStyles,
+            type,
+            title,
+            tooltip,
+            primary,
+            stretch,
+            preventDefaultAnyway,
+        } = this.props;
+        const renderButton = (btnClassName = '') => {
+            const classesToPass = classnames(
+                !noDefaultStyles && `btn btn-${
+                    link ? 'link' :
+                    primary ? 'primary' : 'default'
+                }`,
+                stretch && 'stretch',
+                btnClassName,
+            );
+            const clickHandler = onClickHandler || preventDefaultAnyway
+            ? this.onClick
+            : undefined;
+
+            if (href !== undefined) {
+                if (href[0] === '#') {
+                    return (
+                        <a
+                          href={href}
+                          disabled={disabled}
+                          className={classesToPass}
+                          title={title}
+                          onClick={clickHandler}
+                        >
+                            { children }
+                        </a>
+                    );
+                }
                 return (
-                    <a
-                      href={href}
+                    <Link
                       disabled={disabled}
                       className={classesToPass}
                       title={title}
-                      onClick={onClickHandler}
+                      to={href}
+                      onClick={clickHandler}
                     >
                         { children }
-                    </a>
+                    </Link>
                 );
             }
             return (
-                <Link
+                <button
                   disabled={disabled}
                   className={classesToPass}
-                  title={title}
-                  to={href}
-                  onClick={onClickHandler}
+                  onClick={clickHandler}
+                  type={type}
                 >
                     { children }
-                </Link>
+                </button>
+            );
+        };
+
+        if (tooltip) {
+            return (
+                <Tooltip className={className} {...tooltip}>
+                    { renderButton() }
+                </Tooltip>
             );
         }
-        return (
-            <button
-              disabled={disabled}
-              className={classesToPass}
-              onClick={onClickHandler}
-              type={type}
-            >
-                { children }
-            </button>
-        );
-    };
-
-    if (tooltip) {
-        return (
-            <Tooltip className={className} {...tooltip}>
-                { button() }
-            </Tooltip>
-        );
+        return renderButton(className);
     }
-    return button(className);
 }
 
 Button.propTypes = {
@@ -81,6 +105,7 @@ Button.propTypes = {
     tooltip: PropTypes.object,
     primary: PropTypes.bool,
     stretch: PropTypes.bool,
+    preventDefaultAnyway: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -96,6 +121,7 @@ Button.defaultProps = {
     primary: false,
     tooltip: null,
     stretch: false,
+    preventDefaultAnyway: false,
 };
 
 export default Button;

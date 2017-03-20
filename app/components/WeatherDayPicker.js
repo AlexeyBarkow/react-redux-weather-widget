@@ -8,6 +8,7 @@ function WeatherDayPicker({
     filterDateCheckboxValue,
     filterDatepickerArray,
     maxForwardInterval,
+    maxBackwardInterval,
     prefix,
     changeField,
 }) {
@@ -18,7 +19,7 @@ function WeatherDayPicker({
     return (
         <div className={className}>
             <h2>Days to filter weather</h2>
-            <div className="pseudo-paragraph form-inline">
+            <div className="pseudo-paragraph">
                 <Field
                   name={checkboxName}
                   id={`${prefix}-date-now`}
@@ -27,11 +28,12 @@ function WeatherDayPicker({
                   component={CustomInput}
                 >Right now</Field>
                 {
-                    filterDateCheckboxValue &&
+                    !filterDateCheckboxValue &&
                     <DatepickerInput
                       clearField={(name) => { changeField(name, ''); }}
                       changeField={changeField}
                       maxForwardInterval={maxForwardInterval}
+                      maxBackwardInterval={maxBackwardInterval}
                       name={datepickerName}
                       change={changeField}
                       inputName={datepickerInputName}
@@ -46,6 +48,7 @@ function WeatherDayPicker({
 WeatherDayPicker.propTypes = {
     className: PropTypes.string,
     maxForwardInterval: PropTypes.number,
+    maxBackwardInterval: PropTypes.number,
     prefix: PropTypes.string,
     filterDateCheckboxValue: PropTypes.bool,
     changeField: PropTypes.func.isRequired,
@@ -55,7 +58,8 @@ WeatherDayPicker.propTypes = {
 WeatherDayPicker.defaultProps = {
     prefix: 'filters',
     className: '',
-    maxForwardInterval: 5,
+    maxForwardInterval: -1,
+    maxBackwardInterval: -1,
     filterDateCheckboxValue: false,
     filterDatepickerArray: [],
 };

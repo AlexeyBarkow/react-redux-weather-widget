@@ -55,5 +55,14 @@ export function compareDatesDay(date1, date2) {
 }
 
 export function convertToDateString(day, month, year) {
-    return `${day < 10 ? `0${day}` : day}.${day < 10 ? `0${month + 1}` : month + 1}.${year}`;
+    return `${day < 10 ? `0${day}` : day}.${month < 9 ? `0${month + 1}` : month + 1}.${year}`;
+}
+
+export function compareDatesDayDiff(date1, date2) {
+    const date1Start = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const date2Start = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    const diff = date1Start.getTime() - date2Start.getTime();
+    const oneDay = 1000 * 3600 * 24;
+
+    return Math.round(Math.abs(diff) / oneDay) * (diff > 0 ? 1 : -1);
 }

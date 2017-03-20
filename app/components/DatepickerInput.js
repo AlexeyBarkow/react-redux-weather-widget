@@ -12,6 +12,7 @@ function DatepickerInput({
     changeField,
     datepickerArray,
     maxForwardInterval,
+    maxBackwardInterval,
 }) {
     return (
         <FormGroup className={className}>
@@ -25,6 +26,7 @@ function DatepickerInput({
                   name: inputName,
                   change: changeField,
                   maxForwardInterval,
+                  maxBackwardInterval,
                   datepickerArray,
               }}
             />
@@ -37,6 +39,7 @@ DatepickerInput.propTypes = {
     name: PropTypes.string.isRequired,
     inputName: PropTypes.string.isRequired,
     maxForwardInterval: PropTypes.number,
+    maxBackwardInterval: PropTypes.number,
     clearField: PropTypes.func.isRequired,
     changeField: PropTypes.func.isRequired,
     datepickerArray: PropTypes.array,
@@ -44,7 +47,8 @@ DatepickerInput.propTypes = {
 
 DatepickerInput.defaultProps = {
     className: '',
-    maxForwardInterval: undefined,
+    maxForwardInterval: -1,
+    maxBackwardInterval: -1,
     datepickerArray: [],
 };
 

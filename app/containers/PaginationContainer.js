@@ -31,8 +31,7 @@ class PaginationContainer extends Component {
         }
     }
 
-    navigateTo = newPage => (event) => {
-        event.preventDefault();
+    navigateTo = newPage => () => {
         const { itemsCount, currPage } = this.state;
         const { pageSize } = this.props;
 

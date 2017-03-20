@@ -174,6 +174,8 @@ class FiltersForm extends Component {
                       prefix="filter"
                       changeField={this.changeField}
                       filterDatepickerArray={filterDatepickerArray}
+                      maxForwardInterval={4}
+                      maxBackwardInterval={0}
                     />
                     <ButtonToolbar className="row pseudo-paragraph">
                         <Button type="submit">Apply filters</Button>
@@ -214,6 +216,6 @@ export default reduxForm({
             [icon]: true,
         }), {}),
         filterCityRadio: 'favorites',
-        filterDateCheckbox: false,
+        filterDateCheckbox: true,
     },
 })(FiltersForm);

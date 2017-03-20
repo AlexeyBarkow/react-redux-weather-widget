@@ -181,24 +181,40 @@
     }
 }
 
-.datepicker {
-    &.datepicker-dropdown {
-        top: 100%;
-    }
-    display: block;
-    .datepicker-days {
-        display: block;
-    }
-    .prev, .day {
-        a {
-            color: inherit;
-            text-decoration: none;
+
+.datepicker-wrapper {
+    @include clearfix;
+    .datepicker {
+        &.datepicker-dropdown {
+            top: 100%;
         }
-        .stretch {
-            margin: -5px;
-            height: calc(100% + 10px);
-            width: calc(100% + 10px);
-            line-height: calc(100% + 10px);
+        display: block;
+        .datepicker-days {
+            display: block;
+        }
+        .prev, .day {
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            &.disabled {
+                a {
+                    cursor: not-allowed;
+                }
+                color: #999;
+                &.old, &.new {
+                    color: #ccc;
+                }
+
+            }
+
+            .stretch {
+                margin: -5px;
+                height: calc(100% + 10px);
+                width: calc(100% + 10px);
+                line-height: calc(100% + 10px);
+            }
         }
     }
 }

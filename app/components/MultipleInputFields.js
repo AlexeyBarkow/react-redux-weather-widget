@@ -60,16 +60,19 @@ class MultipleInputFields extends Component {
         return (
             <div className={className}>
                 <div className="form-control auto-form-height clearfix">
-                    <div className="clearfix delete-box-container">
-                        {
-                            fields.map((_, index, arr) => (
-                                <DeleteInputBox
-                                  deleteHandler={() => { fields.remove(index); }}
-                                  key={index}
-                                >{ arr.get(index) }</DeleteInputBox>
-                            ))
-                        }
-                    </div>
+                    {
+                        fields.length > 0 &&
+                        <div className="clearfix delete-box-container">
+                            {
+                                fields.map((_, index, arr) => (
+                                    <DeleteInputBox
+                                      deleteHandler={() => { fields.remove(index); }}
+                                      key={index}
+                                    >{ arr.get(index) }</DeleteInputBox>
+                                ))
+                            }
+                        </div>
+                    }
                     <Field
                       onChangeHandler={addNewFieldOn === 'change'
                           ? this.addNewField
