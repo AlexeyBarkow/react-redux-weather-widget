@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node ./config/server.js",
-    "build": "rimraf dist && mkdir dist && webpack --config webpack.prod.config.js"
+    "build": "rimraf dist && mkdir dist && webpack --config webpack.prod.config.js",
+    "test": "jest --config=jest.config.json",
+    "coverageCheck": "jest --config=jest.config.json --coverage"
   },
   "author": "Aliaksei_Barkou",
   "license": "ISC",
@@ -27,11 +29,13 @@
     "eslint-config-airbnb": "^14.0.0",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jest": "^19.0.1",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.24.1",
     "jest": "^18.1.0",
+    "jest-cli": "^19.0.2",
     "json-loader": "^0.5.4",
     "node-sass": "^4.1.1",
     "postcss-loader": "^1.2.2",
@@ -42,6 +46,7 @@
     "rimraf": "^2.5.4",
     "sass-loader": "^4.1.1",
     "sass-resources-loader": "^1.2.0",
+    "sinon": "^2.1.0",
     "stats-webpack-plugin": "^0.4.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",

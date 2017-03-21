@@ -21,8 +21,7 @@ function getClosestToLocationUrl(
         latitude + radius
     }&west=${
         longitude - radius
-    }
-    &east=${
+    }&east=${
         longitude + radius
     }&username=${username}&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
 }

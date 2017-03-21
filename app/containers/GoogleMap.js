@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import isEqual from 'lodash/isEqual';
 import Loading from '../components/Loading';
-import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
+import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, changeLocation } from '../utils/googleMapAPI';
 import '../styles/gmap.scss';
 
 class GoogleMap extends Component {
@@ -33,7 +33,7 @@ class GoogleMap extends Component {
         }
 
         if (newLocation !== location) {
-            setCenter(map, newLocation);
+            changeLocation(map, newLocation);
         }
     }
 

@@ -4,6 +4,7 @@ module.exports = {
         'react',
         'jsx-a11y',
         'import',
+        'jest',
     ],
     'parser': 'babel-eslint',
     'rules': {
@@ -50,5 +51,6 @@ module.exports = {
     },
     'env': {
         'browser': true,
+        "jest/globals": true,
     },
 };

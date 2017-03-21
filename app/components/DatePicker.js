@@ -87,7 +87,7 @@ class DatePicker extends Component {
         const firstWeekday = firstDay.getDay();
         const today = new Date();
         const rows = [];
-        const firstDateCopy = new Date(firstDay.valueOf());
+        let firstDateCopy = new Date(firstDay.valueOf());
         const setValue = (day, month, year, isActive) => () => {
             const value = convertToDateString(day, month, year);
 
@@ -101,13 +101,13 @@ class DatePicker extends Component {
         };
 
         let counter = -firstWeekday;
-        addDays(firstDateCopy, -firstWeekday);
+        firstDateCopy = addDays(firstDateCopy, -firstWeekday);
 
         while (counter < daysInMonth) {
             const cols = [];
 
             for (let i = 0; i < 7; i += 1) {
-                addDays(firstDateCopy, 1);
+                firstDateCopy = addDays(firstDateCopy, 1);
                 const isActive = datepickerArray.indexOf(
                     convertToDateString(
                         firstDateCopy.getDate(),
