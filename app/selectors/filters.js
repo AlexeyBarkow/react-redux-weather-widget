@@ -42,7 +42,7 @@ export const selectFavoriteCache = createSelector(
 const getAppliedFilterInfo = ({ favorites: { filters } }) =>
     filters || {};
 
-const convertCacheToArray = createSelector(
+export const convertCacheToArray = createSelector(
     selectCachedCitiesToFilterWeather,
     cache => Object.values(cache)
         .reduce((res, curr) =>
@@ -62,7 +62,7 @@ const minMaxFilter = (arr, min, max, filterMin, filterMax) => {
     return res;
 };
 
-const applyTemperatureFilters = ({ minTemperature, maxTemperature }, cacheArray) =>
+export const applyTemperatureFilters = ({ minTemperature, maxTemperature }, cacheArray) =>
     (minMaxFilter(
         cacheArray,
         minTemperature,
@@ -71,13 +71,13 @@ const applyTemperatureFilters = ({ minTemperature, maxTemperature }, cacheArray)
         curr => curr.temperature.max <= maxTemperature,
     ));
 
-const applyWeatherTypesFilter = ({ weatherIcons }, cacheArray) =>
+export const applyWeatherTypesFilter = ({ weatherIcons }, cacheArray) =>
     (weatherIcons
         ? cacheArray.filter(curr =>
             weatherIcons[`i${curr.weatherTypes ? curr.weatherTypes[0].icon.slice(0, -1) : 'empty'}`])
         : cacheArray);
 
-const applyPressureFilter = ({ minPressure, maxPressure }, cacheArray) =>
+export const applyPressureFilter = ({ minPressure, maxPressure }, cacheArray) =>
     (minMaxFilter(
         cacheArray,
         minPressure,
@@ -86,7 +86,7 @@ const applyPressureFilter = ({ minPressure, maxPressure }, cacheArray) =>
         curr => curr.pressure <= maxPressure,
     ));
 
-const applyHumidityFilter = ({ minHumidity, maxHumidity }, cacheArray) =>
+export const applyHumidityFilter = ({ minHumidity, maxHumidity }, cacheArray) =>
     (minMaxFilter(
         cacheArray,
         minHumidity,
@@ -95,7 +95,7 @@ const applyHumidityFilter = ({ minHumidity, maxHumidity }, cacheArray) =>
         curr => curr.humidity <= maxHumidity,
     ));
 
-const applyWindSpeedFilter = ({ minWindSpeed, maxWindSpeed }, cacheArray) =>
+export const applyWindSpeedFilter = ({ minWindSpeed, maxWindSpeed }, cacheArray) =>
     (minMaxFilter(
         cacheArray,
         minWindSpeed,
@@ -104,15 +104,15 @@ const applyWindSpeedFilter = ({ minWindSpeed, maxWindSpeed }, cacheArray) =>
         curr => curr.wind.speed <= maxWindSpeed,
     ));
 
-const applySort = cacheArray =>
+export const applySort = cacheArray =>
     cacheArray.sort(({
         calculationTime: time1,
-        city: city1,
-        country: country1,
+        city: city1 = '',
+        country: country1 = '',
     }, {
         calculationTime: time2,
-        city: city2,
-        country: country2,
+        city: city2 = '',
+        country: country2 = '',
     }) => {
         if (city1 !== city2) {
             return city1.localeCompare(city2);
@@ -122,7 +122,7 @@ const applySort = cacheArray =>
         return time1 - time2;
     });
 
-const applyDateFilter = ({ filterDatepickerArray }, cacheArray) => {
+export const applyDateFilter = ({ filterDatepickerArray }, cacheArray) => {
     if (filterDatepickerArray === undefined) {
         const resSet = new Set();
         return cacheArray.filter((item) => {

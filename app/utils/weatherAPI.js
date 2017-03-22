@@ -2,19 +2,19 @@ import axios, { CancelToken, isCancel } from 'axios';
 import { DEFAULT_API_KEY, API_URL, ROSE_NAMES, DEFAULT_METRIC, MAX_ROWS, DEFAULT_COUNTRY_CODE } from './constants';
 
 function fromCelsiumToKelvin(value) {
-    return Math.trunc(value + 273);
+    return value + 273;
 }
 
 function fromFahrenheitToKelvin(value) {
-    return Math.trunc(((value + 459.67) * 5) / 9);
+    return ((value + 459.67) * 5) / 9;
 }
 
 function fromKelvinToCelsium(value) {
-    return Math.trunc(value - 273);
+    return value - 273;
 }
 
 function fromKelvinToFahrenheit(value) {
-    return Math.trunc(((value * 9) / 5) - 459.67);
+    return ((value * 9) / 5) - 459.67;
 }
 
 function getMetricUrl(format) {
@@ -36,7 +36,7 @@ function getWeatherTemplate(
     apiKey = DEFAULT_API_KEY,
 ) {
     return `${API_URL}/weather?q=${city}${
-        countryCode !== DEFAULT_COUNTRY_CODE
+        countryCode && countryCode !== DEFAULT_COUNTRY_CODE
         ? `,${countryCode}`
         : ''
     }&APPID=${apiKey}${getMetricUrl(format)}`;
@@ -49,7 +49,7 @@ function getWeatherForecastTemplate(
     apiKey = DEFAULT_API_KEY,
 ) {
     return `${API_URL}/forecast?q=${city}${
-        countryCode !== DEFAULT_COUNTRY_CODE
+        countryCode && countryCode !== DEFAULT_COUNTRY_CODE
         ? `,${countryCode}`
         : ''
     }&APPID=${apiKey}${getMetricUrl(format)}`;
@@ -111,9 +111,9 @@ function convertWeatherToAcceptableFormat(city, country, status, data) {
             country: data.sys.country || country || DEFAULT_COUNTRY_CODE,
             humidity: data.main.humidity,
             temperature: {
-                curr: Math.trunc(data.main.temp),
-                min: Math.trunc(data.main.temp_min),
-                max: Math.trunc(data.main.temp_max),
+                curr: Math.round(data.main.temp),
+                min: Math.round(data.main.temp_min),
+                max: Math.round(data.main.temp_max),
             },
             location: data.coord ? {
                 longitude: data.coord.lon,
@@ -130,14 +130,14 @@ function convertWeatherToAcceptableFormat(city, country, status, data) {
                 direction: data.wind.deg,
                 speed: data.wind.speed,
             },
-            rain: data.rain ? Math.trunc(data.rain['3h'] * 100) / 100 : null,
-            snow: data.snow ? Math.trunc(data.snow['3h'] * 100) / 100 : null,
+            rain: data.rain && data.rain['3h'] ? Math.trunc(data.rain['3h'] * 100) / 100 : null,
+            snow: data.snow && data.snow['3h'] ? Math.trunc(data.snow['3h'] * 100) / 100 : null,
             calculationTime: data.dt * 1000,
         };
     } else {
         formattedWeather = {
             status: data.cod,
-            city: data.name,
+            city: city || data.name,
             message: data.message,
         };
     }
@@ -179,13 +179,22 @@ function weatherFetchInit(getTemplateUrl, onFetch, onError, sliceTemplateArgs) {
 const weatherAPI = {
     fetchCurrentWeather: weatherFetchInit(
         getWeatherTemplate,
-        res => convertWeatherToAcceptableFormat(null, null, null, res.data),
+        (res, city) => convertWeatherToAcceptableFormat(city, null, null, res.data),
     ),
     fetchWeatherForecast: weatherFetchInit(
         getWeatherForecastTemplate,
-        res => res.data.list
-            .map(convertWeatherToAcceptableFormat
-            .bind(null, res.data.city.name, res.data.city.country, 200)),
+        (response, city, country) => {
+            const converter = convertWeatherToAcceptableFormat
+            .bind(null, city, country, 200);
+            let result;
+            if (response.data.list) {
+                result = response.data.list.map(converter);
+                result.status = parseInt(response.data.cod, 10);
+            } else {
+                result = [converter(response.data)];
+            }
+            return result;
+        },
     ),
     getClosestCitiesToLocation: weatherFetchInit(
         getClosestCitiesToLocationURL,
@@ -227,11 +236,12 @@ export function convertValueToMetric(value, metric, prevMetric = DEFAULT_METRIC)
         valueInKelvin = value;
     }
 
+    let result = valueInKelvin;
     if (metric === 'C') {
-        return fromKelvinToCelsium(valueInKelvin);
+        result = fromKelvinToCelsium(valueInKelvin);
     } else if (metric === 'F') {
-        return fromKelvinToFahrenheit(valueInKelvin);
+        result = fromKelvinToFahrenheit(valueInKelvin);
     }
 
-    return valueInKelvin;
+    return Math.round(result);
 }
