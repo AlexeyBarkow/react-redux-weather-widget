@@ -1,30 +1,9 @@
 import times from 'lodash/times';
-import { selectForecastFilter, selectCachedCitiesToFilterWeather, selectFavoriteCache, applyAllFilters } from '../../app/selectors';
+import { selectForecastFilter, selectCachedCitiesToFilterWeather, selectFavoriteCache, applyAllFilters, weatherOverallSelector } from '../../app/selectors';
 import { applyTemperatureFilters, applyWeatherTypesFilter, applyPressureFilter, applyHumidityFilter, applyWindSpeedFilter, applySort, applyDateFilter, convertCacheToArray } from '../../app/selectors/filters';
-import { WEATHER_ICON_TYPES_MAP } from '../../app/utils/constants';
+import { createInfoAbout, createInfoArray } from '../testUtils/weatherCreator';
 
 describe('filters.js', () => {
-    const icons = Object.keys(WEATHER_ICON_TYPES_MAP);
-    function createInfoAbout(city, index) {
-        return {
-            humidity: index,
-            temperature: {
-                curr: index,
-                min: index - 1,
-                max: index + 1,
-            },
-            pressure: index,
-            wind: { speed: index },
-            weatherTypes: [{ icon: `${icons[index % icons.length].slice(1)}d` }],
-            calculationTime: new Date(2017, 2, 1 + index),
-            country: 'test',
-            city,
-        };
-    }
-    function createInfoArray(city, count, indexStart = 1, disarray = i => i) {
-        return times(count, index =>
-            createInfoAbout(city, disarray(index + indexStart)));
-    }
     describe('#selectForecastFilter', () => {
         const forecast = times(6, index => ({ index }));
         let store;
@@ -45,7 +24,7 @@ describe('filters.js', () => {
         });
         it('should return the same object if none of the filter params is changed', () => {
             const filter1 = selectForecastFilter(store);
-            const filter2 = selectForecastFilter({ ...store });
+            const filter2 = selectForecastFilter({ weather: { ...store.weather } });
             expect(filter1).toBe(filter2);
         });
     });
@@ -93,11 +72,6 @@ describe('filters.js', () => {
                     'weather/city3/c3': createInfoAbout('city3', 1),
                     'forecast/city3/c3': createInfoArray('city3', 2, 2),
                 });
-            });
-            it('should return the same object if none of the filter params is changed', () => {
-                const filter1 = selectCachedCitiesToFilterWeather(store);
-                const filter2 = selectCachedCitiesToFilterWeather({ ...store });
-                expect(filter1).toBe(filter2);
             });
         });
         describe('#selectFavoriteCache', () => {
@@ -227,6 +201,28 @@ describe('filters.js', () => {
                     createInfoAbout('city2', 2),
                 ]);
             });
+        });
+    });
+});
+
+describe('selectors.js', () => {
+    describe('#weatherOverallSelector', () => {
+        it('should return the same object for the same params', () => {
+            const store = {
+                main: {
+                    city: 'city',
+                },
+                weather: {
+                    weather: {
+                        location: {},
+                        weatherTypes: [{ main: '' }],
+                    },
+                },
+            };
+            expect(weatherOverallSelector(store)).toBe(weatherOverallSelector({
+                main: { ...store.main },
+                weather: { ...store.weather },
+            }));
         });
     });
 });

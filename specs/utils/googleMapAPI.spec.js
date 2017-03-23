@@ -35,7 +35,7 @@ describe('googleMapAPI', () => {
             global.google.maps.Marker = Marker;
 
             createMarker({}, testPosition, 'test');
-            expect(Marker.mock.calls[0][0]).toEqual({
+            expect(Marker).toHaveBeenCalledWith({
                 position: resPosition,
                 title: 'test',
                 map,
@@ -54,8 +54,8 @@ describe('googleMapAPI', () => {
 
             setMapOnAll(map, [marker1, marker2]);
 
-            expect(marker1.setMap.mock.calls[0][0]).toBe(map);
-            expect(marker2.setMap.mock.calls[0][0]).toBe(map);
+            expect(marker1.setMap).toHaveBeenCalledWith(map);
+            expect(marker2.setMap).toHaveBeenCalledWith(map);
         });
     });
 
@@ -86,8 +86,8 @@ describe('googleMapAPI', () => {
                 setMap: jest.fn(),
             };
             clearMarkers([marker1, marker2]);
-            expect(marker1.setMap.mock.calls[0][0]).toBe(null);
-            expect(marker2.setMap.mock.calls[0][0]).toBe(null);
+            expect(marker1.setMap).toHaveBeenCalledWith(null);
+            expect(marker2.setMap).toHaveBeenCalledWith(null);
         });
     });
 });

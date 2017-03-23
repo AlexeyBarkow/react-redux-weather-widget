@@ -45,8 +45,7 @@ describe('localStorage', () => {
         });
         it('should save the serialized data to the given key', () => {
             save(key, parsedObject);
-            expect(global.localStorage.setItem.mock.calls[0][0]).toBe(key);
-            expect(global.localStorage.setItem.mock.calls[0][1]).toEqual(stringifiedObject);
+            expect(global.localStorage.setItem).toHaveBeenCalledWith(key, stringifiedObject);
         });
     });
 });

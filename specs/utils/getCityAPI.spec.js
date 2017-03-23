@@ -42,13 +42,13 @@ describe('getCityAPI.js', () => {
     describe('#getCityAjax', () => {
         it('should not send an ajax request when cityname start is empty', () =>
             getCityAPI.getCityAjax('').then(() => {
-                expect(axios.get.mock.calls.length).toBe(0);
+                expect(axios.get).toHaveBeenCalledTimes(0);
             }),
         );
 
         it('should not send an ajax request when cityname is less than 3', () =>
             getCityAPI.getCityAjax('qw').then(() => {
-                expect(axios.get.mock.calls.length).toBe(0);
+                expect(axios.get).toHaveBeenCalledTimes(0);
             }),
         );
 

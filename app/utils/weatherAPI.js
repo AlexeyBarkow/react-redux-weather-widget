@@ -176,6 +176,19 @@ function weatherFetchInit(getTemplateUrl, onFetch, onError, sliceTemplateArgs) {
     };
 }
 
+function returnConvertedForecast(response, city, country) {
+    const converter = convertWeatherToAcceptableFormat
+    .bind(null, city, country, 200);
+    let result;
+    if (response.data.list) {
+        result = response.data.list.map(converter);
+        result.status = parseInt(response.data.cod, 10);
+    } else {
+        result = [converter(response.data)];
+    }
+    return result;
+}
+
 const weatherAPI = {
     fetchCurrentWeather: weatherFetchInit(
         getWeatherTemplate,
@@ -183,18 +196,7 @@ const weatherAPI = {
     ),
     fetchWeatherForecast: weatherFetchInit(
         getWeatherForecastTemplate,
-        (response, city, country) => {
-            const converter = convertWeatherToAcceptableFormat
-            .bind(null, city, country, 200);
-            let result;
-            if (response.data.list) {
-                result = response.data.list.map(converter);
-                result.status = parseInt(response.data.cod, 10);
-            } else {
-                result = [converter(response.data)];
-            }
-            return result;
-        },
+        returnConvertedForecast,
     ),
     getClosestCitiesToLocation: weatherFetchInit(
         getClosestCitiesToLocationURL,
@@ -203,13 +205,14 @@ const weatherAPI = {
     getWeatherInfoByLocation: weatherFetchInit(
         getWeatherByLocationURL,
         res => convertWeatherToAcceptableFormat(null, null, null, res.data),
+        undefined,
+        1,
     ),
     getForecastInfoByLocation: weatherFetchInit(
         getForecastByLocationURL,
-        res =>
-            res.data.list.map(convertWeatherToAcceptableFormat
-                .bind(null, res.data.city.name, res.data.city.country, 200)),
-        null,
+        (res, _, city) =>
+            returnConvertedForecast(res, city, DEFAULT_COUNTRY_CODE),
+        undefined,
         1,
     ),
 };

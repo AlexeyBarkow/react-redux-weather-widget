@@ -85,7 +85,7 @@ export function getWeatherCacheWrapper(
             const cached = cache[cacheKey];
 
             if (cached && cached.status === 200) {
-                return successCallback(dispatch, cached, ...args);
+                return Promise.resolve(successCallback(dispatch, cached, ...args));
             }
 
             if (cacheStatusActionCreator) {
@@ -103,12 +103,12 @@ export function getWeatherCacheWrapper(
                         if (cacheActionCreator) {
                             dispatch(cacheActionCreator(data, cacheKey));
                         }
-                        return successCallback(dispatch, data, ...args);
+                        return Promise.resolve(successCallback(dispatch, data, ...args));
                     }
                     if (cacheStatusActionCreator) {
                         dispatch(cacheStatusActionCreator(data.cod, cacheKey));
                     }
-                    return failCallback(dispatch, data, ...args);
+                    return Promise.resolve(failCallback(dispatch, data, ...args));
                 });
         };
 }
@@ -142,10 +142,13 @@ export const getWeatherByLocation = getWeatherCacheWrapper(
     },
     (dispatch, data) => {
         dispatch(changeWeatherInfo(data));
+        return data.location;
     },
     (dispatch, data) => {
         const { response: { data: { cod, message } } } = data;
-        dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
+        const errorMessage = { cod: parseInt(cod, 10), message };
+        dispatch(setWeatherStatus(errorMessage));
+        return errorMessage;
     },
 );
 
