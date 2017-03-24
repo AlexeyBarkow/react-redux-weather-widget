@@ -2,25 +2,21 @@ import storeChangeHandler from '../../app/dataflow/middlewares/onStoreChange';
 import types from '../../app/dataflow/actions/types';
 import { createInfoAbout } from '../testUtils/weatherCreator';
 import { getWeatherByLocation, getForecastByLocation, setForecastStatus, getWeather,
-getForecast, redirectToCity } from '../../app/dataflow/actions';
+getForecast, redirectToCity, changeCity, setMetric, getNearestTo } from '../../app/dataflow/actions';
+import { DEFAULT_COUNTRY_CODE } from '../../app/utils/constants';
 
 // mock actions
-jest.mock('../../app/dataflow/actions', () => {
-    const gwbl = jest.fn();
-    const gfbl = jest.fn();
-    const sfs = jest.fn();
-    const gw = jest.fn();
-    const gf = jest.fn();
-    const rts = jest.fn();
-    return {
-        getWeatherByLocation: () => gwbl,
-        getForecastByLocation: () => gfbl,
-        setForecastStatus: () => sfs,
-        getWeather: () => gw,
-        getForecast: () => gf,
-        redirectToCity: () => rts,
-    };
-});
+jest.mock('../../app/dataflow/actions', () => ({
+    getWeatherByLocation: jest.fn(),
+    getForecastByLocation: jest.fn(),
+    setForecastStatus: jest.fn(),
+    getWeather: jest.fn(),
+    getForecast: jest.fn(),
+    redirectToCity: jest.fn(),
+    changeCity: jest.fn(),
+    setMetric: jest.fn(),
+    getNearestTo: jest.fn(),
+}));
 
 describe('middlewares', () => {
     const dispatchMock = jest.fn();
@@ -28,9 +24,18 @@ describe('middlewares', () => {
         jest.resetAllMocks();
     });
     beforeEach(() => {
-        dispatchMock.mockImplementation(callback => Promise.resolve(callback()));
+        dispatchMock.mockImplementation(callback => Promise.resolve(callback));
+        getWeatherByLocation.mockImplementation(() => 'getWeatherByLocation');
+        getForecastByLocation.mockImplementation(() => 'getForecastByLocation');
+        setForecastStatus.mockImplementation(() => 'setForecastStatus');
+        getWeather.mockImplementation(() => 'getWeather');
+        getForecast.mockImplementation(() => 'getForecast');
+        redirectToCity.mockImplementation(() => 'redirectToCity');
+        changeCity.mockImplementation(() => 'changeCity');
+        setMetric.mockImplementation(() => 'setMetric');
+        getNearestTo.mockImplementation(() => 'getNearestTo');
     });
-    describe('handleCityChange', () => {
+    describe('#handleCityChange', () => {
         let action;
         let store;
         let main;
@@ -73,23 +78,29 @@ describe('middlewares', () => {
             store.main = main;
             storeChangeHandler(store, newStore, action, dispatchMock);
             expect(dispatchMock).toHaveBeenCalledWith(getWeatherByLocation());
+            expect(getWeatherByLocation).toHaveBeenCalledWith({}, 'test2');
         });
-        it('should dispatch setForecastStatus when no countryCode is set and location is presented in weather but no location is provided', () => {
+        it('should dispatch setForecastStatus when no countryCode is set and location is presented in weather but no location is returned from server', () => {
             const newStore = { ...store, main: { ...main, city: 'test2', countryCode: 'any' } };
+            const message = { location: {} };
             store.main = main;
+            dispatchMock.mockImplementation(() => Promise.resolve(message));
             return storeChangeHandler(store, newStore, action, dispatchMock).then(() => {
                 expect(dispatchMock).toHaveBeenCalledWith(setForecastStatus());
+                expect(setForecastStatus).toHaveBeenCalledWith(message.location);
             });
         });
         it('should dispatch getForecastByLocation when no countryCode is set and location is presented in weather and weather fetched location successfully', () => {
-            const newStore = { ...store, main: { ...main, city: 'test2', countryCode: 'any' } };
-            store.main = main;
-            getWeatherByLocation().mockImplementation(() => ({
+            const newStore = { ...store, main: { ...main, city: 'test2', countryCode: DEFAULT_COUNTRY_CODE } };
+            const location = {
                 latitude: 10,
                 longitude: 10,
-            }));
+            };
+            store.main = main;
+            getWeatherByLocation.mockImplementation(() => ({ location }));
             return storeChangeHandler(store, newStore, action, dispatchMock).then(() => {
                 expect(dispatchMock).toHaveBeenCalledWith(getForecastByLocation());
+                expect(getForecastByLocation).toHaveBeenCalledWith(location, 'test2');
             });
         });
         it('should dispatch getWeather and getForecast when the weather should be update and country code and cityname are defined', () => {
@@ -98,16 +109,18 @@ describe('middlewares', () => {
             return storeChangeHandler(store, newStore, action, dispatchMock).then(() => {
                 expect(dispatchMock).toHaveBeenCalledWith(getWeather());
                 expect(dispatchMock).toHaveBeenCalledWith(getForecast());
+                expect(getWeather).toBeCalledWith('test2', 'cd');
+                expect(getForecast).toBeCalledWith('test2', 'cd');
             });
         });
     });
-    describe('handleNearesetCitiesSet', () => {
+    describe('#handleNearesetCitiesSet', () => {
         let store;
         let action;
         beforeEach(() => {
             action = {
                 type: types.SET_NEAREST_CITIES,
-                nearestCities: [{ city: 'test', countryCode: 'tt' }],
+                nearestCities: [{ name: 'test', countryCode: 'tt' }],
             };
             store = {
                 main: {},
@@ -117,6 +130,7 @@ describe('middlewares', () => {
             const newStore = { ...store, routing: { locationBeforeTransitions: { pathname: '/home' } } };
             storeChangeHandler(store, newStore, action, dispatchMock);
             expect(dispatchMock).toHaveBeenCalledWith(redirectToCity());
+            expect(redirectToCity).toHaveBeenCalledWith('test', 'tt');
         });
         it('should not dispatch any events if a city is set', () => {
             const newStore = { ...store, main: { city: 'test2', countryCode: 'q' }, routing: { locationBeforeTransitions: { pathname: '/home' } } };
@@ -125,6 +139,94 @@ describe('middlewares', () => {
         });
         it('should not dispatch any events if a location is not home-like', () => {
             const newStore = { ...store, routing: { locationBeforeTransitions: { pathname: '/cities/BY/Homel' } } };
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).not.toHaveBeenCalled();
+        });
+    });
+    describe('#handleLocationChange', () => {
+        let store;
+        let action;
+        beforeEach(() => {
+            store = {
+                main: {
+                    city: 'test',
+                    countryCode: 'cd',
+                },
+                location: { nearestCities: [] },
+            };
+            action = {
+                type: types.LOCATION_CHANGE,
+                payload: {},
+            };
+        });
+        it('should redirecty to the first nearest city when /home path is entered', () => {
+            const nearest = { name: 'city', countryCode: 'dd' };
+            const newStore = {
+                ...store,
+                location: { nearestCities: [nearest] },
+            };
+            action.payload.pathname = '/home';
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).toHaveBeenCalledTimes(1);
+            expect(dispatchMock).toHaveBeenCalledWith(redirectToCity());
+            expect(redirectToCity).toHaveBeenCalledWith(nearest.name, nearest.countryCode);
+        });
+        it('should dispatch change city event when city name or country code are changed in path string', () => {
+            const newStore = { ...store };
+            action.payload.pathname = '/cities/dd/test';
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).toHaveBeenCalledWith(changeCity());
+            expect(changeCity).toHaveBeenCalledWith('test', 'dd');
+        });
+        it('should redirect to previous city when empty path is provided', () => {
+            const newStore = { ...store };
+            action.payload.pathname = '/';
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).toHaveBeenCalledWith(redirectToCity());
+            expect(redirectToCity).toHaveBeenCalledWith('test', 'cd', undefined);
+        });
+        it('should change app\'s metric if metric is provided to query', () => {
+            const newStore = { ...store };
+            action.payload.query = {
+                metric: 'K',
+            };
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).toHaveBeenCalledWith(setMetric());
+            expect(setMetric).toHaveBeenCalledWith('K');
+        });
+    });
+    describe('#handleLocationUpdate', () => {
+        let store;
+        let action;
+        beforeEach(() => {
+            store = {
+                location: { geolocation: {
+                    latitude: 5,
+                    longitude: 5,
+                } },
+            };
+            action = {
+                type: types.UPDATE_LOCATION,
+            };
+        });
+        it('should dispatch getNearestTo action when location is changed', () => {
+            const newLocation = {
+                latitude: 10,
+                longitude: 10,
+            };
+            const newStore = { ...store, location: { geolocation: newLocation } };
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).toHaveBeenCalledWith(getNearestTo());
+            expect(getNearestTo).toHaveBeenCalledWith(newLocation);
+        });
+
+        it('should not dispatch any events if location is not changed', () => {
+            const newStore = { ...store };
+            storeChangeHandler(store, newStore, action, dispatchMock);
+            expect(dispatchMock).not.toHaveBeenCalled();
+        });
+        it('should not dispatch any events new location is undefined', () => {
+            const newStore = { ...store, location: { geolocation: undefined } };
             storeChangeHandler(store, newStore, action, dispatchMock);
             expect(dispatchMock).not.toHaveBeenCalled();
         });

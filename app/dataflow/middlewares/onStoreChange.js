@@ -1,4 +1,3 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
 import types from '../actions/types';
 import { handleCityChange, handleNearesetCitiesSet } from './handleCityChange';
 import { handleLocationChange, handleLocationUpdate } from './handleLocationChange';
@@ -8,7 +7,7 @@ const storeChangeHandler = (...args) => {
     const action = args[2];
 
     switch (action.type) {
-        case LOCATION_CHANGE:
+        case types.LOCATION_CHANGE:
             return handleLocationChange(...args);
         case types.UPDATE_LOCATION:
             return handleLocationUpdate(...args);

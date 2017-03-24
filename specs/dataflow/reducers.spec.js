@@ -9,7 +9,7 @@ import weatherReducer from '../../app/dataflow/reducers/weather';
 
 describe('reducers', () => {
     const JEST_TEST_ACTION = '[JEST_TEST] TEST';
-    describe('dragAndDropReducer', () => {
+    describe('#dragAndDropReducer', () => {
         let store;
         beforeEach(() => {
             store = {};
@@ -19,7 +19,7 @@ describe('reducers', () => {
             expect(dragAndDropReducer(store, { type: types.DROP_DRAG })).not.toBe(store);
         });
     });
-    describe('favoritesReducer', () => {
+    describe('#favoritesReducer', () => {
         let store;
         beforeEach(() => {
             store = {
@@ -55,7 +55,7 @@ describe('reducers', () => {
             expect(favoritesReducer(store, { type: types.SET_CITIES_TO_FILTER })).not.toBe(store);
         });
     });
-    describe('locationReducer', () => {
+    describe('#locationReducer', () => {
         let store;
         beforeEach(() => {
             store = {};
@@ -69,7 +69,7 @@ describe('reducers', () => {
             expect(locationReducer(store, { type: types.SET_LOCATION_STATUS })).not.toBe(store);
         });
     });
-    describe('mainReducer', () => {
+    describe('#mainReducer', () => {
         let store = {};
         beforeEach(() => {
             store = {};
@@ -83,7 +83,7 @@ describe('reducers', () => {
         });
     });
 
-    describe('tooltipReducer', () => {
+    describe('#tooltipReducer', () => {
         it('should mutate previous store object if any supported action is provied', () => {
             const store = {};
             expect(tooltipReducer(store, {
@@ -94,7 +94,7 @@ describe('reducers', () => {
         });
     });
 
-    describe('weatherReducer', () => {
+    describe('#weatherReducer', () => {
         it('should mutate previous store object if any supported action is provied', () => {
             const store = {};
             expect(weatherReducer(store, { type: types.UPDATE_WEATHER_INFO })).not.toBe(store);
@@ -107,7 +107,7 @@ describe('reducers', () => {
         });
     });
 
-    describe('rootReducer', () => {
+    describe('#rootReducer', () => {
         it('should not touch the store when not supported action is provided', () => {
             const store = {
                 dragAndDrop: {},

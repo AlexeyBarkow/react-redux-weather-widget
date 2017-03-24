@@ -11,11 +11,11 @@ export const handleCityChange = (prevState, newState, action, dispatch) => {
     if (status === 0 || (isCitySet && isNotSameAsPrev)) {
         if (location && (!countryCode || countryCode === DEFAULT_COUNTRY_CODE)) {
             return dispatch(getWeatherByLocation(location, city))
-            .then((response) => {
-                if (response && response.latitude && response.longitude) {
-                    dispatch(getForecastByLocation(response, city));
+            .then(({ location: receivedLocation }) => {
+                if (receivedLocation && receivedLocation.latitude && receivedLocation.longitude) {
+                    dispatch(getForecastByLocation(receivedLocation, city));
                 } else {
-                    dispatch(setForecastStatus(response));
+                    dispatch(setForecastStatus(receivedLocation));
                 }
             });
         }
