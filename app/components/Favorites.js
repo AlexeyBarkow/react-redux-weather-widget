@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import map from 'lodash/map';
 import SingleFavorite from './SingleFavorite';
 import Draggable from '../containers/connectors/DraggableConnector';
 import Droppable from '../containers/connectors/DroppableConnector';
@@ -11,7 +12,7 @@ function Favorites({ className, favorites, metric, removeHandler, info, changeFa
                 ? <span>No favorites provided</span>
                 : (
                     <div className="row float-fixer">
-                        { favorites.map((curr, index) => {
+                        { map(favorites, (curr, index) => {
                             const weather = info[`weather/${curr.cityname}/${curr.countryCode}`] || {};
                             const forecast = info[`forecast/${curr.cityname}/${curr.countryCode}`] || {};
                             const dropRight = (_, dropData) => {

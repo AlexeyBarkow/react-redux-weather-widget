@@ -26,6 +26,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "bootstrap-sass-loader": "^1.0.10",
     "css-loader": "^0.26.1",
+    "enzyme": "^2.7.1",
     "eslint": "^3.14.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-loader": "^1.6.1",

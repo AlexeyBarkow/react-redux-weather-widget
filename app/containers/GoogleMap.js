@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
 import isEqual from 'lodash/isEqual';
+import map from 'lodash/map';
 import Loading from '../components/Loading';
 import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, changeLocation } from '../utils/googleMapAPI';
 import '../styles/gmap.scss';
@@ -19,41 +20,41 @@ class GoogleMap extends Component {
     }
 
     componentWillReceiveProps = (newProps) => {
-        const { map } = this.state;
+        const { googleMap } = this.state;
         const { markers, location } = this.props;
         const { location: newLocation, markers: newMarkers } = newProps;
 
-        if (!map) {
+        if (!googleMap) {
             return;
         }
 
         if (!isEqual(markers, newMarkers)) {
-            const stateMarkers = this.getStateMarkers(map, newMarkers);
+            const stateMarkers = this.getStateMarkers(googleMap, newMarkers);
             this.setState({ stateMarkers });
         }
 
         if (newLocation !== location) {
-            changeLocation(map, newLocation);
+            changeLocation(googleMap, newLocation);
         }
     }
 
     shouldComponentUpdate(newProps, newState) {
-        const { map, googleScriptLoaded } = this.state;
+        const { googleMap, googleScriptLoaded } = this.state;
         const { locationServiceMessage } = this.props;
-        return newState.googleScriptLoaded !== googleScriptLoaded || !map ||
+        return newState.googleScriptLoaded !== googleScriptLoaded || !googleMap ||
             locationServiceMessage !== newProps.locationServiceMessage;
     }
 
     // creates an array with google.map markers
-    getStateMarkers = (map, markers) => {
+    getStateMarkers = (googleMap, markers) => {
         const { stateMarkers } = this.state;
 
         if (stateMarkers.length > 0) {
             clearMarkers(stateMarkers);
         }
 
-        return setMapOnAll(map,
-            markers.map(curr => createMarker(map, curr.location, curr.title)));
+        return setMapOnAll(googleMap,
+            map(markers, curr => createMarker(googleMap, curr.location, curr.title)));
     };
 
     scriptLoadingFailed = () => {
@@ -74,16 +75,16 @@ class GoogleMap extends Component {
         }
 
         const { location, markers } = this.props;
-        const map = this.state.map || initMap(element, location);
-        const stateMarkers = this.getStateMarkers(map, markers);
+        const googleMap = this.state.googleMap || initMap(element, location);
+        const stateMarkers = this.getStateMarkers(googleMap, markers);
 
-        this.setState({ map, stateMarkers });
+        this.setState({ googleMap, stateMarkers });
     };
 
     updateComponent = (e) => {
         e.preventDefault();
         this.setState({
-            map: null,
+            googleMap: null,
         });
 
         this.props.getLocation();

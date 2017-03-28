@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
+import map from 'lodash/map';
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
 import {
     getFirstDayOfMonth,
@@ -194,7 +195,7 @@ class DatePicker extends Component {
                                     </tr>
                                     <tr>
                                         {
-                                            WEEK_DAY_NAMES.map((curr, index) => (
+                                            map(WEEK_DAY_NAMES, (curr, index) => (
                                                 <th key={index} className="dow">{ curr.slice(0, 2) }</th>
                                             ))
                                         }

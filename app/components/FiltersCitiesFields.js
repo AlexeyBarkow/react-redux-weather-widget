@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Field, FieldArray } from 'redux-form';
 import FormGroup from './FormGroup';
 import CustomInput from './CustomInput';
-import MultipleInputFields from './MultipleInputFields';
+import MultipleInputFields from '../containers/MultipleInputFields';
 import AutocompleteField from './AutocompleteField';
 
 class FiltersCitiesFields extends Component {

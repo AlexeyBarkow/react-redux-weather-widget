@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { FieldArray } from 'redux-form';
 import FormGroup from './FormGroup';
 import DatePicker from './DatePicker';
-import MultipleInputFields from './MultipleInputFields';
+import MultipleInputFields from '../containers/MultipleInputFields';
 
 function DatepickerInput({
     className,

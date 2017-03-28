@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import map from 'lodash/map';
 import Loading from './Loading';
 import WeatherTemperature from './WeatherTemperature';
 import ErrorMessage from './ErrorMessage';
@@ -54,7 +55,7 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                 </div>
                                 <div className="col-md-9 col-lg-8">
                                     {
-                                        forecast.map((current, index) => (
+                                        map(forecast, (current, index) => (
                                             <div className="row pseudo-paragraph" key={`forecast-${index}`}>
                                                 <WeatherTemperature
                                                   className="pull-left"

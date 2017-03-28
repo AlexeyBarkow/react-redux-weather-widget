@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux';
+import map from 'lodash/map';
 import types from './types';
 import getWeatherAjax from '../../utils/weatherAPI';
 import { DEFAULT_METRIC } from '../../utils/constants';
@@ -230,7 +231,7 @@ export function getNearestTo(location) {
                 dispatch(setNearestCitiesError(error));
                 return error;
             }
-            const nearestCities = res.map((curr) => {
+            const nearestCities = map(res, (curr) => {
                 const { city, country } = curr;
                 dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));
                 return {

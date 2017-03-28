@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import flow from 'lodash/flow';
+import map from 'lodash/map';
 import { compareDatesDay } from '../utils/unifiedDateFormat';
 import { MATCH_DATES_REGEXP } from '../utils/constants';
 
@@ -135,7 +136,7 @@ export const applyDateFilter = ({ filterDatepickerArray }, cacheArray) => {
         });
     }
 
-    const parsedDatepickerArray = filterDatepickerArray.map((val) => {
+    const parsedDatepickerArray = map(filterDatepickerArray, (val) => {
         const [day, month, year] = val.match(MATCH_DATES_REGEXP).slice(1);
         return { day, month, year };
     });
