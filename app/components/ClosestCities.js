@@ -1,16 +1,22 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
+import map from 'lodash/map';
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
+import { DEFAULT_COUNTRY_CODE } from '../utils/constants';
 
 function ClosestCities({ list, className, title, keySeed }) {
     return (
-        <div className={`${className} closest-cities-container`}>
+        <div className={classnames(className, 'closest-cities-container')}>
             { title }
             <ButtonGroup vertical block>
-                { list.map((city, index) => {
-                    const text = `${city.name}, ${city.countryCode}`;
+                { map(list, (city, index) => {
+                    const text = `${city.name}${
+                        city.countryCode !== DEFAULT_COUNTRY_CODE
+                        ? `, ${city.countryCode}`
+                        : ''}`;
                     return (
-                        <Button title={text} key={`${keySeed}-${index}`} className="" href={`/cities/${city.countryCode}/${city.name}`}>{ text }</Button>
+                        <Button title={text} key={`${keySeed}-${index}`} href={`/cities/${city.countryCode}/${city.name}`}>{ text }</Button>
                     );
                 }) }
             </ButtonGroup>

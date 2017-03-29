@@ -21,12 +21,10 @@
             margin-bottom: 0;
         }
         .header__city-search__metric {
-            width: 3em;
-            appearance: button;
-            position: relative;
+            select {
+                width: 3em;
+            }
             .caret {
-                @include center(false, true);
-                right: .3em;
                 color: var(--color-white);
             }
         }
@@ -35,6 +33,9 @@
 
 .fixed-wrapper {
     @include clearfix();
+    > * {
+        margin: 0;
+    }
 }
 
 .fixed-children {

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function TabContainer({ children, className, headerContainer }) {
     const type = headerContainer
@@ -6,7 +7,7 @@ function TabContainer({ children, className, headerContainer }) {
         : 'tab__container';
 
     return (
-        <ul className={`${className} ${type}`}>
+        <ul className={classnames(className, type)}>
             {children}
         </ul>
     );

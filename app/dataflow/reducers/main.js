@@ -1,7 +1,7 @@
 import types from '../actions/types';
 import { ACCEPTABLE_METRICS_REGEXP } from '../../utils/constants';
 
-function mainReducer(state, action) {
+function mainReducer(state = {}, action) {
     switch (action.type) {
         case types.SET_CITY:
             return {
@@ -21,9 +21,10 @@ function mainReducer(state, action) {
         }
         case types.SET_AUTOCOMPLETE_ARRAY:
         case types.SET_AUTOCOMPLETE_ERROR:
+        case types.CLEAR_AUTOCOMPLETE:
             return {
                 ...state,
-                autocomplete: action.autocomplete,
+                autocomplete: action.autocomplete || [],
             };
         default:
             return state;

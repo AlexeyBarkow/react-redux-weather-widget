@@ -16,11 +16,10 @@ function setLocationStatus(status) {
 }
 
 export function getLocation() {
-    return (dispatch) => {
-        loadLocation().then((location) => {
+    return dispatch => loadLocation()
+        .then((location) => {
             dispatch(changeLocation(location));
         }).catch((err) => {
             dispatch(setLocationStatus(err));
         });
-    };
 }

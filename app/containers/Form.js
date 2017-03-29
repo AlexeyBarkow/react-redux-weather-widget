@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 import ButtonToolbar from '../components/ButtonToolbar';
 import '../styles/forms.scss';
 
@@ -24,11 +25,11 @@ class Form extends Component {
 
     render() {
         const { hasFocus } = this.state;
-        const { children, className, submitHandler, autocompleteOff } = this.props;
+        const { children, className, onSubmit, autocompleteOff } = this.props;
         return (
             <form
-              className={`${hasFocus ? 'active-form ' : ''}${className}`}
-              onSubmit={submitHandler}
+              className={classnames(hasFocus && 'active-form', className)}
+              onSubmit={onSubmit}
               onFocus={this.onFocusHandler}
               onBlur={this.onBlurHandler}
               autoComplete={autocompleteOff ? 'off' : null}
@@ -42,13 +43,13 @@ class Form extends Component {
 }
 Form.propTypes = {
     children: PropTypes.node.isRequired,
-    submitHandler: PropTypes.func,
+    onSubmit: PropTypes.func,
     className: PropTypes.string,
     autocompleteOff: PropTypes.bool,
 };
 
 Form.defaultProps = {
-    submitHandler: null,
+    onSubmit: null,
     className: '',
     autocompleteOff: null,
 };

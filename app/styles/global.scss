@@ -1,6 +1,7 @@
 :root {
     //put the global css variables here
     --color-dark-red: rgb(185, 0 , 0);
+    --color-light-red: rgb(185, 125, 125);
     --color-dark-green: rgb(0, 185, 0);
     --color-dark-blue: rgb(0, 0, 185);
     --color-bright-blue: rgba(125, 125, 255, .95);
@@ -12,6 +13,10 @@
     --color-white-alpha: rgba(255,255,255,.85);
     --color-white-bright-alpha: rgba(255, 255, 255, .45);
     --metric-color: rgb(180, 0, 0);
+}
+
+.center-vertical {
+    @include center(false, true);
 }
 
 .tooltip-container {
@@ -32,6 +37,9 @@
         @include center(true, false);
         top: calc(100% - 1em);
     }
+    .tooltip {
+        pointer-events: none;
+    }
 }
 
 html, body, .my-app-root-class, #root {
@@ -42,9 +50,22 @@ html, body, .my-app-root-class, #root {
     @include stretch-width();
 }
 
+.stretch-height {
+    @include stretch-height();
+}
+
+.stretch {
+    @extend .stretch-width;
+    @extend .stretch-height;
+}
+
 .app-wrapper {
     min-height: 100%;
     position: relative;
+}
+
+.pseudo-paragraph {
+    @include clearfix;
 }
 
 .pseudo-paragraph:not(:last-child) {
@@ -71,69 +92,6 @@ html, body, .my-app-root-class, #root {
 
 }
 
-.btn-group > .form-group {
-    float: left;
-    &:not(:first-child) .form-control {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-    &:not(:last-child) .form-control {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-}
-
-.btn-group-justified-sm {
-    @include respond(780px) {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: separate;
-        & > .form-group {
-            display: table-cell;
-            float: none;
-            width: 1%;
-        }
-    }
-}
-
-@mixin btn-group-vertical {
-    & > .form-group {
-        display: block;
-        float: none;
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 0;
-        &:not(:first-child):not(:last-child) .form-control {
-            border-radius: 0;
-        }
-        &:first-child:not(:last-child) .form-control {
-            border-top-right-radius: 4px;
-            border-top-left-radius: 4px;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-        &:last-child:not(:first-child) .form-control {
-            border-top-right-radius: 0;
-            border-top-left-radius: 0;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-    }
-}
-
-.btn-group-vertical {
-    @include btn-group-vertical;
-}
-
-.btn-group-vertical-rsm {
-    @include respond(0, 780px) {
-        width: 100%;
-        @include btn-group-vertical;
-    }
-}
-
-
 .main {
     margin-top: 1em;
     padding-top: 1em;
@@ -142,7 +100,6 @@ html, body, .my-app-root-class, #root {
         padding-left: 0;
         padding-right: 0;
     }
-    background-color: var(--color-white-alpha);
     border: 1px solid var(--color-white);
     border-bottom: 0;
 
@@ -201,12 +158,11 @@ html, body, .my-app-root-class, #root {
     }
 }
 
-.sticky-top {
-
+.app-content > .panel {
+    background-color: var(--color-white-alpha);
 }
 
 .aside {
-    background-color: var(--color-white-alpha);
     border: 1px solid var(--color-white);
     border-top: 0;
     padding-bottom: 1em;
@@ -239,32 +195,65 @@ html, body, .my-app-root-class, #root {
     }
 }
 
-.help-block.panel-danger {
-    display: none;
-}
-
-input[type="radio"] {
-    position: absolute;
-    left: -99999px;
-    &:checked + label.btn {
-        background-image: none;
-        box-shadow: inset 0 3px 5px rgba(0,0,0,0.125)
-    }
-    &:focus + label {
-        outline: 5px auto -webkit-focus-ring-color;
-        outline-offset: -2px;
-    }
-}
-
-.btn-group-justified > .form-group{
-    display: table-cell;
-    float: none;
-    width: 1%;
-}
-
 .divider {
     height: 1px;
     margin: 9px 0;
     overflow: hidden;
     background-color: #cccccc;
+}
+
+.close {
+    button {
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        -webkit-appearance: none;
+    }
+
+    &.remove-cross {
+        opacity: 1;
+        font-size: 2em;
+        color: var(--color-light-red);
+        &:hover {
+            color: var(--color-dark-red)
+        }
+    }
+}
+
+.favorite {
+    margin: 30px 0 30px 0;
+}
+
+.float-fixer {
+    @include respond(768px, 992px) {
+        .col-sm-6:nth-child(2n + 1) {
+            clear: left;
+        }
+    };
+    @include respond(992px, 1200px) {
+        .col-md-4:nth-child(3n + 1) {
+            clear: left;
+        }
+    }
+    @include respond(1200px) {
+        .col-lg-3:nth-child(4n + 1) {
+            clear: left;
+        }
+    }
+}
+
+.btn-toolbar.row {
+    @include make-row(30px);
+}
+
+.pagination-wrapper {
+    text-align: center;
+    .pagination {
+        display: inline-block;
+    }
+}
+
+.relative {
+    @include relative();
 }

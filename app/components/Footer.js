@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import classnames from 'classnames/dedupe';
 
 function Footer({ children, className }) {
     return (
-        <footer className={`${className} container`}>
+        <footer className={classnames(className, 'container')}>
             <div className="row">
                 <p className="col-sm-3 col-xs-4">
                     <Link to="/home">home</Link> / <Link to="/about">about</Link>

@@ -57,5 +57,7 @@ module.exports = {
             autoprefixer,
         ],
     },
-    sassResources: './app/styles/mixins.scss',
+    sassResources: [
+        './app/styles/mixins.scss', './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
+    ],
 };

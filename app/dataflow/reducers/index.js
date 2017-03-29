@@ -1,44 +1,68 @@
 import { routerReducer } from 'react-router-redux';
-import reduceReducers from 'reduce-reducers';
+import { reducer as formReducer } from 'redux-form';
+import { combineReducers } from 'redux';
 import weatherReducer from './weather';
 import mainReducer from './main';
 import locationReducer from './location';
+import favoritesReducer from './favorites';
+import dragAndDropReducer from './dragAndDrog';
+import tooltipReducer from './tooltip';
 import { load } from '../../utils/localStorage';
 import { DEFAULT_METRIC } from '../../utils/constants';
 
 const stored = load('store') || {};
-const { city, countryCode, metric, main } = stored;
+const { city, countryCode, metric, main, location, favoriteCities } = stored;
 
 const initialState = {
-    geolocation: {
-        code: -1,
-        message: 'You location is not defined',
+    location: {
+        geolocation: {
+            code: -1,
+            message: 'You location is not defined',
+        },
+        nearestCities: [],
     },
     weather: {
-        status: 0,
-        message: 'No location API available to get initial state',
-        weatherTypes: [{ main }],
+        weather: {
+            status: 0,
+            message: 'No location API available to get initial state',
+            weatherTypes: [{ main }],
+            location,
+        },
+        forecast: [{
+            status: 0,
+            message: 'No location API available to get initial state',
+        }],
+        forecastFilter: '12H',
+        cache: {},
     },
-    forecast: [{
-        status: 0,
-        message: 'No location API available to get initial state',
-    }],
-    forecastFilter: '12H',
-    nearestCities: [],
-    metric: metric || DEFAULT_METRIC,
-    countryCode,
-    city,
+    main: {
+        city,
+        countryCode,
+        metric: metric || DEFAULT_METRIC,
+        autocomplete: [],
+    },
+    favorites: {
+        favoriteCities: favoriteCities || [],
+        filters: {},
+    },
+    form: {},
+    dragAndDrop: {},
+    tooltip: {},
 };
 
-const reduce = reduceReducers(
-    mainReducer,
-    weatherReducer,
-    locationReducer,
-    routerReducer,
-);
+const finalReducer = combineReducers({
+    form: formReducer,
+    location: locationReducer,
+    weather: weatherReducer,
+    main: mainReducer,
+    routing: routerReducer,
+    favorites: favoritesReducer,
+    dragAndDrop: dragAndDropReducer,
+    tooltip: tooltipReducer,
+});
 
 function rootReducer(state = initialState, action) {
-    return reduce(state, action);
+    return finalReducer(state, action);
 }
 
 export default rootReducer;

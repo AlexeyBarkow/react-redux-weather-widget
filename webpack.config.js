@@ -45,7 +45,7 @@ module.exports = {
                 test: /\.json?$/,
                 loader: 'json',
             }, {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 loaders: [
                     'style-loader',
                     'css-loader?sourceMap',
@@ -53,14 +53,11 @@ module.exports = {
                     'sass-resources?sourceMap',
                     'postcss-loader',
                 ],
-            }, {
-                test: /\.css$/,
-                loaders: [
-                    'css-loader',
-                    'postcss-loader',
-                ],
             },
         ],
     },
-    sassResources: './app/styles/mixins.scss',
+    sassResources: [
+        './app/styles/mixins.scss',
+        './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
+    ],
 };

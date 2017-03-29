@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import classnames from 'classnames/dedupe';
 import '../styles/tabs.scss';
 
 class TabController extends Component {
@@ -25,9 +26,9 @@ class TabController extends Component {
     };
 
     render() {
-        const { children } = this.props;
+        const { children, className } = this.props;
         return (
-            <div className="tabs">
+            <div className={classnames('tabs', className)}>
                 {children}
             </div>
         );
@@ -40,6 +41,7 @@ TabController.childContextTypes = {
 };
 
 TabController.propTypes = {
+    className: PropTypes.string,
     children: PropTypes.node,
     defaultSelectedTabIndex: PropTypes.string,
 };
@@ -47,6 +49,7 @@ TabController.propTypes = {
 TabController.defaultProps = {
     children: null,
     defaultSelectedTabIndex: '',
+    className: '',
 };
 
 export default TabController;

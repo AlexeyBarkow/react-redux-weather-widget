@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
+import Button from './Button';
 
 function TabHeader({
     children,
@@ -8,11 +10,14 @@ function TabHeader({
     selectedTabIndex,
     setSelectedTabIndex,
 }) {
+    const handler = () => {
+        setSelectedTabIndex(index);
+    };
     return (
-        <li className={`${index === selectedTabIndex ? 'active' : ''} ${className}`}>
-            <a href="#" className="btn btn-link" onClick={() => setSelectedTabIndex(index)}>
+        <li className={classnames(index === selectedTabIndex && 'active', className)}>
+            <Button link href="#" onClickHandler={handler}>
                 {children}
-            </a>
+            </Button>
         </li>
     );
 }

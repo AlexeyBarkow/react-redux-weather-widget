@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function Table({ children, className, striped, bordered, condensed, hover }) {
-    const tableClasses = `${
-        striped ? 'table-striped' : ''
-    }${
-        bordered ? ' table-bordered' : ''
-    }${
-        condensed ? ' table-condensed' : ''
-    }${
-        hover ? ' table-hover' : ''
-    }`;
+    const tableClasses = classnames(
+        striped && 'table-striped',
+        bordered && 'table-bordered',
+        condensed && 'table-condensed',
+        hover && ' table-hover',
+    );
+
     return (
         <div className={className}>
             <table className={tableClasses}>

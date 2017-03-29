@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react';
+import FormatTemperature from './FormatTemperature';
 
 function Temperature({ metric, minTemperature, maxTemperature, currTemperature, className }) {
     return (
         <div className={className}>
             <p className="main-temperature">
-                { currTemperature }
-                <span className={`temperature-metric ${metric}`}>
-                    { metric }
-                </span>
+                <FormatTemperature value={currTemperature} metric={metric} />
             </p>
             {
                 (minTemperature === undefined
@@ -15,19 +13,9 @@ function Temperature({ metric, minTemperature, maxTemperature, currTemperature, 
                 || minTemperature < maxTemperature)
                 &&
                 (<p className="temperature-range">
-                    <span className="min-temperature">
-                        { minTemperature }
-                        <span className={`temperature-metric ${metric}`}>
-                            { metric }
-                        </span>
-                    </span>
+                    <FormatTemperature className="min-temperature" value={minTemperature} metric={metric} />
                     {' — '}
-                    <span className="max-temperature">
-                        { maxTemperature }
-                        <span className={`temperature-metric ${metric}`}>
-                            { metric }
-                        </span>
-                    </span>
+                    <FormatTemperature className="max-temperature" value={maxTemperature} metric={metric} />
                 </p>)
             }
         </div>

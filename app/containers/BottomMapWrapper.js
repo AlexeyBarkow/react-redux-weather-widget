@@ -14,7 +14,7 @@ class BottomWrapper extends Component {
             });
         }
 
-        if (weatherOverall.city) {
+        if (weatherOverall.city && weatherOverall.location) {
             markers.push({
                 title: weatherOverall.city,
                 location: weatherOverall.location,
@@ -22,7 +22,7 @@ class BottomWrapper extends Component {
         }
 
         return (
-            <GoogleMap className="map panel col-xs-12" location={mapCenter} markers={markers} getLocation={getLocation} />
+            <GoogleMap className="map panel col-xs-12" location={mapCenter} markers={markers} locationServiceMessage={geolocation.message} getLocation={getLocation} />
         );
     }
 }

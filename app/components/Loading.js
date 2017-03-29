@@ -1,15 +1,17 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import classnames from 'classnames/dedupe';
+import times from 'lodash/times';
+import map from 'lodash/map';
 
 function Loading({ dots, classNameSeed }) {
     const divs = [];
-    _.times(dots, i => divs.push((
-        <div className={`${classNameSeed} ${classNameSeed}-${i}`} key={`${classNameSeed}-${i}`} />
+    times(dots, i => divs.push((
+        <div className={classnames(classNameSeed, `${classNameSeed}-${i}`)} key={`${classNameSeed}-${i}`} />
     )));
     return (
         <div className={`${classNameSeed}-animate-loading`}>
             {
-                divs.map(curr => curr)
+                map(divs, curr => curr)
             }
         </div>
     );

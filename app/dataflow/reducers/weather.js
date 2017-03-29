@@ -1,6 +1,6 @@
 import types from '../actions/types';
 
-function weatherReducer(state, action) {
+function weatherReducer(state = {}, action) {
     switch (action.type) {
         case types.UPDATE_WEATHER_INFO:
         case types.SET_WEATHER_STATUS:
@@ -19,6 +19,28 @@ function weatherReducer(state, action) {
                 ...state,
                 forecastFilter: action.forecastFilter,
             };
+        case types.CACHE_PUSH: {
+            const { cache } = state;
+            return {
+                ...state,
+                cache: {
+                    ...cache,
+                    [action.key]: action.cache,
+                },
+            };
+        }
+        case types.SET_CACHE_STATUS: {
+            const { cache } = state;
+            return {
+                ...state,
+                cache: {
+                    ...cache,
+                    [action.key]: {
+                        status: action.status,
+                    },
+                },
+            };
+        }
         default:
             return state;
     }

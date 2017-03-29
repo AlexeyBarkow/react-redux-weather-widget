@@ -1,7 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import Script from 'react-load-script';
+import isEqual from 'lodash/isEqual';
+import map from 'lodash/map';
 import Loading from '../components/Loading';
-import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, setCenter } from '../utils/googleMapAPI';
+import { getGoogleMapUrl, initMap, createMarker, setMapOnAll, clearMarkers, changeLocation } from '../utils/googleMapAPI';
 import '../styles/gmap.scss';
 
 class GoogleMap extends Component {
@@ -18,43 +20,41 @@ class GoogleMap extends Component {
     }
 
     componentWillReceiveProps = (newProps) => {
-        const { map } = this.state;
+        const { googleMap } = this.state;
         const { markers, location } = this.props;
-        const newMarkers = newProps.markers;
-        const newLocation = newProps.location;
+        const { location: newLocation, markers: newMarkers } = newProps;
 
-        if (!map) {
+        if (!googleMap) {
             return;
         }
 
-        if (markers !== newMarkers) {
-            const stateMarkers = this.getStateMarkers(map, newMarkers);
-
+        if (!isEqual(markers, newMarkers)) {
+            const stateMarkers = this.getStateMarkers(googleMap, newMarkers);
             this.setState({ stateMarkers });
         }
 
-
         if (newLocation !== location) {
-            setCenter(map, newLocation);
+            changeLocation(googleMap, newLocation);
         }
     }
 
-    shouldComponentUpdate(_, newState) {
-        const { map, googleScriptLoaded, location } = this.state;
-        return newState.googleScriptLoaded !== googleScriptLoaded || !map
-            || !!(location && location.message);
+    shouldComponentUpdate(newProps, newState) {
+        const { googleMap, googleScriptLoaded } = this.state;
+        const { locationServiceMessage } = this.props;
+        return newState.googleScriptLoaded !== googleScriptLoaded || !googleMap ||
+            locationServiceMessage !== newProps.locationServiceMessage;
     }
 
     // creates an array with google.map markers
-    getStateMarkers = (map, markers) => {
+    getStateMarkers = (googleMap, markers) => {
         const { stateMarkers } = this.state;
 
         if (stateMarkers.length > 0) {
             clearMarkers(stateMarkers);
         }
 
-        return setMapOnAll(map,
-            markers.map(curr => createMarker(map, curr.location, curr.title)));
+        return setMapOnAll(googleMap,
+            map(markers, curr => createMarker(googleMap, curr.location, curr.title)));
     };
 
     scriptLoadingFailed = () => {
@@ -75,30 +75,32 @@ class GoogleMap extends Component {
         }
 
         const { location, markers } = this.props;
-        const map = this.state.map || initMap(element, location);
-        const stateMarkers = this.getStateMarkers(map, markers);
+        const googleMap = this.state.googleMap || initMap(element, location);
+        const stateMarkers = this.getStateMarkers(googleMap, markers);
 
-        this.setState({ map, stateMarkers });
+        this.setState({ googleMap, stateMarkers });
     };
 
-    updateComponent = () => {
+    updateComponent = (e) => {
+        e.preventDefault();
         this.setState({
-            map: null,
+            googleMap: null,
         });
 
         this.props.getLocation();
     };
 
     render() {
-        const { className, location } = this.props;
+        const { className, location, locationServiceMessage } = this.props;
         const { googleScriptLoaded } = this.state;
 
         return (
             <div className={className}>
                 {(() => {
-                    if (googleScriptLoaded === 'loaded' && !location.message) {
+                    if (googleScriptLoaded === 'loaded' && location.longitude && location.latitude) {
                         return (
                             <div
+                              className="pseudo-paragraph"
                               style={{
                                   width: '100%',
                                   height: '500px',
@@ -110,19 +112,23 @@ class GoogleMap extends Component {
                     } else if (googleScriptLoaded === 'loading') {
                         return <Loading />;
                     }
-                    return (
-                        <div>
+                    return undefined;
+                })()}
+                { locationServiceMessage
+                    ? (
+                        <div className="pseudo-paragraph">
                             <p>
                                 {
                                     <span>
-                                        { location.message
+                                        { locationServiceMessage
                                         || 'Google Maps service is not responding or google location service is not enabled.'} <a href="#" onClick={this.updateComponent}>Retry?</a>
                                     </span>
                                 }
                             </p>
                         </div>
-                    );
-                })()}
+                    )
+                    : undefined
+                }
                 <Script
                   url={getGoogleMapUrl()}
                   onLoad={this.scriptLoaded}
@@ -138,6 +144,7 @@ GoogleMap.propTypes = {
     location: PropTypes.object,
     markers: PropTypes.array,
     getLocation: PropTypes.func.isRequired,
+    locationServiceMessage: PropTypes.string,
 };
 
 GoogleMap.defaultProps = {
@@ -146,6 +153,7 @@ GoogleMap.defaultProps = {
         message: 'No location available',
     },
     markers: [],
+    locationServiceMessage: '',
 };
 
 export default GoogleMap;

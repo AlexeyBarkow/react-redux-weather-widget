@@ -14,9 +14,9 @@ const composeEnhancers = typeof window === 'object' &&
 /*eslint-enable no-underscore-dangle*/
 
 const enhancer = composeEnhancers(applyMiddleware(
-    thunk,
     middleware,
     onStateChange(storeChangeHandler),
+    thunk,
 ));
 
 export default enhancer;

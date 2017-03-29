@@ -1,40 +1,42 @@
 import React, { PropTypes, Component } from 'react';
+import classnames from 'classnames/dedupe';
 
 class Tooltip extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isHovered: false,
-        };
+    componentWillUnmount() {
+        const { destroyTooltip, placement } = this.props;
+        destroyTooltip(placement);
     }
 
     onHover = () => {
-        this.setState({
-            isHovered: true,
-        });
+        const rect = this.el.getBoundingClientRect();
+        const top = rect.top + document.body.scrollTop;
+        const left = rect.left + document.body.scrollLeft;
+        const bottom = top + this.el.offsetHeight;
+        const right = left + this.el.offsetWidth;
+        const { createTooltip, tooltipText, placement } = this.props;
+
+        createTooltip(tooltipText, { top, left, bottom, right }, placement);
     };
 
     onLeave = () => {
-        this.setState({
-            isHovered: false,
-        });
+        const { destroyTooltip, placement } = this.props;
+
+        destroyTooltip(placement);
     };
 
+    getTooltipRef = (el) => {
+        if (!el) {
+            return;
+        }
+        this.el = el;
+    }
+
     render() {
-        const { isHovered } = this.state;
-        const { className, tooltipText, children, placement } = this.props;
+        const { className, children } = this.props;
+
         return (
-            <div onMouseOver={this.onHover} onMouseOut={this.onLeave} className={`${className} tooltip-container`}>
+            <div ref={this.getTooltipRef} onMouseOver={this.onHover} onMouseOut={this.onLeave} className={classnames(className, 'tooltip-container')}>
                 { children }
-                {
-                    isHovered &&
-                    (<div className={`tooltip in ${placement}`}>
-                        <div className="tooltip-inner">
-                            {tooltipText}
-                        </div>
-                        <div className="tooltip-arrow" />
-                    </div>)
-                }
             </div>
         );
     }
@@ -45,6 +47,8 @@ Tooltip.propTypes = {
     tooltipText: PropTypes.string.isRequired,
     children: PropTypes.node,
     placement: PropTypes.string,
+    createTooltip: PropTypes.func.isRequired,
+    destroyTooltip: PropTypes.func.isRequired,
 };
 
 Tooltip.defaultProps = {

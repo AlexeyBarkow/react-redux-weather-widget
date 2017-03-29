@@ -1,70 +1,92 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
+import InputError from '../components/InputError';
+import Input from '../components/Input';
+import FormGroup from '../components/FormGroup';
 
 function DropDown({
     children,
     className,
     inputClassName,
-    dataListClassName,
+    labelText,
+    assistiveLabel,
+    id,
     name,
     value,
     placeholder,
     listId,
-    onInputChange,
-    errorBlock,
+    onChange,
     onBlur,
     onFocus,
-    validationState,
+    input,
+    meta,
+    onKeyPress,
 }) {
+    const { error } = meta;
+
     return (
-        <div className={`${className} form-group ${validationState}`}>
-            <input
-              className={`${inputClassName} form-control`}
-              type="text"
+        <FormGroup meta={meta} className={className}>
+            {
+                labelText && id
+                ? <label className={classnames(assistiveLabel && 'sr-only')} htmlFor={id}>{ labelText }</label>
+                : undefined
+            }
+            <Input
+              className={inputClassName}
+              id={id}
               name={name}
               value={value}
               placeholder={placeholder}
               list={listId}
-              onChange={onInputChange}
+              onChange={onChange}
               onBlur={onBlur}
               onFocus={onFocus}
+              onKeyPress={onKeyPress}
+              {...input}
             />
-            <datalist id={listId} className={dataListClassName}>
+            <datalist id={listId}>
                 { children }
             </datalist>
-            { validationState === 'has-error' && errorBlock }
-        </div>
+            { error && <InputError popupPanel errorMessage={error} /> }
+        </FormGroup>
     );
 }
 
 DropDown.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-    dataListClassName: PropTypes.string,
     inputClassName: PropTypes.string,
     listId: PropTypes.string.isRequired,
     name: PropTypes.string,
-    onInputChange: PropTypes.func,
+    onChange: PropTypes.func,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    errorBlock: PropTypes.element,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
-    validationState: PropTypes.string,
+    input: PropTypes.object,
+    meta: PropTypes.object,
+    id: PropTypes.string,
+    labelText: PropTypes.string,
+    assistiveLabel: PropTypes.bool,
+    onKeyPress: PropTypes.func,
 };
 
 DropDown.defaultProps = {
     children: null,
     className: '',
-    dataListClassName: '',
     inputClassName: '',
-    name: '',
-    onInputChange: null,
+    name: undefined,
+    onChange: null,
     placeholder: '',
-    value: '',
-    errorBlock: null,
+    value: undefined,
+    id: undefined,
     onBlur: null,
     onFocus: null,
-    validationState: '',
+    input: {},
+    meta: {},
+    labelText: '',
+    assistiveLabel: false,
+    onKeyPress: undefined,
 };
 
 export default DropDown;

@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function Navbar({ children, className }) {
     return (
-        <ul role="navigation" className={`${className} nav navbar-nav`}>
+        <ul role="navigation" className={classnames(className, 'nav navbar-nav')}>
             {children}
         </ul>
     );

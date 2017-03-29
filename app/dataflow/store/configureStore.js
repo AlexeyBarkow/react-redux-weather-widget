@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
-import rootReducer from '../reducers/index';
+import rootReducer from '../reducers';
 import { save } from '../../utils/localStorage';
-import enhancer from '../middlewares/middleware';
+import enhancer from '../middlewares';
 
 export default function configureStore(initialState) {
     const store = createStore(
@@ -11,14 +11,20 @@ export default function configureStore(initialState) {
     );
     store.subscribe(() => {
         const state = store.getState();
-        const { city, countryCode, metric } = state;
-        const main = state.weather.weatherTypes && state.weather.weatherTypes[0]
-            && state.weather.weatherTypes[0].main;
+        const {
+            main: { city, countryCode, metric },
+            weather: { weather: { location } },
+            favorites: { favoriteCities },
+        } = state;
+        const main = state.weather.weather.weatherTypes && state.weather.weather.weatherTypes[0]
+            && state.weather.weather.weatherTypes[0].main;
         save('store', {
             city,
             countryCode,
             metric,
             main,
+            location,
+            favoriteCities,
         });
     });
 

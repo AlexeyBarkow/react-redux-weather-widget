@@ -28,14 +28,16 @@ class StaticFixator extends Component {
 
     handleScroll = () => {
         const { isFixed } = this.state;
+        const { alwaysFixed } = this.props;
         const { contentElement } = this;
+        const fixedThreshold = alwaysFixed ? -1 : 0;
         const newState = {
             contentHeight: `${contentElement.offsetHeight}px`,
         };
 
-        if (isFixed && window.pageYOffset < 5) {
+        if (isFixed && window.pageYOffset <= fixedThreshold) {
             newState.isFixed = false;
-        } else if (!isFixed && window.pageYOffset > 0) {
+        } else if (!isFixed && window.pageYOffset > fixedThreshold) {
             newState.isFixed = true;
         }
 
@@ -47,7 +49,10 @@ class StaticFixator extends Component {
         const { placeholderClass, children } = this.props;
 
         return (
-            <div className={`${isFixed ? 'fixed-children' : ''}`}>
+            <div className={isFixed ? 'fixed-children' : ''}>
+                <div className="fixed-wrapper" ref={this.getContent}>
+                    { children }
+                </div>
                 {
                     isFixed &&
                         (<div
@@ -55,9 +60,6 @@ class StaticFixator extends Component {
                           style={{ height: contentHeight }}
                         />)
                 }
-                <div className="fixed-wrapper" ref={this.getContent}>
-                    { children }
-                </div>
             </div>
         );
     }
@@ -66,10 +68,12 @@ class StaticFixator extends Component {
 StaticFixator.propTypes = {
     placeholderClass: PropTypes.string,
     children: PropTypes.element.isRequired,
+    alwaysFixed: PropTypes.bool,
 };
 
 StaticFixator.defaultProps = {
     placeholderClass: '',
+    alwaysFixed: false,
 };
 
 export default StaticFixator;

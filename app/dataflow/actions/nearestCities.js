@@ -1,26 +1,18 @@
 import types from './types';
 import getCityAPI from '../../utils/getCityAPI';
 
-function changeNearestCities(nearestCities) {
-    return {
-        type: types.SET_NEAREST_CITIES,
-        nearestCities,
-    };
-}
-
-function setCityAutocompleteArray(autocomplete) {
+function setCityAutocompleteArray(autocompleteRaw, input) {
+    const autocomplete = autocompleteRaw;
+    autocomplete.input = input;
     return {
         type: types.SET_AUTOCOMPLETE_ARRAY,
         autocomplete,
     };
 }
 
-function setNearestCitiesError(error) {
-    const nearestCities = [];
-    nearestCities.error = error;
+export function clearAutocomplete() {
     return {
-        type: types.SET_NEAREST_CITIES_ERROR,
-        nearestCities,
+        type: types.CLEAR_AUTOCOMPLETE,
     };
 }
 
@@ -33,32 +25,17 @@ function setAutocompleteError(error) {
     };
 }
 
-export function autocompleteCity(beginning) {
+export function autocompleteCity(beginning, input = 'all') {
     return (dispatch) => {
         dispatch(setAutocompleteError({
             code: 0,
             message: 'loading...',
         }));
-        getCityAPI.getCityAjax(beginning)
+        return getCityAPI.getCityAjax(beginning)
           .then((data) => {
-              dispatch(setCityAutocompleteArray(data));
+              dispatch(setCityAutocompleteArray(data, input));
           }).catch((error) => {
               dispatch(setAutocompleteError(error));
-          });
-    };
-}
-
-export function getNearestTo(location) {
-    return (dispatch) => {
-        dispatch(setNearestCitiesError({
-            code: 0,
-            message: 'loading...',
-        }));
-        getCityAPI.getClosestCitiesToLocation(location)
-          .then((cities) => {
-              dispatch(changeNearestCities(cities));
-          }).catch((error) => {
-              dispatch(setNearestCitiesError(error));
           });
     };
 }

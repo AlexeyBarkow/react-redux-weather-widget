@@ -1,18 +1,18 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import BottomWrapper from '../BottomWrapper';
-import { weatherOverallSelector } from '../../selectors/selectors';
-import * as actions from '../../dataflow/actions/index';
+import BottomMapWrapper from '../BottomMapWrapper';
+import { weatherOverallSelector } from '../../selectors';
+import { getLocation } from '../../dataflow/actions';
 
 function mapStateToProps(state) {
     return {
-        geolocation: state.geolocation,
+        geolocation: state.location.geolocation,
         weatherOverall: weatherOverallSelector(state),
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
+    return bindActionCreators({ getLocation }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BottomWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(BottomMapWrapper);

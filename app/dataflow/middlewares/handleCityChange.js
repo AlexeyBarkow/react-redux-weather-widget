@@ -1,26 +1,37 @@
-import { getWeather, getForecast, redirectToCity } from '../actions/index';
-import { DEFAULT_PATH_REGEXP } from '../../utils/constants';
+import { getWeather, getForecast, redirectToCity, getWeatherByLocation, getForecastByLocation, setForecastStatus } from '../actions';
+import { DEFAULT_PATH_REGEXP, DEFAULT_COUNTRY_CODE } from '../../utils/constants';
 
 export const handleCityChange = (prevState, newState, action, dispatch) => {
-    const { city, countryCode, metric, weather } = newState;
-    const oldCity = prevState.city;
-    const oldCountryCode = prevState.countryCode;
-    const oldMetric = prevState.metric;
+    const { main: { city, countryCode }, weather: { weather: { status, location } } } = newState;
+    const { main: { city: oldCity, countryCode: oldCountryCode } } = prevState;
 
     const isCitySet = city && countryCode;
-    const isNotSameAsPrev = (city !== oldCity || countryCode !== oldCountryCode ||
-        metric !== oldMetric || weather.status === 0);
-
-    if (isCitySet && isNotSameAsPrev) {
-        dispatch(getWeather(city, countryCode, metric));
-        dispatch(getForecast(city, countryCode, metric));
+    const isNotSameAsPrev = (city !== oldCity || countryCode !== oldCountryCode
+        || status === 0);
+    if (status === 0 || (isCitySet && isNotSameAsPrev)) {
+        if (location && (!countryCode || countryCode === DEFAULT_COUNTRY_CODE)) {
+            return dispatch(getWeatherByLocation(location, city))
+            .then(({ location: receivedLocation }) => {
+                if (receivedLocation && receivedLocation.latitude && receivedLocation.longitude) {
+                    dispatch(getForecastByLocation(receivedLocation, city));
+                } else {
+                    dispatch(setForecastStatus(receivedLocation));
+                }
+            });
+        }
+        return Promise.all([
+            dispatch(getWeather(city, countryCode)),
+            dispatch(getForecast(city, countryCode)),
+        ]);
     }
+    return Promise.resolve();
 };
 
 export const handleNearesetCitiesSet = (prevState, newState, action, dispatch) => {
-    const { city, countryCode } = newState;
+    const { main: { city, countryCode } } = newState;
     const nearestCities = action.nearestCities[0];
-    if (DEFAULT_PATH_REGEXP.test(newState.locationBeforeTransitions.pathname)
+
+    if (DEFAULT_PATH_REGEXP.test(newState.routing.locationBeforeTransitions.pathname)
         && nearestCities && (!city || !countryCode)) {
         dispatch(redirectToCity(nearestCities.name, nearestCities.countryCode));
     }

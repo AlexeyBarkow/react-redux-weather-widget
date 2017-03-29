@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import classnames from 'classnames/dedupe';
 
 function MenuItem({
     children,
@@ -24,7 +25,7 @@ function MenuItem({
         case divider:
             return (
                 <li
-                  className={`divider ${className}`}
+                  className={classnames('divider', className)}
                   title={title}
                 />
             );
@@ -46,7 +47,7 @@ function MenuItem({
 }
 
 MenuItem.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.node,
     className: PropTypes.string,
     header: PropTypes.boolean,
     divider: PropTypes.boolean,

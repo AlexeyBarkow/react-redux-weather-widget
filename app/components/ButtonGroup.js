@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames/dedupe';
 
 function ButtonGroup({
     children,
@@ -7,16 +8,14 @@ function ButtonGroup({
     block,
     justified,
 }) {
+    const resultClassNames = classnames(
+        `btn-group${vertical ? '-vertical' : ''}`,
+        block && 'btn-block',
+        justified && 'btn-group-justified',
+        className,
+    );
     return (
-        <div
-          className={`btn-group${
-                vertical ? '-vertical' : ''
-            }${
-                block ? ' btn-block ' : ' '
-            }${
-                justified ? ' btn-group-justified ' : ' '
-            }${className}`}
-        >
+        <div className={resultClassNames}>
             { children }
         </div>
     );
