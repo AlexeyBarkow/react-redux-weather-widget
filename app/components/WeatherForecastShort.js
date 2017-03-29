@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import map from 'lodash/map';
 import { formatDate } from '../utils/unifiedDateFormat';
 import ErrorMessage from './ErrorMessage';
 import WeatherSummary from './WeatherSummary';
@@ -10,7 +11,7 @@ function WeatherForecastShort({ metric, forecast, className }) {
             {(() => {
                 if (forecast.length > 0 && forecast[0].status !== 1) {
                     if (forecast[0].status === 200) {
-                        const weatherMap = forecast.map((curr, index) => (
+                        const weatherMap = map(forecast, (curr, index) => (
                             <WeatherSummary
                               formatDate={date => formatDate(date)}
                               shortView

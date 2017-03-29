@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import { Field } from 'redux-form';
 import entries from 'lodash/entries';
+import map from 'lodash/map';
 import every from 'lodash/every';
-import DeleteInputBox from './DeleteInputBox';
+import DeleteInputBox from '../components/DeleteInputBox';
 
 class MultipleInputFields extends Component {
     shouldComponentUpdate(newProps) {
@@ -64,7 +65,7 @@ class MultipleInputFields extends Component {
                         fields.length > 0 &&
                         <div className="clearfix delete-box-container">
                             {
-                                fields.map((_, index, arr) => (
+                                map(fields, (_, index, arr) => (
                                     <DeleteInputBox
                                       deleteHandler={() => { fields.remove(index); }}
                                       key={index}

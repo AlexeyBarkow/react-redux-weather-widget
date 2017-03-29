@@ -31,7 +31,7 @@ export function autocompleteCity(beginning, input = 'all') {
             code: 0,
             message: 'loading...',
         }));
-        getCityAPI.getCityAjax(beginning)
+        return getCityAPI.getCityAjax(beginning)
           .then((data) => {
               dispatch(setCityAutocompleteArray(data, input));
           }).catch((error) => {

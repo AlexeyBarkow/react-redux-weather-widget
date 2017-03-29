@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import map from 'lodash/map';
 import FiltersForm from './connectors/FiltersFormConnector';
 import FilteredItemsContainer from '../components/FilteredItemsContainer';
 import Loading from '../components/Loading';
@@ -62,7 +63,7 @@ class FiltersContainer extends Component {
 
         if (filterCityRadio === 'custom') {
             citiesToFilterArray = filterSelectedCities
-            ? filterSelectedCities.map((curr) => {
+            ? map(filterSelectedCities, (curr) => {
                 const [cityname, countryCode] = curr.match(VALIDATE_ADDRESS_REGEXP).slice(1);
                 return { cityname, countryCode };
             })
@@ -75,7 +76,7 @@ class FiltersContainer extends Component {
             filterStatus: 'loading',
         });
 
-        Promise.all(citiesToFilterArray.map(({ cityname, countryCode }) =>
+        Promise.all(map(citiesToFilterArray, ({ cityname, countryCode }) =>
             fetchWeatherAndForecast(cityname, countryCode)))
             .then(() => {
                 setCitiesToFilter(citiesToFilterArray);

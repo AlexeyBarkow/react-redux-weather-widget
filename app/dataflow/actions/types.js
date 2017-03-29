@@ -1,3 +1,5 @@
+import { LOCATION_CHANGE } from 'react-router-redux';
+
 export default {
     'SET_CITY': '[GLOBAL] SET_CITY',
     'SET_METRIC': '[GLOBAL] SET_METRIC',
@@ -24,4 +26,5 @@ export default {
     'CREATE_TOOLTIP': '[TOOLTIP] CREATE_TOOLTIP',
     'DESTROY_TOOLTIP': '[TOOLTIP] DESTROY_TOOLTIP',
     'SET_CITIES_TO_FILTER': '[FILTER] SET_CITIES_TO_FILTER',
+    LOCATION_CHANGE,
 };

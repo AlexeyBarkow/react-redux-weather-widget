@@ -3,16 +3,15 @@ import { CITY_PATH_REGEXP, DEFAULT_PATH_REGEXP } from '../../utils/constants';
 
 export const handleLocationChange = (prevState, newState, action, dispatch) => {
     const { main: { city, countryCode } } = prevState;
+    const { location: { nearestCities: [nearest] } } = newState;
     const pathString = decodeURI(action.payload.pathname);
-    const path = pathString
-        .match(CITY_PATH_REGEXP) || [];
-    const pathCountryName = path && path[1];
-    const pathCityName = path && path[2];
+    const path = pathString.match(CITY_PATH_REGEXP) || [];
+    const [pathCountryName, pathCityName] = path.slice(1);
     const metricTitle = action.payload.query && action.payload.query.metric;
 
-    if (pathString === '/home' && newState.location.nearestCities[0]) {
-        const closestCity = newState.location.nearestCities[0].name;
-        const closestCountryCode = newState.location.nearestCities[0].countryCode;
+    if (pathString === '/home' && nearest) {
+        const closestCity = nearest.name;
+        const closestCountryCode = nearest.countryCode;
         dispatch(redirectToCity(closestCity, closestCountryCode));
         return;
     }
@@ -30,7 +29,9 @@ export const handleLocationChange = (prevState, newState, action, dispatch) => {
 
 export const handleLocationUpdate = (prevState, newState, action, dispatch) => {
     const { location: { geolocation } } = newState;
-    if (geolocation && prevState.location.geolocation !== geolocation) {
+    const { location: { geolocation: prevGeolocation } } = prevState;
+
+    if (geolocation && prevGeolocation !== geolocation) {
         dispatch(getNearestTo(geolocation));
     }
 };

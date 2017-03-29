@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import map from 'lodash/map';
 import DropDown from './DropDown';
 import DatalistOption from './DatalistOption';
 
@@ -10,7 +11,7 @@ function AutocompleteField(props) {
             {
                 autocomplete.input === autocompleteName
                 ?
-                autocomplete.map((curr, index) => (
+                map(autocomplete, (curr, index) => (
                     <DatalistOption hiddenValue={index} value={`${curr.name}, ${curr.countryCode}`} key={`${curr.name}-${index}`} />
                 ))
                 : undefined

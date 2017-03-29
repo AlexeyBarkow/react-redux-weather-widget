@@ -8,9 +8,9 @@ import storeChangeHandler from './onStoreChange';
 const middleware = routerMiddleware(browserHistory);
 
 const enhancer = compose(applyMiddleware(
-    thunk,
     middleware,
     onStateChange(storeChangeHandler),
+    thunk,
 ));
 
 export default enhancer;

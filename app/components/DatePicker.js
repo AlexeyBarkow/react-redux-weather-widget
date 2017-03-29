@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
+import map from 'lodash/map';
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
 import {
     getFirstDayOfMonth,
@@ -87,7 +88,7 @@ class DatePicker extends Component {
         const firstWeekday = firstDay.getDay();
         const today = new Date();
         const rows = [];
-        const firstDateCopy = new Date(firstDay.valueOf());
+        let firstDateCopy = new Date(firstDay.valueOf());
         const setValue = (day, month, year, isActive) => () => {
             const value = convertToDateString(day, month, year);
 
@@ -101,13 +102,13 @@ class DatePicker extends Component {
         };
 
         let counter = -firstWeekday;
-        addDays(firstDateCopy, -firstWeekday);
+        firstDateCopy = addDays(firstDateCopy, -firstWeekday);
 
         while (counter < daysInMonth) {
             const cols = [];
 
             for (let i = 0; i < 7; i += 1) {
-                addDays(firstDateCopy, 1);
+                firstDateCopy = addDays(firstDateCopy, 1);
                 const isActive = datepickerArray.indexOf(
                     convertToDateString(
                         firstDateCopy.getDate(),
@@ -194,7 +195,7 @@ class DatePicker extends Component {
                                     </tr>
                                     <tr>
                                         {
-                                            WEEK_DAY_NAMES.map((curr, index) => (
+                                            map(WEEK_DAY_NAMES, (curr, index) => (
                                                 <th key={index} className="dow">{ curr.slice(0, 2) }</th>
                                             ))
                                         }

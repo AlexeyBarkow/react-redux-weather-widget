@@ -77,7 +77,7 @@ PaginationContainer.propTypes = {
 PaginationContainer.defaultProps = {
     pageSize: 10,
     className: '',
-    children: null,
+    children: [],
 };
 
 export default PaginationContainer;

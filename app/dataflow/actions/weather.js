@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux';
+import map from 'lodash/map';
 import types from './types';
 import getWeatherAjax from '../../utils/weatherAPI';
 import { DEFAULT_METRIC } from '../../utils/constants';
@@ -85,7 +86,7 @@ export function getWeatherCacheWrapper(
             const cached = cache[cacheKey];
 
             if (cached && cached.status === 200) {
-                return successCallback(dispatch, cached, ...args);
+                return Promise.resolve(successCallback(dispatch, cached, ...args));
             }
 
             if (cacheStatusActionCreator) {
@@ -103,12 +104,12 @@ export function getWeatherCacheWrapper(
                         if (cacheActionCreator) {
                             dispatch(cacheActionCreator(data, cacheKey));
                         }
-                        return successCallback(dispatch, data, ...args);
+                        return Promise.resolve(successCallback(dispatch, data, ...args));
                     }
                     if (cacheStatusActionCreator) {
                         dispatch(cacheStatusActionCreator(data.cod, cacheKey));
                     }
-                    return failCallback(dispatch, data, ...args);
+                    return Promise.resolve(failCallback(dispatch, data, ...args));
                 });
         };
 }
@@ -124,10 +125,13 @@ export const getWeather = getWeatherCacheWrapper(
     },
     (dispatch, data) => {
         dispatch(changeWeatherInfo(data));
+        return data;
     },
     (dispatch, data) => {
         const { response: { data: { cod, message } } } = data;
-        dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
+        const status = { cod: parseInt(cod, 10), message };
+        dispatch(setWeatherStatus(status));
+        return status;
     },
 );
 
@@ -142,10 +146,13 @@ export const getWeatherByLocation = getWeatherCacheWrapper(
     },
     (dispatch, data) => {
         dispatch(changeWeatherInfo(data));
+        return data;
     },
     (dispatch, data) => {
         const { response: { data: { cod, message } } } = data;
-        dispatch(setWeatherStatus({ cod: parseInt(cod, 10), message }));
+        const errorMessage = { cod: parseInt(cod, 10), message };
+        dispatch(setWeatherStatus(errorMessage));
+        return errorMessage;
     },
 );
 
@@ -160,10 +167,13 @@ export const getForecast = getWeatherCacheWrapper(
     },
     (dispatch, data) => {
         dispatch(changeForecastInfo(data));
+        return data;
     },
     (dispatch, data) => {
         const { response: { data: { cod, message } } } = data;
-        dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
+        const status = { cod: parseInt(cod, 10), message };
+        dispatch(setForecastStatus(status));
+        return status;
     },
 );
 
@@ -178,10 +188,13 @@ export const getForecastByLocation = getWeatherCacheWrapper(
     },
     (dispatch, data) => {
         dispatch(changeForecastInfo(data));
+        return data;
     },
     (dispatch, data) => {
         const { response: { data: { cod, message } } } = data;
-        dispatch(setForecastStatus({ cod: parseInt(cod, 10), message }));
+        const status = { cod: parseInt(cod, 10), message };
+        dispatch(setForecastStatus(status));
+        return status;
     },
 );
 
@@ -198,25 +211,27 @@ export function getNearestTo(location) {
     return (dispatch, getState) => {
         const geolocation = location || getState().location.geolocation;
         if (!geolocation.latitude || !geolocation.longitude) {
-            dispatch(setNearestCitiesError({
+            const error = {
                 code: -1,
                 message: 'Could not get geolocation',
-            }));
-            return;
+            };
+            dispatch(setNearestCitiesError(error));
+            return Promise.resolve(error);
         }
         dispatch(setNearestCitiesError({
             code: 0,
             message: 'loading...',
         }));
-        getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
+        return getWeatherAjax.getClosestCitiesToLocation(geolocation).then((res) => {
             if (res.response) {
-                dispatch(setNearestCitiesError({
+                const error = {
                     code: res.response.status,
                     message: res.response.statusText,
-                }));
-                return;
+                };
+                dispatch(setNearestCitiesError(error));
+                return error;
             }
-            const nearestCities = res.map((curr) => {
+            const nearestCities = map(res, (curr) => {
                 const { city, country } = curr;
                 dispatch(cacheFetchedData(curr, `weather/${city}/${country}`));
                 return {
@@ -225,8 +240,10 @@ export function getNearestTo(location) {
                 };
             });
             dispatch(changeNearestCities(nearestCities));
+            return nearestCities;
         }).catch((error) => {
             dispatch(setNearestCitiesError(error));
+            return error;
         });
     };
 }

@@ -21,7 +21,7 @@ export function getMinutes(date) {
 }
 
 export function getHours(date) {
-    return checkValidity(date, () => dateFormat(date, 'HH '));
+    return checkValidity(date, () => dateFormat(date, 'HH'));
 }
 
 export function getFirstDayOfMonth(date) {
@@ -38,14 +38,16 @@ export function getMonthLength(date) {
     return new Date(year, month, 0).getDate();
 }
 
-export function addDays(date, days) {
-    date.setDate(date.getDate() + days);
-    return date;
+export function addDays(date, days = 0) {
+    const newDate = new Date(date.getTime());
+    newDate.setDate(newDate.getDate() + days);
+    return newDate;
 }
 
-export function addMonths(date, months) {
-    date.setMonth(date.getMonth() + months);
-    return date;
+export function addMonths(date, months = 0) {
+    const newDate = new Date(date.getTime());
+    newDate.setMonth(newDate.getMonth() + months);
+    return newDate;
 }
 
 export function compareDatesDay(date1, date2) {
@@ -55,7 +57,7 @@ export function compareDatesDay(date1, date2) {
 }
 
 export function convertToDateString(day, month, year) {
-    return `${day < 10 ? `0${day}` : day}.${month < 9 ? `0${month + 1}` : month + 1}.${year}`;
+    return dateFormat(new Date(year, month, day), 'dd.mm.yyyy');
 }
 
 export function compareDatesDayDiff(date1, date2) {

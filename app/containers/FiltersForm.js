@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames/dedupe';
 import { reduxForm, Fields } from 'redux-form';
 import throttle from 'lodash/throttle';
+import map from 'lodash/map';
 import Form from './Form';
 import ButtonToolbar from '../components/ButtonToolbar';
 import TemperatureFilterFields from '../components/TemperatureFilterFields';
@@ -140,7 +141,7 @@ class FiltersForm extends Component {
                     />
                     <Fields
                       className="row pseudo-paragraph"
-                      names={WEATHER_ICONS_NAMES.map(curr => `weatherIcons.${curr}`)}
+                      names={map(WEATHER_ICONS_NAMES, curr => `weatherIcons.${curr}`)}
                       icons={WEATHER_ICON_TYPES_MAP}
                       component={WeatherTypeFields}
                     />

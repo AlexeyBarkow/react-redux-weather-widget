@@ -12,8 +12,11 @@ class FiltersBottomWrapper extends Component {
     submitAddToFav = ({ tableCity }) => {
         const { addToFavoritesAndFetchWeather, favorites } = this.props;
         if (tableCity) {
-            const [cityname, countryCode] = tableCity.match(VALIDATE_ADDRESS_REGEXP).slice(1);
-            if (favorites.find(city =>
+            let [cityname, countryCode] = tableCity.match(VALIDATE_ADDRESS_REGEXP).slice(1);
+            cityname = cityname.charAt(0).toUpperCase() + cityname.slice(1).toLowerCase();
+            countryCode = countryCode.toUpperCase();
+
+            if (favorites.some(city =>
                 cityname === city.cityname && countryCode === city.countryCode)) {
                 throw new SubmissionError({ tableCity: 'Already added' });
             }
