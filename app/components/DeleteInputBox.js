@@ -5,8 +5,8 @@ import Button from './Button';
 function DeleteInputBox({ className, deleteHandler, children }) {
     return (
         <Button onClickHandler={deleteHandler} primary className={classnames(className, 'delete-box')}>
-            { children }
             <span className="close">×</span>
+            { children }
         </Button>
     );
 }

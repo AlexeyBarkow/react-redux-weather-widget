@@ -16,7 +16,7 @@ module.exports = {
         publicPath: './',
     },
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'app/index.html'),
             inject: 'body',
@@ -26,7 +26,6 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin({
             compressor: {
                 warnings: false,
-                screw_ie8: true,
             },
         }),
         new webpack.optimize.CommonsChunkPlugin({
@@ -42,22 +41,39 @@ module.exports = {
         loaders: [{
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: 'babel',
+            loader: 'babel-loader',
         }, {
             test: /\.json$/,
-            loader: 'json',
+            loader: 'json-loader',
         }, {
             test: /\.scss$/,
-            loader: ExtractTextPlugin.extract('style', ['css-loader', 'sass-loader', 'sass-resources', 'postcss-loader']),
+            loader: ExtractTextPlugin.extract(
+                {
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        'sass-loader',
+                        {
+                            loader: 'sass-resources-loader?sourceMap',
+                            options: {
+                                resources: [
+                                    './app/styles/mixins.scss',
+                                    './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
+                                ],
+                            },
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: () => [autoprefixer],
+                            },
+                        },
+                    ],
+                }
+            ),
         }, {
             test: /\.css$/,
             loader: 'css-loader',
         }],
-        postcss: [
-            autoprefixer,
-        ],
     },
-    sassResources: [
-        './app/styles/mixins.scss', './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
-    ],
 };

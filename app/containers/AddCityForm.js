@@ -21,6 +21,7 @@ class AddCityForm extends Component {
 
     render() {
         const { handleSubmit, className, autocomplete } = this.props;
+
         return (
             <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>

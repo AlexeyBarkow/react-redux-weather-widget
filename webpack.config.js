@@ -29,35 +29,38 @@ module.exports = {
         }),
     ],
     module: {
-        preLoaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint',
-            },
-        ],
         loaders: [
             {
+                enforce: 'pre',
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel',
+                loader: 'eslint-loader',
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
             }, {
                 test: /\.json?$/,
-                loader: 'json',
+                loader: 'json-loader',
             }, {
                 test: /\.s?css$/,
                 loaders: [
                     'style-loader',
                     'css-loader?sourceMap',
                     'sass-loader?sourceMap',
-                    'sass-resources?sourceMap',
+                    {
+                        loader: 'sass-resources-loader?sourceMap',
+                        options: {
+                            resources: [
+                                './app/styles/mixins.scss',
+                                './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
+                            ],
+                        },
+                    },
                     'postcss-loader',
                 ],
             },
         ],
     },
-    sassResources: [
-        './app/styles/mixins.scss',
-        './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
-    ],
 };
