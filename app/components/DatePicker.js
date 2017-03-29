@@ -31,7 +31,7 @@ class DatePicker extends Component {
         super(props);
 
         this.state = {
-            currDate: props.startDate ? new Date(props.startDate) : new Date(),
+            currDate: new Date(props.startDate),
             hideInput: true,
         };
     }
@@ -77,12 +77,15 @@ class DatePicker extends Component {
         const { currDate: date } = this.state;
         const {
             change,
+            startDate,
             input: { name },
             onChangeHandler,
             datepickerArray,
             maxForwardInterval,
             maxBackwardInterval,
         } = this.props;
+
+        const now = new Date(startDate);
         const firstDay = getFirstDayOfMonth(date);
         const daysInMonth = getMonthLength(date);
         const firstWeekday = firstDay.getDay();
@@ -117,7 +120,7 @@ class DatePicker extends Component {
                     )) !== -1;
                 const datesDiffInDays = compareDatesDayDiff(new Date(
                     firstDateCopy.getFullYear(), firstDateCopy.getMonth(), firstDateCopy.getDate(),
-                ), date);
+                ), now);
                 const isMatchesIntervals = (
                     maxForwardInterval !== -1
                     ? datesDiffInDays <= maxForwardInterval
@@ -227,7 +230,7 @@ DatePicker.propTypes = {
 DatePicker.defaultProps = {
     className: '',
     title: null,
-    startDate: undefined,
+    startDate: Date.now(),
     maxBackwardInterval: -1,
     maxForwardInterval: -1,
 };

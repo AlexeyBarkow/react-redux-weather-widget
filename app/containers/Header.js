@@ -23,11 +23,12 @@ class Header extends Component {
         });
     };
 
-    cityInputFormSubmit = ({ city, metric }) => {
-        const { redirectToCity } = this.props;
+    cityInputFormSubmit = ({ city, metric }, _, { form: formName }) => {
+        const { redirectToCity, reset } = this.props;
         if (city) {
             const [cityName, countryCode] = city.match(VALIDATE_ADDRESS_REGEXP).slice(1);
             redirectToCity(cityName, countryCode, metric);
+            reset(formName);
         }
     }
 
@@ -80,6 +81,7 @@ Header.propTypes = {
     autocomplete: PropTypes.array,
     autocompleteCity: PropTypes.func.isRequired,
     metric: PropTypes.string.isRequired,
+    reset: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
