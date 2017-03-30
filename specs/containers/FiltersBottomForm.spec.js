@@ -14,6 +14,7 @@ describe('FiltersBottomWrapper', () => {
                   getAllFavoritesWeather={jest.fn()}
                   changeFavoriteIndex={jest.fn()}
                   cache={{}}
+                  reset={jest.fn()}
                   addToFavoritesAndFetchWeather={jest.fn()}
                   favorites={[{ cityname: 'Testcity', countryCode: 'TS' }]}
                   metric="K"
@@ -24,12 +25,20 @@ describe('FiltersBottomWrapper', () => {
         });
         it('should call addToFavoritesAndFetchWeather when new city is added', () => {
             const instance = wrapper.instance();
-            instance.submitAddToFav({ tableCity: 'City, BY' });
+            instance.submitAddToFav(
+                { tableCity: 'City, BY' },
+                undefined,
+                { form: 'form' },
+            );
             expect(instance.props.addToFavoritesAndFetchWeather).toHaveBeenCalledWith('City', 'BY');
         });
         it('should throw SubmissionError if city is already presented in favorites', () => {
             const instance = wrapper.instance();
-            expect(() => instance.submitAddToFav({ tableCity: 'testcity, ts' })).toThrow(SubmissionError);
+            expect(() => instance.submitAddToFav(
+                { tableCity: 'testcity, ts' },
+                undefined,
+                { form: 'form' },
+            )).toThrow(SubmissionError);
         });
     });
 });
