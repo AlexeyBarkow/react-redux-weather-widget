@@ -7,6 +7,7 @@ import {
     removeFromFavorites,
     getAllFavoritesWeather,
     changeFavoriteIndex,
+    reset,
 } from '../../dataflow/actions';
 import { selectFavoriteCache } from '../../selectors';
 
@@ -31,6 +32,7 @@ function mapDispatchToProps(dispatch) {
         removeFromFavorites,
         getAllFavoritesWeather,
         changeFavoriteIndex,
+        reset,
     }, dispatch);
 }
 

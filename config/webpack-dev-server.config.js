@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const config = require('../webpack.config.js');
 
 module.exports = {
@@ -14,9 +13,9 @@ module.exports = {
         hash: false,
         timings: false,
         chunks: false,
-        chunkModules: false
+        chunkModules: false,
     },
     watchOptions: {
-        aggregateTimeout: 300
-    }
+        aggregateTimeout: 300,
+    },
 };

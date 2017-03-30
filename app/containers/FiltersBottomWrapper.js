@@ -9,8 +9,8 @@ class FiltersBottomWrapper extends Component {
         this.props.getAllFavoritesWeather();
     }
 
-    submitAddToFav = ({ tableCity }) => {
-        const { addToFavoritesAndFetchWeather, favorites } = this.props;
+    submitAddToFav = ({ tableCity }, _, { form: formName }) => {
+        const { addToFavoritesAndFetchWeather, favorites, reset } = this.props;
         if (tableCity) {
             let [cityname, countryCode] = tableCity.match(VALIDATE_ADDRESS_REGEXP).slice(1);
             cityname = cityname.charAt(0).toUpperCase() + cityname.slice(1).toLowerCase();
@@ -21,6 +21,7 @@ class FiltersBottomWrapper extends Component {
                 throw new SubmissionError({ tableCity: 'Already added' });
             }
             addToFavoritesAndFetchWeather(cityname, countryCode);
+            reset(formName);
         }
     };
 
@@ -65,6 +66,7 @@ FiltersBottomWrapper.propTypes = {
     getAllFavoritesWeather: PropTypes.func.isRequired,
     changeFavoriteIndex: PropTypes.func.isRequired,
     cache: PropTypes.object.isRequired,
+    reset: PropTypes.func.isRequired,
 };
 
 FiltersBottomWrapper.defaultProps = {

@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     devtool: 'source-map',
     entry: [
-        'webpack/hot/only-dev-server',
+        'webpack-dev-server/client?http://localhost:3000',
+        'webpack/hot/dev-server',
         'react-hot-loader/patch',
         path.join(__dirname, 'app/index.js'),
     ],
@@ -28,35 +29,35 @@ module.exports = {
         }),
     ],
     module: {
-        preLoaders: [
+        rules: [
             {
+                enforce: 'pre',
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'eslint',
+                use: 'eslint-loader',
             },
-        ],
-        loaders: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel',
-            }, {
-                test: /\.json?$/,
-                loader: 'json',
+                use: 'babel-loader',
             }, {
                 test: /\.s?css$/,
-                loaders: [
+                use: [
                     'style-loader',
                     'css-loader?sourceMap',
                     'sass-loader?sourceMap',
-                    'sass-resources?sourceMap',
+                    {
+                        loader: 'sass-resources-loader?sourceMap',
+                        options: {
+                            resources: [
+                                './app/styles/mixins.scss',
+                                './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
+                            ],
+                        },
+                    },
                     'postcss-loader',
                 ],
             },
         ],
     },
-    sassResources: [
-        './app/styles/mixins.scss',
-        './node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/*.scss',
-    ],
 };
