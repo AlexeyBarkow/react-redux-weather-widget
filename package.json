@@ -4,12 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node ./config/server.js",
+    "dev": "node ./config/server.js",
     "build": "rimraf dist && mkdir dist && webpack --config webpack.prod.config.js",
     "test": "jest --config=jest.config.json",
     "coverageCheck": "jest --config=jest.config.json --coverage",
     "updateSnapshots": "jest --updateSnapshot",
-    "server": "nodemon ./server"
+    "server": "nodemon ./server",
+    "start": "concurrently --kill-others \"npm run dev\" \"npm run server\""
   },
   "author": "Aliaksei_Barkou",
   "license": "ISC",
@@ -57,7 +58,9 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.3.2",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-dev-server": "^2.4.2",
+    "webpack-hot-middleware": "^2.18.0"
   },
   "dependencies": {
     "axios": "^0.15.3",

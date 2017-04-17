@@ -5,6 +5,7 @@ module.exports = {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
+    index: 'index.html',
     quiet: false,
     noInfo: false,
     stats: {
