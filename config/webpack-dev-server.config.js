@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const config = require('../webpack.config.js');
 
 module.exports = {

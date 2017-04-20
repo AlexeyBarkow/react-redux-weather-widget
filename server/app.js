@@ -4,24 +4,26 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
-const path = require('path');
+const webpack = require('webpack');
 const { passport } = require('./passport');
 const { PORT } = require('./constants');
-const webpackMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('../webpack.config.js');
 const webpackDevConfig = require('../config/webpack-dev-server.config.js');
-const webpack = require('webpack');
+const { get } = require('./utils/request');
+const weatherRouter = require('./routes/weather');
 
 const app = express();
 const logger = morgan(':method :url :status :res[content-length] - :response-time ms');
 
+// app.use('/api', weatherRouter);
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(session({ secret: 'secret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logger);
-app.use(webpackMiddleware(webpack(webpackConfig), webpackDevConfig));
+const compiler = webpack(webpackConfig);
+
 
 // app.get('/', (req, res) => {
 //     res.status(200).send(`hello, ${JSON.stringify(req.user)}`);
