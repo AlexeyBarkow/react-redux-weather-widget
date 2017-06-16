@@ -6,8 +6,8 @@ jest.mock('axios');
 
 describe('getCityAPI.js', () => {
     beforeAll(() => {
-        const getClosestCitiesToLocationUrl = 'http://ws.geonames.org/citiesJSON?north=9.5&south=10.5&west=9.5&east=10.5&username=aliaksei_barkou&maxRows=10&style=SHORT&radius=0.5';
-        const getCitiesByNameUrl = 'http://ws.geonames.org/searchJSON?name_startsWith=home&username=aliaksei_barkou&maxRows=10&style=SHORT';
+        const getClosestCitiesToLocationUrl = '/api/citiesJSON?north=9.5&south=10.5&west=9.5&east=10.5&maxRows=10&style=SHORT&radius=0.5';
+        const getCitiesByNameUrl = '/api/searchJSON?name_startsWith=home&maxRows=10&style=SHORT';
 
         axios.get.mockImplementation(
             url => new Promise((res, rej) => {

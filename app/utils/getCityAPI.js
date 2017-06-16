@@ -21,7 +21,7 @@ function getClosestToLocationUrl(
         longitude - radius
     }&east=${
         longitude + radius
-    }&&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
+    }&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
 }
 
 function convertToAcceptable({ countryCode, countrycode, name }) {

@@ -5,13 +5,14 @@
   "main": "server.js",
   "scripts": {
     "dev": "node ./config/server.js",
-    "deploy": "npm run build && npm run server:prod",
+    "deploy": "npm run build && npm run build:server && npm run server:prod",
     "build": "cross-env NODE_ENV=production rimraf dist && mkdir dist && webpack --config webpack.prod.config.js",
+    "build:server": "babel server -d dist-server --presets es2015,stage-2",
     "test": "jest --config=jest.config.json",
     "coverageCheck": "jest --config=jest.config.json --coverage",
     "updateSnapshots": "jest --updateSnapshot",
     "server": "cross-env NODE_ENV=development nodemon ./server --exec babel-node --presets es2015,stage-2",
-    "server:prod": "cross-env NODE_ENV=production ./server --exec babel-node --presets es2015,stage-2",
+    "server:prod": "cross-env NODE_ENV=production node ./dist-server",
     "start": "concurrently --kill-others \"npm run dev\" \"npm run server\"",
     "eslint": "eslint \"app/**/*.js\" \"server/**/*.js\" --fix --cache --cache-location \"./.cache\""
   },
@@ -100,5 +101,14 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^2.5.4",
     "url": "^0.11.0"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js"],
+    "collectCoverageFrom" : ["app/**/*.js", "!**/node_modules/**"],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.css$": "<rootDir>/specs/__mocks__/styleMock.js",
+      "\\.scss$": "<rootDir>/specs/__mocks__/styleMock.js"
+    }
   }
 }

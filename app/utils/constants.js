@@ -1,4 +1,4 @@
-export const BASEPATH_URL = 'http://epam.2i.by/barkou';
+export const BASEPATH_URL = 'http://localhost:3005';
 
 export const IMAGES_BASE_PATH = 'http://openweathermap.org/img/w/';
 export const IMAGES_UNUSUAL_PATH = 'http://epam.2i.by/barkou/images/';
