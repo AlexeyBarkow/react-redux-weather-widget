@@ -21,23 +21,23 @@ function WeatherDayPicker({
             <h2>Days to filter weather</h2>
             <div className="pseudo-paragraph">
                 <Field
-                  name={checkboxName}
-                  id={`${prefix}-date-now`}
-                  type="checkbox"
-                  className="custom-radio"
-                  component={CustomInput}
+                    name={checkboxName}
+                    id={`${prefix}-date-now`}
+                    type="checkbox"
+                    className="custom-radio"
+                    component={CustomInput}
                 >Right now</Field>
                 {
                     !filterDateCheckboxValue &&
                     <DatepickerInput
-                      clearField={(name) => { changeField(name, ''); }}
-                      changeField={changeField}
-                      maxForwardInterval={maxForwardInterval}
-                      maxBackwardInterval={maxBackwardInterval}
-                      name={datepickerName}
-                      change={changeField}
-                      inputName={datepickerInputName}
-                      datepickerArray={filterDatepickerArray}
+                        clearField={(name) => { changeField(name, ''); }}
+                        changeField={changeField}
+                        maxForwardInterval={maxForwardInterval}
+                        maxBackwardInterval={maxBackwardInterval}
+                        name={datepickerName}
+                        change={changeField}
+                        inputName={datepickerInputName}
+                        datepickerArray={filterDatepickerArray}
                     />
                 }
             </div>

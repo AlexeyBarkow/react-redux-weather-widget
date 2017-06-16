@@ -35,11 +35,11 @@ describe('weatherAPI.js', () => {
         const token = {};
         const cancelErr = {};
         beforeAll(() => {
-            const getWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=Minsk,BY&APPID=1c11f4e7692bb5e0526e72c0e6baaa3b&units=metric';
-            const getForecastUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=Minsk,BY&APPID=1c11f4e7692bb5e0526e72c0e6baaa3b&units=metric';
-            const getWrongWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=qweqweqwewqeqwe&APPID=1c11f4e7692bb5e0526e72c0e6baaa3b&units=metric';
-            const getWrongForecastUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=qweqweqwewqeqwe&APPID=1c11f4e7692bb5e0526e72c0e6baaa3b&units=metric';
-            const getClosestCitiesUrl = 'http://api.openweathermap.org/data/2.5/find?lat=10&lon=10&cnt=10&APPID=1c11f4e7692bb5e0526e72c0e6baaa3b&units=metric';
+            const getWeatherUrl = '/api/weather?q=Minsk,BY&units=metric';
+            const getForecastUrl = '/api/forecast?q=Minsk,BY&units=metric';
+            const getWrongWeatherUrl = '/api/weather?q=qweqweqwewqeqwe&units=metric';
+            const getWrongForecastUrl = '/api/forecast?q=qweqweqwewqeqwe&units=metric';
+            const getClosestCitiesUrl = '/api/find?lat=10&lon=10&cnt=10&units=metric';
 
             axios.get.mockImplementation(
                 (url, { cancelToken }) => new Promise((res, rej) => {

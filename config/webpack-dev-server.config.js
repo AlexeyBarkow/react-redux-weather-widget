@@ -5,6 +5,7 @@ module.exports = {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
+    index: 'index.html',
     quiet: false,
     noInfo: false,
     stats: {
@@ -18,5 +19,8 @@ module.exports = {
     },
     watchOptions: {
         aggregateTimeout: 300
+    },
+    proxy: {
+        '/api': 'http://localhost:3005'
     }
 };

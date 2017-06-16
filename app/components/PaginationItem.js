@@ -5,10 +5,10 @@ function PaginationItem({ children, className, onClickHandler }) {
     return (
         <li className={className}>
             <Button
-              href="#"
-              noDefaultStyles
-              preventDefaultAnyway
-              onClickHandler={onClickHandler}
+                href="#"
+                noDefaultStyles
+                preventDefaultAnyway
+                onClickHandler={onClickHandler}
             >{ children }</Button>
         </li>
     );

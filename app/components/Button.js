@@ -47,11 +47,11 @@ class Button extends Component {
                 if (href[0] === '#') {
                     return (
                         <a
-                          href={href}
-                          disabled={disabled}
-                          className={classesToPass}
-                          title={title}
-                          onClick={clickHandler}
+                            href={href}
+                            disabled={disabled}
+                            className={classesToPass}
+                            title={title}
+                            onClick={clickHandler}
                         >
                             { children }
                         </a>
@@ -59,11 +59,11 @@ class Button extends Component {
                 }
                 return (
                     <Link
-                      disabled={disabled}
-                      className={classesToPass}
-                      title={title}
-                      to={href}
-                      onClick={clickHandler}
+                        disabled={disabled}
+                        className={classesToPass}
+                        title={title}
+                        to={href}
+                        onClick={clickHandler}
                     >
                         { children }
                     </Link>
@@ -71,10 +71,10 @@ class Button extends Component {
             }
             return (
                 <button
-                  disabled={disabled}
-                  className={classesToPass}
-                  onClick={clickHandler}
-                  type={type}
+                    disabled={disabled}
+                    className={classesToPass}
+                    onClick={clickHandler}
+                    type={type}
                 >
                     { children }
                 </button>

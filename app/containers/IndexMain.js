@@ -23,19 +23,19 @@ class IndexMain extends Component {
                 <TabContainer>
                     <Tab noRenderWhenHidden index="1">
                         <WeatherSummary
-                          formatDate={date => `Info gathered in ${formatDate(date)}`}
-                          showDate
-                          weather={weather}
-                          metric={metric}
+                            formatDate={date => `Info gathered in ${formatDate(date)}`}
+                            showDate
+                            weather={weather}
+                            metric={metric}
                         />
                     </Tab>
                     <Tab noRenderWhenHidden index="2">
                         <WeatherForecastSummary
-                          forecastFilter={forecastFilter}
-                          changeFilter={this.changeForecastFilter}
-                          forecast={forecast}
-                          className="summary"
-                          metric={metric}
+                            forecastFilter={forecastFilter}
+                            changeFilter={this.changeForecastFilter}
+                            forecast={forecast}
+                            className="summary"
+                            metric={metric}
                         />
                     </Tab>
                 </TabContainer>

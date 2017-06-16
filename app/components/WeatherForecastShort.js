@@ -13,20 +13,20 @@ function WeatherForecastShort({ metric, forecast, className }) {
                     if (forecast[0].status === 200) {
                         const weatherMap = map(forecast, (curr, index) => (
                             <WeatherSummary
-                              formatDate={date => formatDate(date)}
-                              shortView
-                              className="forecast-single"
-                              key={`forecast-${index}`}
-                              weather={curr}
-                              metric={metric}
+                                formatDate={date => formatDate(date)}
+                                shortView
+                                className="forecast-single"
+                                key={`forecast-${index}`}
+                                weather={curr}
+                                metric={metric}
                             />
                         ));
                         return weatherMap;
                     } else if (forecast[0]) {
                         return (
                             <ErrorMessage
-                              status={forecast[0].status !== 0 ? forecast[0].status : null}
-                              message={forecast[0].message}
+                                status={forecast[0].status !== 0 ? forecast[0].status : null}
+                                message={forecast[0].message}
                             />
                         );
                     }

@@ -122,43 +122,43 @@ class FiltersForm extends Component {
             <Form className={classnames(className, 'filters-form')} onSubmit={handleSubmit} autocompleteOff>
                 <div className="container-fluid">
                     <FilterCitiesFields
-                      filterCityRadioValue={filterCityRadio}
-                      className="row pseudo-paragraph"
-                      prefix="filter"
-                      cityMeta={cityMeta}
-                      autocomplete={autocomplete}
-                      validateDropDown={this.validateDropDown}
-                      autocompleteName={FORM_NAME}
-                      autocompleteCity={this.autocompleteCity}
-                      clearField={this.clearField}
+                        filterCityRadioValue={filterCityRadio}
+                        className="row pseudo-paragraph"
+                        prefix="filter"
+                        cityMeta={cityMeta}
+                        autocomplete={autocomplete}
+                        validateDropDown={this.validateDropDown}
+                        autocompleteName={FORM_NAME}
+                        autocompleteCity={this.autocompleteCity}
+                        clearField={this.clearField}
                     />
                     <Fields
-                      className="row pseudo-paragraph filters-form__min-max"
-                      component={TemperatureFilterFields}
-                      prefix="filter"
-                      metric={metric}
-                      names={['minTemperature', 'maxTemperature', 'temperatureErrors']}
+                        className="row pseudo-paragraph filters-form__min-max"
+                        component={TemperatureFilterFields}
+                        prefix="filter"
+                        metric={metric}
+                        names={['minTemperature', 'maxTemperature', 'temperatureErrors']}
                     />
                     <Fields
-                      className="row pseudo-paragraph"
-                      names={map(WEATHER_ICONS_NAMES, curr => `weatherIcons.${curr}`)}
-                      icons={WEATHER_ICON_TYPES_MAP}
-                      component={WeatherTypeFields}
+                        className="row pseudo-paragraph"
+                        names={map(WEATHER_ICONS_NAMES, curr => `weatherIcons.${curr}`)}
+                        icons={WEATHER_ICON_TYPES_MAP}
+                        component={WeatherTypeFields}
                     />
                     <Fields
-                      className="row pseudo-paragraph filters-form__min-max"
-                      component={WeatherDetailsFields}
-                      prefix="filter"
-                      names={['minPressure', 'maxPressure', 'minHumidity', 'maxHumidity', 'minWindSpeed', 'maxWindSpeed']}
+                        className="row pseudo-paragraph filters-form__min-max"
+                        component={WeatherDetailsFields}
+                        prefix="filter"
+                        names={['minPressure', 'maxPressure', 'minHumidity', 'maxHumidity', 'minWindSpeed', 'maxWindSpeed']}
                     />
                     <WeatherDayPicker
-                      className="row pseudo-paragraph"
-                      filterDateCheckboxValue={filterDateCheckbox}
-                      prefix="filter"
-                      changeField={this.changeField}
-                      filterDatepickerArray={filterDatepickerArray}
-                      maxForwardInterval={4}
-                      maxBackwardInterval={0}
+                        className="row pseudo-paragraph"
+                        filterDateCheckboxValue={filterDateCheckbox}
+                        prefix="filter"
+                        changeField={this.changeField}
+                        filterDatepickerArray={filterDatepickerArray}
+                        maxForwardInterval={4}
+                        maxBackwardInterval={0}
                     />
                     <ButtonToolbar className="row pseudo-paragraph">
                         <Button type="submit">Apply filters</Button>

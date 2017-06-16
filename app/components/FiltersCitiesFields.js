@@ -25,39 +25,39 @@ class FiltersCitiesFields extends Component {
             <div className={className}>
                 <h2>Select cities to filter...</h2>
                 <Field
-                  name={radioName}
-                  id={`${prefix}-favorites`}
-                  type="radio"
-                  className="custom-radio"
-                  component={CustomInput}
-                  value="favorites"
+                    name={radioName}
+                    id={`${prefix}-favorites`}
+                    type="radio"
+                    className="custom-radio"
+                    component={CustomInput}
+                    value="favorites"
                 >Use favorites</Field>
                 <Field
-                  name={radioName}
-                  id={`${prefix}-custom`}
-                  type="radio"
-                  className="custom-radio"
-                  component={CustomInput}
-                  value="custom"
+                    name={radioName}
+                    id={`${prefix}-custom`}
+                    type="radio"
+                    className="custom-radio"
+                    component={CustomInput}
+                    value="custom"
                 >Use selected cities</Field>
                 {
                     filterCityRadioValue === 'custom' &&
                     <FormGroup meta={cityMeta}>
                         <FieldArray
-                          component={MultipleInputFields}
-                          name={selectedFieldsName}
-                          validateField={validateDropDown}
-                          clearField={clearField}
-                          inputFieldProps={{
-                              component: AutocompleteField,
-                              name: 'city',
-                              placeholder: 'Type cities here',
-                              listId: 'filter-cities-input-list',
-                              id: 'filter-cities-input',
-                              onChange: autocompleteCity,
-                              autocomplete,
-                              autocompleteName,
-                          }}
+                            component={MultipleInputFields}
+                            name={selectedFieldsName}
+                            validateField={validateDropDown}
+                            clearField={clearField}
+                            inputFieldProps={{
+                                component: AutocompleteField,
+                                name: 'city',
+                                placeholder: 'Type cities here',
+                                listId: 'filter-cities-input-list',
+                                id: 'filter-cities-input',
+                                onChange: autocompleteCity,
+                                autocomplete,
+                                autocompleteName,
+                            }}
                         />
                     </FormGroup>
                 }

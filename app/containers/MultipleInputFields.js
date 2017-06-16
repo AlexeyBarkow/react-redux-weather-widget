@@ -67,21 +67,21 @@ class MultipleInputFields extends Component {
                             {
                                 map(fields, (_, index, arr) => (
                                     <DeleteInputBox
-                                      deleteHandler={() => { fields.remove(index); }}
-                                      key={index}
+                                        deleteHandler={() => { fields.remove(index); }}
+                                        key={index}
                                     >{ arr.get(index) }</DeleteInputBox>
                                 ))
                             }
                         </div>
                     }
                     <Field
-                      onChangeHandler={addNewFieldOn === 'change'
+                        onChangeHandler={addNewFieldOn === 'change'
                           ? this.addNewField
                           : undefined}
-                      onKeyPress={addNewFieldOn === 'enter'
+                        onKeyPress={addNewFieldOn === 'enter'
                           ? this.handleEnterClick
                           : undefined}
-                      {...inputFieldProps}
+                        {...inputFieldProps}
                     />
                 </div>
             </div>

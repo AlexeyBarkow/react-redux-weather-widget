@@ -1,5 +1,5 @@
 import axios, { CancelToken, isCancel } from 'axios';
-import { DEFAULT_API_KEY, API_URL, ROSE_NAMES, DEFAULT_METRIC, MAX_ROWS, DEFAULT_COUNTRY_CODE } from './constants';
+import { API_URL, ROSE_NAMES, DEFAULT_METRIC, MAX_ROWS, DEFAULT_COUNTRY_CODE } from './constants';
 
 function fromCelsiumToKelvin(value) {
     return value + 273;
@@ -33,51 +33,46 @@ function getWeatherTemplate(
     city,
     countryCode,
     format = DEFAULT_METRIC,
-    apiKey = DEFAULT_API_KEY,
 ) {
     return `${API_URL}/weather?q=${city}${
         countryCode && countryCode !== DEFAULT_COUNTRY_CODE
         ? `,${countryCode}`
         : ''
-    }&APPID=${apiKey}${getMetricUrl(format)}`;
+    }${getMetricUrl(format)}`;
 }
 
 function getWeatherForecastTemplate(
     city,
     countryCode,
     format = DEFAULT_METRIC,
-    apiKey = DEFAULT_API_KEY,
 ) {
     return `${API_URL}/forecast?q=${city}${
         countryCode && countryCode !== DEFAULT_COUNTRY_CODE
         ? `,${countryCode}`
         : ''
-    }&APPID=${apiKey}${getMetricUrl(format)}`;
+    }${getMetricUrl(format)}`;
 }
 
 function getClosestCitiesToLocationURL(
     { longitude, latitude },
     resultRows = MAX_ROWS,
     format = DEFAULT_METRIC,
-    apiKey = DEFAULT_API_KEY,
 ) {
-    return `${API_URL}/find?lat=${latitude}&lon=${longitude}&cnt=${resultRows}&APPID=${apiKey}${getMetricUrl(format)}`;
+    return `${API_URL}/find?lat=${latitude}&lon=${longitude}&cnt=${resultRows}${getMetricUrl(format)}`;
 }
 
 function getWeatherByLocationURL(
     { latitude, longitude },
     format = DEFAULT_METRIC,
-    apiKey = DEFAULT_API_KEY,
 ) {
-    return `${API_URL}/weather?lat=${latitude}&lon=${longitude}&APPID=${apiKey}${getMetricUrl(format)}`;
+    return `${API_URL}/weather?lat=${latitude}&lon=${longitude}${getMetricUrl(format)}`;
 }
 
 function getForecastByLocationURL(
     { latitude, longitude },
     format = DEFAULT_METRIC,
-    apiKey = DEFAULT_API_KEY,
 ) {
-    return `${API_URL}/forecast?lat=${latitude}&lon=${longitude}&APPID=${apiKey}${getMetricUrl(format)}`;
+    return `${API_URL}/forecast?lat=${latitude}&lon=${longitude}${getMetricUrl(format)}`;
 }
 
 function mapWeatherType(type) {

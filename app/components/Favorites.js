@@ -32,12 +32,12 @@ function Favorites({ className, favorites, metric, removeHandler, info, changeFa
                                 <Draggable key={`fav-${curr.cityname}-${curr.countryCode}`} className="col-sm-6 col-md-4 col-lg-3 drop-container" dataOnDragStart={index}>
                                     <Droppable onDrop={dropLeft} className="left dropzone" />
                                     <SingleFavorite
-                                      index={index}
-                                      favorite={curr}
-                                      metric={metric}
-                                      weather={weather}
-                                      removeHandler={removeHandler}
-                                      forecast={forecast}
+                                        index={index}
+                                        favorite={curr}
+                                        metric={metric}
+                                        weather={weather}
+                                        removeHandler={removeHandler}
+                                        forecast={forecast}
                                     />
                                     <Droppable onDrop={dropRight} className="right dropzone" />
                                 </Draggable>

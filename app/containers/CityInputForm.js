@@ -29,27 +29,27 @@ class CityInputForm extends Component {
             <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>
                     <Field
-                      component={AutocompleteField}
-                      className="header__city-search__name"
-                      name="city"
-                      placeholder="Type city here"
-                      listId="city-input-list"
-                      id="city-input"
-                      assistiveLabel
-                      labelText="City"
-                      onChange={this.autocompleteCity}
-                      validate={this.validateDropDown}
-                      autocomplete={autocomplete}
-                      autocompleteName={autocompleteName}
+                        component={AutocompleteField}
+                        className="header__city-search__name"
+                        name="city"
+                        placeholder="Type city here"
+                        listId="city-input-list"
+                        id="city-input"
+                        assistiveLabel
+                        labelText="City"
+                        onChange={this.autocompleteCity}
+                        validate={this.validateDropDown}
+                        autocomplete={autocomplete}
+                        autocompleteName={autocompleteName}
                     />
                     <Field
-                      component={Select}
-                      name="metric"
-                      className="header__city-search__metric"
-                      btnStyle
-                      id="metric-input"
-                      assistiveLabel
-                      labelText="Metric"
+                        component={Select}
+                        name="metric"
+                        className="header__city-search__metric"
+                        btnStyle
+                        id="metric-input"
+                        assistiveLabel
+                        labelText="Metric"
                     >
                         <DatalistOption value="C">C&deg;</DatalistOption>
                         <DatalistOption value="F">F&deg;</DatalistOption>

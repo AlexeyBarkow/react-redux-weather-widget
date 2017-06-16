@@ -27,24 +27,24 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                             <span>Interval:</span>
                                             <ButtonGroup className="btn-group-justified-sm btn-group-vertical-rsm" >
                                                 <CustomInput
-                                                  type="radio"
-                                                  buttonStyle
-                                                  id="forecast-rad-1"
-                                                  name="forecast-filter"
-                                                  onChange={changeFilter}
-                                                  checked={forecastFilter === '12H'}
-                                                  value="12H"
+                                                    type="radio"
+                                                    buttonStyle
+                                                    id="forecast-rad-1"
+                                                    name="forecast-filter"
+                                                    onChange={changeFilter}
+                                                    checked={forecastFilter === '12H'}
+                                                    value="12H"
                                                 >
                                                     12h
                                                 </CustomInput>
                                                 <CustomInput
-                                                  type="radio"
-                                                  buttonStyle
-                                                  id="forecast-rad-2"
-                                                  name="forecast-filter"
-                                                  onChange={changeFilter}
-                                                  checked={forecastFilter === '3H'}
-                                                  value="3H"
+                                                    type="radio"
+                                                    buttonStyle
+                                                    id="forecast-rad-2"
+                                                    name="forecast-filter"
+                                                    onChange={changeFilter}
+                                                    checked={forecastFilter === '3H'}
+                                                    value="3H"
                                                 >
                                                     3h
                                                 </CustomInput>
@@ -58,14 +58,14 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                                         map(forecast, (current, index) => (
                                             <div className="row pseudo-paragraph" key={`forecast-${index}`}>
                                                 <WeatherTemperature
-                                                  className="pull-left"
-                                                  date={new Date((index * forecastInterval)
+                                                    className="pull-left"
+                                                    date={new Date((index * forecastInterval)
                                                         + lastForecast)}
-                                                  metric={metric}
-                                                  weatherType={current.weatherTypes[0]}
-                                                  minTemperature={current.temperature.min}
-                                                  maxTemperature={current.temperature.max}
-                                                  currTemperature={current.temperature.curr}
+                                                    metric={metric}
+                                                    weatherType={current.weatherTypes[0]}
+                                                    minTemperature={current.temperature.min}
+                                                    maxTemperature={current.temperature.max}
+                                                    currTemperature={current.temperature.curr}
                                                 />
                                                 <DetailedInfoTable className="pull-right clear-500" weather={current} />
                                             </div>
@@ -77,8 +77,8 @@ function WeatherForecastSummary({ className, forecast, forecastFilter, changeFil
                     } else if (forecast[0]) {
                         return (
                             <ErrorMessage
-                              status={forecast[0].status !== 0 ? forecast[0].status : null}
-                              message={forecast[0].message}
+                                status={forecast[0].status !== 0 ? forecast[0].status : null}
+                                message={forecast[0].message}
                             />
                         );
                     }

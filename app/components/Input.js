@@ -20,18 +20,18 @@ class Input extends Component {
 
         return (
             <input
-              className={classnames('form-control', className)}
-              type={type}
-              name={name}
-              value={value}
-              id={id}
-              placeholder={placeholder}
-              list={list}
-              onChange={onChange}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              onKeyPress={onKeyPress}
-              {...input}
+                className={classnames('form-control', className)}
+                type={type}
+                name={name}
+                value={value}
+                id={id}
+                placeholder={placeholder}
+                list={list}
+                onChange={onChange}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                onKeyPress={onKeyPress}
+                {...input}
             />
         );
     }

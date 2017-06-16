@@ -131,8 +131,8 @@ class DatePicker extends Component {
 
                 cols.push(
                     <td
-                      key={i}
-                      className={classnames(
+                        key={i}
+                        className={classnames(
                           'day',
                           counter + i < 0 && 'old',
                           counter + i >= daysInMonth && 'new',
@@ -142,11 +142,11 @@ class DatePicker extends Component {
                       )}
                     >
                         <Button
-                          stretch
-                          noDefaultStyles
-                          preventDefaultAnyway
-                          href="#"
-                          onClickHandler={
+                            stretch
+                            noDefaultStyles
+                            preventDefaultAnyway
+                            href="#"
+                            onClickHandler={
                               isMatchesIntervals
                               ? setValue(
                                   firstDateCopy.getDate(),
