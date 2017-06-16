@@ -32,17 +32,17 @@ function DropDown({
                 : undefined
             }
             <Input
-              className={inputClassName}
-              id={id}
-              name={name}
-              value={value}
-              placeholder={placeholder}
-              list={listId}
-              onChange={onChange}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              onKeyPress={onKeyPress}
-              {...input}
+                className={inputClassName}
+                id={id}
+                name={name}
+                value={value}
+                placeholder={placeholder}
+                list={listId}
+                onChange={onChange}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                onKeyPress={onKeyPress}
+                {...input}
             />
             <datalist id={listId}>
                 { children }

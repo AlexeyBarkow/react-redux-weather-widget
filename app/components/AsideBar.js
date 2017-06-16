@@ -26,8 +26,8 @@ function AsideBar({ className, nearestCities, getNearestTo }) {
                 }
                 return (
                     <ClosestCities
-                      title={<h3>Nearest cities to your current location</h3>}
-                      list={nearestCities}
+                        title={<h3>Nearest cities to your current location</h3>}
+                        list={nearestCities}
                     />
                 );
             })()}

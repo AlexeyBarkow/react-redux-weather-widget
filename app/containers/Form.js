@@ -28,11 +28,11 @@ class Form extends Component {
         const { children, className, onSubmit, autocompleteOff } = this.props;
         return (
             <form
-              className={classnames(hasFocus && 'active-form', className)}
-              onSubmit={onSubmit}
-              onFocus={this.onFocusHandler}
-              onBlur={this.onBlurHandler}
-              autoComplete={autocompleteOff ? 'off' : null}
+                className={classnames(hasFocus && 'active-form', className)}
+                onSubmit={onSubmit}
+                onFocus={this.onFocusHandler}
+                onBlur={this.onBlurHandler}
+                autoComplete={autocompleteOff ? 'off' : null}
             >
                 <ButtonToolbar>
                     { children }

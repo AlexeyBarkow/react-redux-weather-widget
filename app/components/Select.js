@@ -22,12 +22,12 @@ function Select({
                 : undefined
             }
             <select
-              className={classnames(btnStyle && 'btn btn-default', 'form-control')}
-              name={name}
-              id={id}
-              value={value}
-              onChange={onChange}
-              {...input}
+                className={classnames(btnStyle && 'btn btn-default', 'form-control')}
+                name={name}
+                id={id}
+                value={value}
+                onChange={onChange}
+                {...input}
             >
                 { children }
             </select>

@@ -46,11 +46,11 @@ class Draggable extends Component {
         const { dragging } = this.state;
         return (
             <div
-              draggable="true"
-              onDragStart={this.handleDragStart}
-              onDragEnd={this.handleDragEnd}
-              onDragOver={this.onDragOver}
-              className={classnames(className, dragging && classNameWhenDragging)}
+                draggable="true"
+                onDragStart={this.handleDragStart}
+                onDragEnd={this.handleDragEnd}
+                onDragOver={this.onDragOver}
+                className={classnames(className, dragging && classNameWhenDragging)}
             >
                 { children }
             </div>

@@ -12,10 +12,10 @@ function FilteredItemsContainer({ className, items, metric }) {
                     {
                         map(items, (curr, index) => (
                             <FilteredItem
-                              className="pseudo-paragraph"
-                              key={`fi-${index}`}
-                              weather={curr}
-                              metric={metric}
+                                className="pseudo-paragraph"
+                                key={`fi-${index}`}
+                                weather={curr}
+                                metric={metric}
                             />
                         ))
                     }

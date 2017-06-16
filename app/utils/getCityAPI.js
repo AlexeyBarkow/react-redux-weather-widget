@@ -1,21 +1,19 @@
 import axios from 'axios';
-import { USERNAME, GEONAMES_API_URL, MAX_ROWS } from './constants';
+import { API_URL, MAX_ROWS } from './constants';
 
 function getCitiesByNameUrl(
     cityStart,
     resultRows = MAX_ROWS,
-    username = USERNAME,
 ) {
-    return `${GEONAMES_API_URL}/searchJSON?name_startsWith=${cityStart}&username=${username}&maxRows=${resultRows}&style=SHORT`;
+    return `${API_URL}/searchJSON?name_startsWith=${cityStart}&maxRows=${resultRows}&style=SHORT`;
 }
 
 function getClosestToLocationUrl(
     { latitude, longitude },
     radius = .5,
     resultRows = MAX_ROWS,
-    username = USERNAME,
 ) {
-    return `${GEONAMES_API_URL}/citiesJSON?north=${
+    return `${API_URL}/citiesJSON?north=${
         latitude - radius
     }&south=${
         latitude + radius
@@ -23,7 +21,7 @@ function getClosestToLocationUrl(
         longitude - radius
     }&east=${
         longitude + radius
-    }&username=${username}&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
+    }&&maxRows=${resultRows}&style=SHORT&radius=${radius}`;
 }
 
 function convertToAcceptable({ countryCode, countrycode, name }) {

@@ -56,11 +56,11 @@ class PaginationContainer extends Component {
                 </section>
                 { itemsCount > pageSize &&
                     <Pagination
-                      className=""
-                      navigateTo={this.navigateTo}
-                      currPage={currPage}
-                      pagesCount={Math.trunc(itemsCount / pageSize) + 1}
-                      paginationMaxLength={8}
+                        className=""
+                        navigateTo={this.navigateTo}
+                        currPage={currPage}
+                        pagesCount={Math.trunc(itemsCount / pageSize) + 1}
+                        paginationMaxLength={8}
                     />
                 }
             </div>

@@ -56,8 +56,8 @@ class StaticFixator extends Component {
                 {
                     isFixed &&
                         (<div
-                          className={placeholderClass}
-                          style={{ height: contentHeight }}
+                            className={placeholderClass}
+                            style={{ height: contentHeight }}
                         />)
                 }
             </div>

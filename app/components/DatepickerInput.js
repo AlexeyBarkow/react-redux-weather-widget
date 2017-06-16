@@ -17,18 +17,18 @@ function DatepickerInput({
     return (
         <FormGroup className={className}>
             <FieldArray
-              component={MultipleInputFields}
-              name={name}
-              addNewFieldOn="change"
-              clearField={clearField}
-              inputFieldProps={{
-                  component: DatePicker,
-                  name: inputName,
-                  change: changeField,
-                  maxForwardInterval,
-                  maxBackwardInterval,
-                  datepickerArray,
-              }}
+                component={MultipleInputFields}
+                name={name}
+                addNewFieldOn="change"
+                clearField={clearField}
+                inputFieldProps={{
+                    component: DatePicker,
+                    name: inputName,
+                    change: changeField,
+                    maxForwardInterval,
+                    maxBackwardInterval,
+                    datepickerArray,
+                }}
             />
         </FormGroup>
     );

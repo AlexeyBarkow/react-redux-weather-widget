@@ -29,13 +29,18 @@ class Tooltip extends Component {
             return;
         }
         this.el = el;
-    }
+    };
 
     render() {
         const { className, children } = this.props;
 
         return (
-            <div ref={this.getTooltipRef} onMouseOver={this.onHover} onMouseOut={this.onLeave} className={classnames(className, 'tooltip-container')}>
+            <div
+                ref={this.getTooltipRef}
+                onMouseOver={this.onHover}
+                onMouseOut={this.onLeave}
+                className={classnames(className, 'tooltip-container')}
+            >
                 { children }
             </div>
         );

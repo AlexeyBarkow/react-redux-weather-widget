@@ -22,23 +22,23 @@ function WeatherTemperature({
             <div className={date ? 'col-xs-7' : ''}>
                 <div className={classnames('pull-left', date && 'stretch-width')}>
                     <Tooltip
-                      className="weather-pictures"
-                      placement="bottom"
-                      tooltipText={weatherType.desc}
+                        className="weather-pictures"
+                        placement="bottom"
+                        tooltipText={weatherType.desc}
                     >
                         <img
-                          className="temperature-icon"
-                          src={`${IMAGES_BASE_PATH}${weatherType.icon}.png`}
-                          alt={weatherType.desc}
+                            className="temperature-icon"
+                            src={`${IMAGES_BASE_PATH}${weatherType.icon}.png`}
+                            alt={weatherType.desc}
                         />
                     </Tooltip>
                 </div>
                 <Temperature
-                  className={classnames(date && 'stretch-width', 'pull-left')}
-                  metric={metric}
-                  minTemperature={minTemperature}
-                  maxTemperature={maxTemperature}
-                  currTemperature={currTemperature}
+                    className={classnames(date && 'stretch-width', 'pull-left')}
+                    metric={metric}
+                    minTemperature={minTemperature}
+                    maxTemperature={maxTemperature}
+                    currTemperature={currTemperature}
                 />
             </div>
         </div>

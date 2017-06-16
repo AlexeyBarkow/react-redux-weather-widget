@@ -19,14 +19,14 @@ function CustomInput({
     return (
         <FormGroup className={className}>
             <input
-              defaultChecked={defaultChecked}
-              checked={checked || value === true}
-              type={type}
-              name={name}
-              value={value}
-              id={id}
-              onChange={onChange}
-              {...input}
+                defaultChecked={defaultChecked}
+                checked={checked || value === true}
+                type={type}
+                name={name}
+                value={value}
+                id={id}
+                onChange={onChange}
+                {...input}
             />
             <label className={classnames(!noControl && 'form-control', buttonStyle && 'btn btn-default')} htmlFor={id}>{ children }</label>
         </FormGroup>

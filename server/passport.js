@@ -1,7 +1,8 @@
 /* eslint-disable no-console, no-param-reassign, consistent-return */
-const passport = require('passport');
-const { Strategy: GoogleStrategy } = require('passport-google-oauth2');
-const { PORT, DOMAIN, GOOGLE_CLIENT_ID, GOOGLE_SECRET } = require('./constants');
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
+import { PORT, DOMAIN, GOOGLE_CLIENT_ID, GOOGLE_SECRET } from './constants';
+
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -17,10 +18,7 @@ passport.use(new GoogleStrategy({
     callbackURL: `${DOMAIN}:${PORT}/auth/google/callback`,
     passReqToCallback: true,
 }, (request, accessToken, refreshToken, profile, done) => {
-    process.nextTick(() => {
-        console.log(profile);
-        return done(null, profile);
-    });
+    process.nextTick(() => done(null, profile));
 }));
 
 function ensureAuthenticated(req, res, next) {

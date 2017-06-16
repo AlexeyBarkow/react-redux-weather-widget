@@ -1,16 +1,13 @@
 /* eslint-disable no-console, comma-dangle, no-param-reassign */
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const morgan = require('morgan');
-const path = require('path');
-const { passport } = require('./passport');
-const { PORT } = require('./constants');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../webpack.config.js');
-const webpackDevConfig = require('../config/webpack-dev-server.config.js');
-const webpack = require('webpack');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import morgan from 'morgan';
+import geoRouter from './routes/geo';
+import weatherRouter from './routes/weather';
+import { passport } from './passport';
+import { PORT } from './constants';
 
 const app = express();
 const logger = morgan(':method :url :status :res[content-length] - :response-time ms');
@@ -21,11 +18,8 @@ app.use(session({ secret: 'secret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logger);
-app.use(webpackMiddleware(webpack(webpackConfig), webpackDevConfig));
-
-// app.get('/', (req, res) => {
-//     res.status(200).send(`hello, ${JSON.stringify(req.user)}`);
-// });
+app.use('/api', geoRouter);
+app.use('/api', weatherRouter);
 
 app.get('/auth/google',
     passport.authenticate('google', {

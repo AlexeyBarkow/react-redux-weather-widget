@@ -16,8 +16,8 @@ function MenuItem({
         case header:
             return (
                 <li
-                  className={className}
-                  title={title}
+                    className={className}
+                    title={title}
                 >
                     {children}
                 </li>
@@ -25,19 +25,19 @@ function MenuItem({
         case divider:
             return (
                 <li
-                  className={classnames('divider', className)}
-                  title={title}
+                    className={classnames('divider', className)}
+                    title={title}
                 />
             );
         default:
             return (
                 <li>
                     <Link
-                      className={className}
-                      href={href || '#'}
-                      disabled={disabled}
-                      onClick={onClickHandler}
-                      title={title}
+                        className={className}
+                        href={href || '#'}
+                        disabled={disabled}
+                        onClick={onClickHandler}
+                        title={title}
                     >
                         {children}
                     </Link>

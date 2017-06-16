@@ -26,17 +26,17 @@ class AddCityForm extends Component {
             <Form className={className} autocompleteOff onSubmit={handleSubmit}>
                 <ButtonGroup>
                     <Field
-                      component={AutocompleteField}
-                      name="tableCity"
-                      id="city-table-input"
-                      listId="city-table-list"
-                      labelText="City"
-                      assistiveLabel
-                      placeholder="Type city here"
-                      onChange={this.autocompleteCity}
-                      validate={this.validateDropDown}
-                      autocompleteName={autocompleteName}
-                      autocomplete={autocomplete}
+                        component={AutocompleteField}
+                        name="tableCity"
+                        id="city-table-input"
+                        listId="city-table-list"
+                        labelText="City"
+                        assistiveLabel
+                        placeholder="Type city here"
+                        onChange={this.autocompleteCity}
+                        validate={this.validateDropDown}
+                        autocompleteName={autocompleteName}
+                        autocomplete={autocomplete}
                     />
                     <Button type="submit">Add city</Button>
                 </ButtonGroup>

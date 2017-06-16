@@ -19,5 +19,8 @@ module.exports = {
     },
     watchOptions: {
         aggregateTimeout: 300
+    },
+    proxy: {
+        '/api': 'http://localhost:3005'
     }
 };

@@ -58,12 +58,12 @@ class WeatherSummary extends Component {
                                     }
                                     <div className="pseudo-paragraph">
                                         <WeatherTemperature
-                                          className="pull-left"
-                                          metric={metric}
-                                          weatherType={weather.weatherTypes[0]}
-                                          minTemperature={weather.temperature.min}
-                                          maxTemperature={weather.temperature.max}
-                                          currTemperature={weather.temperature.curr}
+                                            className="pull-left"
+                                            metric={metric}
+                                            weatherType={weather.weatherTypes[0]}
+                                            minTemperature={weather.temperature.min}
+                                            maxTemperature={weather.temperature.max}
+                                            currTemperature={weather.temperature.curr}
                                         />
                                         {
                                             shortView
@@ -96,8 +96,8 @@ class WeatherSummary extends Component {
                     }
                     return (
                         <ErrorMessage
-                          status={weather.status !== 0 ? weather.status : null}
-                          message={weather.message}
+                            status={weather.status !== 0 ? weather.status : null}
+                            message={weather.message}
                         />
                     );
                 })()

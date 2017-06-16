@@ -56,10 +56,10 @@ class Droppable extends Component {
         const { dragover } = this.state;
         return (
             <div
-              onDragEnter={this.onDragEnter}
-              onDragLeave={this.onDragLeave}
-              onDrop={this.onDrop}
-              className={classnames(className, dragover && 'over')}
+                onDragEnter={this.onDragEnter}
+                onDragLeave={this.onDragLeave}
+                onDrop={this.onDrop}
+                className={classnames(className, dragover && 'over')}
             >
                 { children }
             </div>

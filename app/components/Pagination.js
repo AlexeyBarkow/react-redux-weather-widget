@@ -17,15 +17,15 @@ function Pagination({
         <nav className={classnames(className, 'pagination-wrapper')} aria-label="Page navigation">
             <ul className="pagination">
                 <PaginationItem
-                  className={classnames(currPage <= 0 && 'disabled')}
-                  onClickHandler={navigateTo(currPage - 1)}
+                    className={classnames(currPage <= 0 && 'disabled')}
+                    onClickHandler={navigateTo(currPage - 1)}
                 >
                     <span aria-hidden="true">&laquo;</span>
                     <span className="sr-only">Previous page</span>
                 </PaginationItem>
                 <PaginationItem
-                  className={classnames(currPage === 0 && 'active')}
-                  onClickHandler={navigateTo(0)}
+                    className={classnames(currPage === 0 && 'active')}
+                    onClickHandler={navigateTo(0)}
                 >
                     { numberMapper(0) }
                 </PaginationItem>
@@ -68,14 +68,14 @@ function Pagination({
                     </PaginationItem>
                 }
                 <PaginationItem
-                  className={classnames(currPage === pagesCount - 1 && 'active')}
-                  onClickHandler={navigateTo(pagesCount - 1)}
+                    className={classnames(currPage === pagesCount - 1 && 'active')}
+                    onClickHandler={navigateTo(pagesCount - 1)}
                 >
                     { numberMapper(pagesCount - 1) }
                 </PaginationItem>
                 <PaginationItem
-                  className={classnames(currPage >= pagesCount - 1 && 'disabled')}
-                  onClickHandler={navigateTo(currPage + 1)}
+                    className={classnames(currPage >= pagesCount - 1 && 'disabled')}
+                    onClickHandler={navigateTo(currPage + 1)}
                 >
                     <span aria-hidden="true">&raquo;</span>
                     <span className="sr-only">Next page</span>

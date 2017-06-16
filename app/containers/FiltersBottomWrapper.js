@@ -40,16 +40,16 @@ class FiltersBottomWrapper extends Component {
             <section className="panel col-xs-12">
                 <h3>Favorite cities</h3>
                 <AddCityForm
-                  autocompleteCity={autocompleteCity}
-                  autocomplete={autocomplete}
-                  onSubmit={this.submitAddToFav}
+                    autocompleteCity={autocompleteCity}
+                    autocomplete={autocomplete}
+                    onSubmit={this.submitAddToFav}
                 />
                 <Favorites
-                  info={cache}
-                  metric={metric}
-                  favorites={favorites}
-                  removeHandler={removeFromFavorites}
-                  changeFavoriteIndex={changeFavoriteIndex}
+                    info={cache}
+                    metric={metric}
+                    favorites={favorites}
+                    removeHandler={removeFromFavorites}
+                    changeFavoriteIndex={changeFavoriteIndex}
                 />
             </section>
         );

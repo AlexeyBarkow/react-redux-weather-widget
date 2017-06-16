@@ -100,13 +100,13 @@ class GoogleMap extends Component {
                     if (googleScriptLoaded === 'loaded' && location.longitude && location.latitude) {
                         return (
                             <div
-                              className="pseudo-paragraph"
-                              style={{
-                                  width: '100%',
-                                  height: '500px',
-                              }}
-                              id="map"
-                              ref={this.initMapBlock}
+                                className="pseudo-paragraph"
+                                style={{
+                                    width: '100%',
+                                    height: '500px',
+                                }}
+                                id="map"
+                                ref={this.initMapBlock}
                             />
                         );
                     } else if (googleScriptLoaded === 'loading') {
@@ -130,9 +130,9 @@ class GoogleMap extends Component {
                     : undefined
                 }
                 <Script
-                  url={getGoogleMapUrl()}
-                  onLoad={this.scriptLoaded}
-                  onError={this.scriptLoadingFailed}
+                    url={getGoogleMapUrl()}
+                    onLoad={this.scriptLoaded}
+                    onError={this.scriptLoadingFailed}
                 />
             </div>
         );
