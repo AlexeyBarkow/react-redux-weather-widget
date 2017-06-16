@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "dev": "node ./config/server.js",
-    "deploy": "npm run build && npm run build:server && npm run server:prod",
-    "build": "cross-env NODE_ENV=production rimraf dist && mkdir dist && webpack --config webpack.prod.config.js",
-    "build:server": "babel server -d dist-server --presets es2015,stage-2",
+    "deploy": "npm run build:server && npm run build && node ./dist-server",
+    "build": "rimraf dist && mkdir dist && webpack --config webpack.prod.config.js",
+    "build:server": "rimraf dist-server && mkdir dist-server && babel server -d dist-server --presets es2015,stage-2",
     "test": "jest --config=jest.config.json",
     "coverageCheck": "jest --config=jest.config.json --coverage",
     "updateSnapshots": "jest --updateSnapshot",
@@ -32,6 +32,8 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap-sass-loader": "^1.0.10",
+    "concurrently": "~3.4.0",
+    "cross-env": "~3.2.4",
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.1",
     "eslint": "^3.14.0",
@@ -55,7 +57,7 @@
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.1.1",
-    "rimraf": "^2.5.4",
+    "rimraf": "^2.6.1",
     "sass-loader": "^4.1.1",
     "sass-resources-loader": "^1.2.0",
     "sinon": "^2.1.0",
@@ -103,12 +105,20 @@
     "url": "^0.11.0"
   },
   "jest": {
-    "moduleFileExtensions": ["js"],
-    "collectCoverageFrom" : ["app/**/*.js", "!**/node_modules/**"],
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "collectCoverageFrom": [
+      "app/**/*.js",
+      "!**/node_modules/**"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.css$": "<rootDir>/specs/__mocks__/styleMock.js",
       "\\.scss$": "<rootDir>/specs/__mocks__/styleMock.js"
     }
+  },
+  "engines": {
+    "node": "7.8.0"
   }
 }
